@@ -1,0 +1,44 @@
+{% extends "users/layout.html" %} {% block content %}
+<input id="baseUrl" value="{{baseURL}}" hidden>
+	<div class="page_header clearfix page_margin_top">
+		<div class="page_header_left">
+			<h2 class="page_title"></h2>
+		</div>
+
+	</div>
+	<div class="page_layout clearfix">
+		<div class="row">
+		<div class="column column_1_1">
+				<h4 class="box_header">
+					LAPOR KERUMUNAN
+				</h4>
+				<p class="padding_top_30">Maecenas mauris elementum, est morbi interdum cursus at elite imperdiet libero. Proin odios dapibus integer an nulla augue.</p>
+				<div>
+				  
+				    <label for="fname">Nama :</label>
+				    <input type="text" id="input-name" name="firstname" placeholder="isi nama lengkap">
+
+				    <label for="lname">Nomor Telepon :</label>
+				    <input type="text" id="input-notelp" name="lastname" placeholder="isi nomor telepon">
+
+				    <label for="input-kecamatan">Kecamatan :</label>
+				    <select id="input-kecamatan">
+				    </select>
+
+				    <label for="input-desa">Desa :</label>
+				    <select disabled id="input-desa">
+							<option value="0">- Pilih -</option>
+				    </select>
+
+				    <label for="country">Alamat Lengkap :</label>
+						<input type="text" id="input-alamat" name="">
+
+						<input id="input-gambar" type="file" name="filename" style="width: 100%;box-sizing:border-box;" accept="image/*" multiple>
+
+				    <input id="submit-lapor" type="submit" name="submit" value="KIRIM LAPORAN" class="more active">
+
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

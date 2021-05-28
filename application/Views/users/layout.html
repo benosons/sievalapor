@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Kepolisian Resor Sumedang</title>
+		<!--meta-->
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.2" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="keywords" content="Medic, Medical Center" />
+		<meta name="description" content="Responsive Medical Health Template" />
+		<!--style-->
+		<!-- <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'> -->
+		<link href='{{baseURL}}/assets/fonts/family=Roboto.css' rel='stylesheet' type='text/css'>
+		<!-- <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700' rel='stylesheet' type='text/css'> -->
+		<link href='{{baseURL}}/assets/fonts/family=Roboto+Condensed.css' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="{{baseURL}}/assets/users/style/reset.css">
+		<link rel="stylesheet" type="text/css" href="{{baseURL}}/assets/users/style/superfish.css">
+		<link rel="stylesheet" type="text/css" href="{{baseURL}}/assets/users/style/prettyPhoto.css">
+		<link rel="stylesheet" type="text/css" href="{{baseURL}}/assets/users/style/jquery.qtip.css">
+		<link rel="stylesheet" type="text/css" href="{{baseURL}}/assets/users/style/style.css">
+		<link rel="stylesheet" type="text/css" href="{{baseURL}}/assets/users/style/menu_styles.css">
+		<link rel="stylesheet" type="text/css" href="{{baseURL}}/assets/users/style/animations.css">
+		<link rel="stylesheet" type="text/css" href="{{baseURL}}/assets/users/style/responsive.css">
+		<link rel="stylesheet" type="text/css" href="{{baseURL}}/assets/users/style/odometer-theme-default.css">
+		<link rel="stylesheet" type="text/css" href="{{baseURL}}/assets/users/style/custom.css">
+				<!--<link rel="stylesheet" type="text/css" href="style/dark_skin.css">-->
+		<!--<link rel="stylesheet" type="text/css" href="style/high_contrast_skin.css">-->
+		<link rel="shortcut icon" href="{{baseURL}}/assets/users/images/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="{{baseURL}}/assets/users/style_selector/style_selector.css">
+
+		<link rel="stylesheet" href="{{baseURL}}/assets/swal/limonte-sweetalert2/7.33.1/sweetalert2.min.css">
+		<link rel="stylesheet" href="{{baseURL}}/assets/swal/fontawesome/v5.7.2/all.css">
+		<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
+
+		<!-- <script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery-migrate-1.4.1.min.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery-ui-1.11.1.custom.min.js"></script> -->
+
+		<style>
+		.col-form-label {
+		    font-size: 14px;
+		}
+		.form-control {
+		    font-size: 14px;
+		    border-radius: 2px;
+		    border-width: 2px;
+		}
+
+		.swal2-modal {
+			font-size: 75%;
+		}
+
+		.swal2-popup .swal2-styled.swal2-confirm {
+	    background-color: #ED1C24;
+		}
+
+		.swal2-popup .swal2-title {
+			font-size: 1.3em;
+		}
+
+		.pull-right {
+			float: right;
+		}
+
+		.sf-menu {
+			padding-left: 15rem;
+		}
+
+		.slider li.slide img, .pr_preload {
+		    display: block;
+		}
+
+		.features_icon {
+			background-size: 50px;
+		}
+
+		.item_content .features_icon {
+			width: 50px!important;
+    	height: 50px!important;
+		}
+
+		.blog .post > a > img {
+		    display: block;
+		}
+
+		@media only screen and (max-width: 700px) {
+			.presentation {
+				right: 10em!important;
+			}
+			nav.float-action-button {
+			  margin-right: 10em!important;
+			}
+		}
+
+		html:hover .presentation,
+		body:hover .presentation {
+		display: none;
+		}
+
+		.presentation {
+			position: fixed;
+			right: 88px;
+			bottom: 34px;
+			text-shadow: 1px 1px 1px #000;
+		}
+
+		nav.float-action-button {
+		  position: fixed;
+		  bottom: 0;
+		  right: 0;
+		  margin: 1em;
+		}
+
+
+a.buttons {
+  box-shadow: 0 5px 11px -2px rgba(0, 0, 0, 0.18), 0 4px 12px -7px rgba(0, 0, 0, 0.15);
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  color: #fff;
+  font-size: 2.6em;
+  padding: 1px 0 0 0;
+  text-align: center;
+  display: block;
+  margin: 20px auto 0;
+  position: relative;
+  -webkit-transition: all .1s ease-out;
+  transition: all .1s ease-out;
+}
+
+a.buttons:active,
+a.buttons:focus,
+a.buttons:hover {
+  box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+  text-decoration: none;
+}
+
+a.buttons:not(:last-child) {
+  width: 40px;
+  height: 40px;
+  margin: 20px auto 0;
+  opacity: 0;
+  font-size: 1.6em;
+  padding-top: 4px;
+  -webkit-transform: translateY(50px);
+  -ms-transform: translateY(50px);
+  transform: translateY(50px);
+}
+
+a.buttons.main-button > i:first-child {
+  position: relative;
+  margin-top: 10px;
+}
+
+nav.float-action-button:hover a.buttons:not(:last-child) {
+  opacity: 1;
+  -webkit-transform: none;
+  -ms-transform: none;
+  transform: none;
+  margin: 20px auto 0;
+}
+
+a.buttons:nth-last-child(1) {
+  -webkit-transition-delay: 25ms;
+  transition-delay: 25ms;
+  background-color: #D32F2F;
+  /* Button color */
+}
+
+a.buttons:nth-last-child(1) i.fa {
+  transform: rotate3d(0, 0, 1, 0);
+  transition: content 0.4s, transform 0.4s, opacity 0.4s;
+}
+
+a.buttons:nth-last-child(1):hover i.fa {
+  transform: rotate3d(0, 0, 1, -180deg);
+}
+
+a.buttons:nth-last-child(1) i.fa:nth-last-child(1) {
+  position: absolute;
+  margin: 13px 0 0 -30px;
+	font-size: 70%;
+}
+
+a.buttons:nth-last-child(1) i.fa:nth-last-child(2) {
+  opacity: 0;
+}
+
+a.buttons:nth-last-child(1):hover i.fa:nth-last-child(1) {
+  opacity: 0;
+}
+
+a.buttons:nth-last-child(1):hover i.fa:nth-last-child(2) {
+  opacity: 1;
+	font-size: 70%;
+	top : -9px;
+}
+
+a.buttons:not(:last-child):nth-last-child(2) {
+  -webkit-transition-delay: 50ms;
+  transition-delay: 20ms;
+  background-color: #f0ad4e;
+  /* Facebook color */
+}
+
+a.buttons:not(:last-child):nth-last-child(3) {
+  -webkit-transition-delay: 75ms;
+  transition-delay: 40ms;
+  background-color: #5cb85c;
+  /* Twitter color */
+}
+
+a.buttons:not(:last-child):nth-last-child(4) {
+  -webkit-transition-delay: 100ms;
+  transition-delay: 60ms;
+  background-color: #dd4b39;
+  /* Google plus color */
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 10em;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 12px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+	right: 100%;
+	font-size: 12px;
+	margin-right: 1em;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+
+.pulse {
+  margin:100px;
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 100%;
+  background: #ff0007;
+  cursor: pointer;
+  box-shadow: 0 0 0 rgba(204,44,44, 0.4);
+  animation: pulse 2s infinite;
+}
+.pulse:hover {
+  animation: none;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(204,44,44, 0.4);
+  }
+  70% {
+      -webkit-box-shadow: 0 0 0 10px rgba(204,44,44, 0);
+  }
+  100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(204,44,44, 0);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(204,44,44, 0.4);
+    box-shadow: 0 0 0 0 rgba(204,44,44, 0.4);
+  }
+  70% {
+      -moz-box-shadow: 0 0 0 10px rgba(204,44,44, 0);
+      box-shadow: 0 0 0 10px rgba(204,44,44, 0);
+  }
+  100% {
+      -moz-box-shadow: 0 0 0 0 rgba(204,44,44, 0);
+      box-shadow: 0 0 0 0 rgba(204,44,44, 0);
+  }
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+	background-color: #ffffff00;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+#input-gambar::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+#input-gambar::before {
+  content: 'Pilih Upload Gambar';
+	display: inline-block;
+  background: linear-gradient(top, #f9f9f9, #e3e3e3);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+}
+
+		</style>
+	</head>
+	<input type="hidden" id="baseURL" value="{{baseURL}}">
+	<!--<body class="image_1">
+	<body class="image_1 overlay">
+	<body class="image_2">
+	<body class="image_2 overlay">
+	<body class="image_3">
+	<body class="image_3 overlay">
+	<body class="image_4">
+	<body class="image_4 overlay">
+	<body class="image_5">
+	<body class="image_5 overlay">
+	<body class="pattern_1">
+	<body class="pattern_2">
+	<body class="pattern_3">
+	<body class="pattern_4">
+	<body class="pattern_5">
+	<body class="pattern_6">
+	<body class="pattern_7">
+	<body class="pattern_8">
+	<body class="pattern_9">
+	<body class="pattern_10">-->
+	<body class="">
+		<div class="site_container">
+
+			{% include "users/header.html" %}
+
+			{% include "users/menu.html" %}
+
+
+<div class="page">
+	{% if page == "home" %}
+	{% include "users/carousel.html" %}
+	{% endif %}
+	{% block content %} {% endblock %}
+
+</div>
+
+{% include "users/footer.html" %}
+
+</div>
+		<div class="background_overlay"></div>
+		<!--js-->
+		<script type="text/javascript" src="{{baseURL}}/assets/js/jquery-3.5.1.min.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/js/jquery-migrate-3.3.2.min.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/js/ui/1.12.1/jquery-ui.min.js"></script>
+		<script type="text/javascript">
+		jQuery.browser = {};
+		(function () {
+			jQuery.browser.msie = false;
+			jQuery.browser.version = 0;
+			if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+				jQuery.browser.msie = true;
+				jQuery.browser.version = RegExp.$1;
+			}
+		});
+		</script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery.ba-bbq.min.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery.carouFredSel-6.2.1-packed.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery.touchSwipe.min.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery.transit.min.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery.sliderControl.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery.timeago.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery.hint.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery.prettyPhoto.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery.qtip.min.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/jquery.blockUI.js"></script>
+
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/odometer.min.js"></script>
+		<script type="text/javascript" src="{{baseURL}}/assets/users/style_selector/style_selector.js"></script>
+		<script src="{{baseURL}}/assets/swal/limonte-sweetalert2/7.33.1/sweetalert2.min.js"></script>
+		<script src="{{baseURL}}/assets/action-js/global.js"></script>
+		{% if script %}
+		<script src="{{script}}"></script>
+		{% endif %}
+		<script type="text/javascript" src="{{baseURL}}/assets/users/js/main.js"></script>
+		<script>
+		$(document).ready(function () {
+			$(window).scroll(function () {
+			  if($(window).scrollTop() > $('.header_container').height()) {
+			    $("#menu-bar").addClass('move');
+			  } else {
+			    $("#menu-bar").removeClass('move');
+			  }
+			});
+
+			if($( window ).width() < 700){
+				$("iframe").width(500);
+				$("iframe").height(250);
+			}
+
+		});
+		</script>
+<div class="style_selector">
+	<div class="style_selector_icon">
+		&nbsp;
+	</div>
+	<div class="style_selector_content">
+		<h4>Style Selector</h4>
+		<ul>
+			<li class="style_selector_header hide_on_mobile">
+				<label>Header Style</label>
+				<select name="header_style">
+					<option value="style_1" selected="selected">Style 1</option>
+					<option value="style_2">Style 2</option>
+					<option value="style_3">Style 3</option>
+					<option value="style_4">Style 4</option>
+					<option value="style_5">Style 5</option>
+					<option value="style_6">Style 6</option>
+					<option value="style_7">Style 7</option>
+					<option value="style_8">Style 8</option>
+					<option value="style_9">Style 9</option>
+					<option value="style_10">Style 10</option>
+					<option value="style_11">Style 11</option>
+					<option value="style_12">Style 12</option>
+					<option value="style_13">Style 13</option>
+					<option value="style_14">Style 14</option>
+					<option value="style_15">Style 15</option>
+					<option value="style_high_contrast">Style high contrast</option>
+				</select>
+			</li>
+			<li class="hide_on_mobile">
+				<label>Menu Type</label>
+				<select name="menu_type">
+					<option value="default" selected="selected">Default</option>
+					<option value="sticky">Sticky</option>
+				</select>
+			</li>
+			<li class="hide_on_mobile">
+				<label>Layout Style</label>
+				<select name="layout_style">
+					<option value="wide" selected="selected">Wide</option>
+					<option value="boxed">Boxed</option>
+				</select>
+			</li>
+			<li>
+				<label>Color Skin</label>
+				<select name="color_skin">
+					<option value="light" selected="selected">Light</option>
+					<option value="dark">Dark</option>
+					<option value="high_contrast">Hight Contrast</option>
+				</select>
+			</li>
+			<li class="clearfix hide_on_mobile">
+				<label>Boxed Layout Pattern</label>
+				<ul class="layout_chooser">
+					<li>
+						<a href="index.html@page=home_3.html#" class="pattern_1">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li>
+						<a href="index.html@page=home_3.html#" class="pattern_2">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li>
+						<a href="index.html@page=home_3.html#" class="pattern_3">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li>
+						<a href="index.html@page=home_3.html#" class="pattern_4">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li>
+						<a href="index.html@page=home_3.html#" class="pattern_5">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li class="first">
+						<a href="index.html@page=home_3.html#" class="pattern_6">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li>
+						<a href="index.html@page=home_3.html#" class="pattern_7">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li>
+						<a href="index.html@page=home_3.html#" class="pattern_8">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li>
+						<a href="index.html@page=home_3.html#" class="pattern_9">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li>
+						<a href="index.html@page=home_3.html#" class="pattern_10">
+							<span class="tick"></span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="clearfix hide_on_mobile">
+				<label>Boxed Layout Image</label>
+				<ul class="layout_chooser">
+					<li class="selected">
+						<a href="index.html@page=home_3.html#" class="image_1">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li>
+						<a href="index.html@page=home_3.html#" class="image_2">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li>
+						<a href="index.html@page=home_3.html#" class="image_3">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li>
+						<a href="index.html@page=home_3.html#" class="image_4">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li>
+						<a href="index.html@page=home_3.html#" class="image_5">
+							<span class="tick"></span>
+						</a>
+					</li>
+					<li class="first">
+						<input type="checkbox" checked="checked" id="overlay"><label class="overlay_label" for="overlay">overlay</label>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div class="presentation">LAPOR/ PENGADUAN <i class="fa fa-arrow-right" aria-hidden="true"></i></div>
+
+<nav class="float-action-button" data-class="pulse">
+<a href="{{baseUrl}}login" class="buttons tooltip" title="" data-toggle="tooltip" data-placement="left" style="height: 45px;width: 50px;">
+				<i class="fa fa-comments"></i>
+				<span class="tooltiptext">Pengaduan</span>
+			</a>
+<a href="{{baseUrl}}lapor" class="buttons tooltip" title="" data-toggle="tooltip" data-placement="left" style="height: 45px;width: 50px;">
+				<i class="fa fa-camera"></i>
+				<span class="tooltiptext">Lapor Kerumunan</span>
+			</a>
+<a href="#!" class="buttons main-button pulse" title="Share" data-toggle="tooltip" data-placement="left" style="z-index: 10000;">
+				<i class="fa fa-times"></i>
+				<i class="fa fa-bullhorn"></i>
+			</a>
+</nav>
+	</body>
+</html>
