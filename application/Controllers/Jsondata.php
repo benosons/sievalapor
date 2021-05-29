@@ -512,6 +512,48 @@ class Jsondata extends \CodeIgniter\Controller
 		}
 	}
 
+	public function loadtarget()
+	{
+		try
+		{
+				$request  = $this->request;
+				$param 	  = $request->getVar('param');
+				$id		 	  = $request->getVar('id');
+				$role 		= $this->data['role'];
+				$userid		= $this->data['userid'];
+				$code 		= $request->getVar('code');
+
+					$model = new \App\Models\TargetModel();
+					$modelparam = new \App\Models\ParamModel();
+					$modelfiles = new \App\Models\FilesModel();
+
+						$fulldata = [];
+						$datapaket = $model->gettarget($code);
+
+					if($datapaket){
+						$response = [
+							'status'   => 'sukses',
+							'code'     => '1',
+							'data' 		 => $datapaket
+						];
+					}else{
+						$response = [
+								'status'   => 'gagal',
+								'code'     => '0',
+								'data'     => 'tidak ada data',
+						];
+					}
+
+				header('Content-Type: application/json');
+				echo json_encode($response);
+				exit;
+			}
+		catch (\Exception $e)
+		{
+			die($e->getMessage());
+		}
+	}
+
 	public function loadBeritaCovid()
 	{
 		try
@@ -1262,6 +1304,61 @@ class Jsondata extends \CodeIgniter\Controller
 							'updated_date'	=> $this->now,
 					];
 		}
+
+		$res = $model->saveParam($param, $data);
+		$id  = $model->insertID();
+
+		$response = [
+				'status'   => 'sukses',
+				'code'     => '0',
+				'data' 		 => 'terkirim'
+		];
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+
+	}
+
+	public function addTarget(){
+
+		$request  = $this->request;
+		$param 	  = $request->getVar('param');
+		$role 		= $this->data['role'];
+
+		$model 	  = new \App\Models\TargetModel();
+
+		$data = [
+						'kode_program'		=> $request->getVar('kode_program'),
+						'kode_kegiatan'		=> $request->getVar('kode_kegiatan'),
+						'kode_subkegiatan'=> $request->getVar('kode_subkegiatan'),
+						'id_paket'				=> $request->getVar('id_paket'),
+						'created_by'			=> $role,
+						'created_date'		=> $this->now,
+						'updated_date'		=> $this->now,
+						'pagu'						=> $request->getVar('pagu_kegiatan'),
+				];
+
+		$databulan_k = [];
+		$databulan_f = [];
+		for ($i=1; $i <= 12; $i++) {
+			$databulan_k['id_paket'] = $request->getVar('id_paket');
+			$databulan_f['id_paket'] = $request->getVar('id_paket');
+
+			$databulan_k['type'] = 'keuangan';
+			$databulan_k['n'.$i] = $request->getVar('k'.$i);
+			$databulan_f['type'] = 'fisik';
+			$databulan_f['n'.$i] = $request->getVar('f'.$i);
+		}
+
+		// for ($i=1; $i <= 2; $i++) {
+			// if($=1){
+				$res_k = $model->saveParam('bulan_target', $databulan_k);
+
+			// }else if($=2){
+				$res_f = $model->saveParam('bulan_target', $databulan_f);
+			// }
+			// code...
+		// }
 
 		$res = $model->saveParam($param, $data);
 		$id  = $model->insertID();

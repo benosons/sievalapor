@@ -89,6 +89,8 @@ $routes->add('paket', 'View::paket');
 $routes->add('target', 'View::target');
 $routes->add('fisik', 'View::fisik');
 $routes->add('biodata', 'View::biodata');
+$routes->add('rencana', 'View::rencana');
+$routes->add('laporan', 'View::laporan');
 
 $routes->add('auth', 'Auth::auth');
 $routes->add('reg', 'Auth::reg');
@@ -100,11 +102,13 @@ $routes->post('loadprogram', 'Jsondata::loadprogram');
 $routes->post('loadkegiatan', 'Jsondata::loadkegiatan');
 $routes->post('loadsubkegiatan', 'Jsondata::loadsubkegiatan');
 $routes->post('loadpaket', 'Jsondata::loadpaket');
+$routes->post('loadtarget', 'Jsondata::loadtarget');
 
 $routes->post('actionUsers', 'Jsondata::actionUsers');
 $routes->post('addUser', 'Jsondata::addUser');
 $routes->post('addProgram', 'Jsondata::addProgram');
 $routes->post('addKegiatan', 'Jsondata::addKegiatan');
+$routes->post('addTarget', 'Jsondata::addTarget');
 
 
 

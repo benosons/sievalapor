@@ -133,6 +133,25 @@ class View extends \CodeIgniter\Controller
 				}
 	}
 
+	public function rencana()
+	{
+				if($this->logged){
+					helper('form');
+					$request  = $this->request;
+					$param 	  = $request->getGet('param');
+
+					if($param == 'insert'){
+							$this->data['script'] = $this->data['baseURL'].'/action-js/admin/rencana/rencana-insert.js';
+							return \Twig::instance()->display('admin/rencana/rencana-insert.html', $this->data);
+					}else{
+							$this->data['script'] = $this->data['baseURL'].'/action-js/admin/rencana/rencana-index.js';
+							return \Twig::instance()->display('admin/rencana/rencana-index.html', $this->data);
+					}
+				}else{
+					return redirect('home');
+				}
+	}
+
 	public function target()
 	{
 				if($this->logged){
