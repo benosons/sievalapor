@@ -11,6 +11,19 @@ class TargetModel extends Model{
 
     public function gettarget($code = null)
     {
+      if($code){
+        $sql = "SELECT dt.*, dp.nama_paket as nama_paket, bt.*, dsk.nama_subkegiatan, dk.nama_kegiatan, dpo.nama_program
+                FROM data_target dt
+                inner join data_paket dp on dp.id = dt.id_paket
+								inner join data_subkegiatan dsk on dsk.kode_subkegiatan = dt.kode_subkegiatan
+								inner join data_kegiatan dk on dk.kode_kegiatan = dt.kode_kegiatan
+								inner join data_program dpo on dpo.kode_program = dt.kode_program
+                inner join bulan_target bt on bt.id_paket = dt.id_paket where dt.id = '$code'";
+
+        $result = $this->db->query($sql);
+        $row = $result->getResult();
+        return $row;
+      }
 
       $sql = "SELECT dt.*, dp.nama_paket as nama_paket FROM `data_target` dt
               inner join data_paket dp on dp.id = dt.id_paket";

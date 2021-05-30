@@ -58,7 +58,7 @@ function loadtarget(param){
                   mRender: function ( data, type, row ) {
 
                     var el = `
-                              <button class="btn btn-xs btn-primary" onclick="action(\'delete\','+row.id+',\'\')">
+                              <button class="btn btn-xs btn-primary" onclick="window.location.href = 'rencana?param=view&ids=`+row.id+`'">
                                 <i class="ace-icon fa fa-search bigger-120"></i>
                               </button>
                               <button class="btn btn-xs btn-success" onclick="action(\'delete\','+row.id+',\'\')">

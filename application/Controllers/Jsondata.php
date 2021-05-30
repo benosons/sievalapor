@@ -527,8 +527,8 @@ class Jsondata extends \CodeIgniter\Controller
 					$modelparam = new \App\Models\ParamModel();
 					$modelfiles = new \App\Models\FilesModel();
 
-						$fulldata = [];
-						$datapaket = $model->gettarget($code);
+					$fulldata = [];
+					$datapaket = $model->gettarget($code);
 
 					if($datapaket){
 						$response = [

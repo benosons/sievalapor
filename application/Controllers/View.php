@@ -143,6 +143,10 @@ class View extends \CodeIgniter\Controller
 					if($param == 'insert'){
 							$this->data['script'] = $this->data['baseURL'].'/action-js/admin/rencana/rencana-insert.js';
 							return \Twig::instance()->display('admin/rencana/rencana-insert.html', $this->data);
+					}else if($param == 'view'){
+						$this->data['script'] = $this->data['baseURL'].'/action-js/admin/rencana/rencana-view.js';
+						$this->data['ids'] = $request->getGet('ids');
+						return \Twig::instance()->display('admin/rencana/rencana-view.html', $this->data);
 					}else{
 							$this->data['script'] = $this->data['baseURL'].'/action-js/admin/rencana/rencana-index.js';
 							return \Twig::instance()->display('admin/rencana/rencana-index.html', $this->data);
