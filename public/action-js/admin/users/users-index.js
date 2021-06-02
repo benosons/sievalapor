@@ -14,17 +14,19 @@ $(document).ready(function(){
       let user_password = 12345;
       let user_role = $('#user_role').val();
       let user_fullname = $('#user_fullname').val();
+      let user_nip = $('#user_nip').val();
 
       var formData = new FormData();
       formData.append('user_name', user_name);
       formData.append('user_password', user_password);
       formData.append('user_role', user_role);
       formData.append('user_fullname', user_fullname);
+      formData.append('nip', user_nip);
 
       var Validator = {
           rules: {
               username: /^(\d|\w)+$/, // allows letters, numbers, and underscores
-              length: 6
+              length: 4
           },
           validate: function(user) {
               var value = $(user).val();
@@ -92,7 +94,7 @@ function loadusers(param){
                 { 'mDataProp': 'user_id', 'width':'10%'},
                 { 'mDataProp': 'user_name'},
                 { 'mDataProp': 'user_fullname'},
-                { 'mDataProp': 'user_email'},
+                { 'mDataProp': 'nip'},
                 { 'mDataProp': 'role_name'},
                 { 'mDataProp': 'user_status'},
                 { 'mDataProp': 'user_status'},

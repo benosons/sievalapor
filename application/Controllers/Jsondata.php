@@ -1554,6 +1554,7 @@ class Jsondata extends \CodeIgniter\Controller
 			'user_status' 	=> 1,
 			'create_by' 		=> $this->data['userid'],
 			'user_created_at'=> $this->now,
+			'nip'=> $request->getVar('nip'),
 		];
 
 		$model->save($data);
