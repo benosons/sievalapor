@@ -275,50 +275,119 @@ function saveminggu(ke){
           },
           success: function(result){
               let data = result.data;
-              $('#progres_mingu_1').val(data[0].m1);
-              $('#progres_mingu_2').val(data[1].m2);
-              $('#progres_mingu_3').val(data[2].m3);
-              $('#progres_mingu_4').val(data[3].m4);
-              $('#progres_mingu_5').val(data[4].m5);
+              if(typeof data[0] !== 'undefined'){
+                $('#progres_mingu_1').val(data[0].m1);
+              }else{
+                $('#progres_mingu_1').val('');
+                $('#progres_mingu_1').prop('disabled', false);
+                $('#save_minggu_1').prop('disabled', false);
+              }
 
-              // for (var i = 0; i < data.length; i++) {
-                if(data[0].m1){
-                  $('#progres_mingu_1').prop('disabled', true);
-                  $('#save_minggu_1').prop('disabled', true);
+              if(typeof data[1] !== 'undefined'){
+                $('#progres_mingu_2').val(data[1].m2);
+              }else{
+                $('#progres_mingu_2').val('');
+                $('#progres_mingu_2').prop('disabled', false);
+                $('#save_minggu_2').prop('disabled', false);
+              }
+
+              if(typeof data[2] !== 'undefined'){
+                $('#progres_mingu_3').val(data[2].m3);
+              }else{
+                $('#progres_mingu_3').val('');
+                $('#progres_mingu_3').prop('disabled', false);
+                $('#save_minggu_3').prop('disabled', false);
+              }
+
+              if(typeof data[3] !== 'undefined'){
+                $('#progres_mingu_4').val(data[3].m4);
+              }else{
+                $('#progres_mingu_4').val('');
+                $('#progres_mingu_4').prop('disabled', false);
+                $('#save_minggu_4').prop('disabled', false);
+              }
+
+              if(typeof data[4] !== 'undefined'){
+                $('#progres_mingu_5').val(data[4].m5);
+              }else{
+                $('#progres_mingu_5').val('');
+                $('#progres_mingu_5').prop('disabled', false);
+                $('#save_minggu_5').prop('disabled', false);
+              }
+
+                if(typeof data[0] !== 'undefined'){
+                  if(data[0].m1){
+                    $('#progres_mingu_1').prop('disabled', true);
+                    $('#save_minggu_1').prop('disabled', true);
+                  }else{
+                    $('#progres_mingu_1').prop('disabled', false);
+                    $('#save_minggu_1').prop('disabled', false);
+                  }
                 }else{
-                  $('#progres_mingu_1').prop('disabled', false);
-                  $('#save_minggu_1').prop('disabled', false);
-                }
-                if(data[1].m2){
-                  $('#progres_mingu_2').prop('disabled', true);
-                  $('#save_minggu_2').prop('disabled', true);
-                }else{
-                  $('#progres_mingu_2').prop('disabled', false);
-                  $('#save_minggu_2').prop('disabled', false);
-                }
-                if(data[2].m3){
-                  $('#progres_mingu_3').prop('disabled', true);
-                  $('#save_minggu_3').prop('disabled', true);
-                }else{
-                  $('#progres_mingu_3').prop('disabled', false);
-                  $('#save_minggu_3').prop('disabled', false);
-                }
-                if(data[3].m4){
-                  $('#progres_mingu_4').prop('disabled', true);
-                  $('#save_minggu_4').prop('disabled', true);
-                }else{
-                  $('#progres_mingu_4').prop('disabled', false);
-                  $('#save_minggu_4').prop('disabled', false);
-                }
-                if(data[4].m5){
-                  $('#progres_mingu_5').prop('disabled', true);
-                  $('#save_minggu_5').prop('disabled', true);
-                }else{
-                  $('#progres_mingu_5').prop('disabled', false);
-                  $('#save_minggu_5').prop('disabled', false);
+                  $('#progres_mingu_1').val('');
                 }
 
-              // }
+                if(typeof data[1] !== 'undefined'){
+                  if(data[1].m2){
+                    $('#progres_mingu_2').prop('disabled', true);
+                    $('#save_minggu_2').prop('disabled', true);
+                  }else{
+                    $('#progres_mingu_2').prop('disabled', false);
+                    $('#save_minggu_2').prop('disabled', false);
+                  }
+                }else{
+                  $('#progres_mingu_2').val('');
+                }
+
+                if(typeof data[2] !== 'undefined'){
+                  if(data[2].m3){
+                    $('#progres_mingu_3').prop('disabled', true);
+                    $('#save_minggu_3').prop('disabled', true);
+                  }else{
+                    $('#progres_mingu_3').prop('disabled', false);
+                    $('#save_minggu_3').prop('disabled', false);
+                  }
+                }else{
+                  $('#progres_mingu_3').val('');
+                }
+
+                if(typeof data[3] !== 'undefined'){
+                  if(data[3].m4){
+                    $('#progres_mingu_4').prop('disabled', true);
+                    $('#save_minggu_4').prop('disabled', true);
+                  }else{
+                    $('#progres_mingu_4').prop('disabled', false);
+                    $('#save_minggu_4').prop('disabled', false);
+                  }
+                }else{
+                  $('#progres_mingu_4').val('');
+                }
+
+                if(typeof data[4] !== 'undefined'){
+                  if(data[4].m5){
+                    $('#progres_mingu_5').prop('disabled', true);
+                    $('#save_minggu_5').prop('disabled', true);
+                  }else{
+                    $('#progres_mingu_5').prop('disabled', false);
+                    $('#save_minggu_5').prop('disabled', false);
+                  }
+                }else{
+                  $('#progres_mingu_5').val('');
+                }
+
             }
           });
         }
+
+  function editdong(ke){
+    if($('#progres_mingu_'+ke).val()){
+      if($('#edit_'+ke).is(":checked")){
+        $('#progres_mingu_'+ke).prop('disabled', false);
+        $('#save_minggu_'+ke).prop('disabled', false);
+      }else{
+        $('#progres_mingu_'+ke).prop('disabled', true);
+        $('#save_minggu_'+ke).prop('disabled', true);
+      }
+    }
+
+  }
