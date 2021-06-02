@@ -555,6 +555,71 @@ class Jsondata extends \CodeIgniter\Controller
 		}
 	}
 
+	public function loadtargetNip()
+	{
+		try
+		{
+				$request  = $this->request;
+				$param 	  = $request->getVar('param');
+				$id		 	  = $request->getVar('id');
+				$role 		= $this->data['role'];
+				$userid		= $this->data['userid'];
+				$code 		= $request->getVar('code');
+
+					$model = new \App\Models\TargetModel();
+					$modelparam = new \App\Models\ParamModel();
+					$modelfiles = new \App\Models\FilesModel();
+
+					$fulldata = [];
+					$datapaket = $model->gettargetNip($code);
+					$datareal = [];
+					$bulan = [];
+					$newreal = [];
+					foreach ($datapaket as $key => $value) {
+
+						if($value->type == 'fisik'){
+							$datareal['n1'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n1');
+							$datareal['n2'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n2');
+							$datareal['n3'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n3');
+							$datareal['n4'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n4');
+							$datareal['n5'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n5');
+							$datareal['n6'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n6');
+							$datareal['n7'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n7');
+							$datareal['n8'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n8');
+							$datareal['n9'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n9');
+							$datareal['n10'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n10');
+							$datareal['n11'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n11');
+							$datareal['n12'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n12');
+							$datapaket[$key]->progres = $datareal;
+						}
+
+					}
+
+
+					if($datapaket){
+						$response = [
+							'status'   => 'sukses',
+							'code'     => '1',
+							'data' 		 => $datapaket
+						];
+					}else{
+						$response = [
+								'status'   => 'gagal',
+								'code'     => '0',
+								'data'     => 'tidak ada data',
+						];
+					}
+
+				header('Content-Type: application/json');
+				echo json_encode($response);
+				exit;
+			}
+		catch (\Exception $e)
+		{
+			die($e->getMessage());
+		}
+	}
+
 	public function loadminggu()
 	{
 		try
@@ -572,6 +637,48 @@ class Jsondata extends \CodeIgniter\Controller
 
 					$fulldata = [];
 					$datapaket = $model->getminggu($code);
+
+					if($datapaket){
+						$response = [
+							'status'   => 'sukses',
+							'code'     => '1',
+							'data' 		 => $datapaket
+						];
+					}else{
+						$response = [
+								'status'   => 'gagal',
+								'code'     => '0',
+								'data'     => 'tidak ada data',
+						];
+					}
+
+				header('Content-Type: application/json');
+				echo json_encode($response);
+				exit;
+			}
+		catch (\Exception $e)
+		{
+			die($e->getMessage());
+		}
+	}
+
+	public function loadnip()
+	{
+		try
+		{
+				$request  = $this->request;
+				$param 	  = $request->getVar('param');
+				$id		 	  = $request->getVar('id');
+				$role 		= $this->data['role'];
+				$userid		= $this->data['userid'];
+				$code 		= $request->getVar('code');
+
+					$model = new \App\Models\TargetModel();
+					$modelparam = new \App\Models\ParamModel();
+					$modelfiles = new \App\Models\FilesModel();
+
+					$fulldata = [];
+					$datapaket = $model->getnip($code);
 
 					if($datapaket){
 						$response = [

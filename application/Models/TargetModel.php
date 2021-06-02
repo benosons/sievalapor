@@ -33,6 +33,31 @@ class TargetModel extends Model{
       return $row;
     }
 
+    public function gettargetNip($code = null)
+    {
+      if($code){
+        $sql = "SELECT dt.*, u.*, dp.nama_paket as nama_paket, bt.*, dsk.nama_subkegiatan, dk.nama_kegiatan, dpo.nama_program
+                FROM data_target dt
+                inner join data_paket dp on dp.id = dt.id_paket
+								inner join data_subkegiatan dsk on dsk.kode_subkegiatan = dt.kode_subkegiatan
+								inner join data_kegiatan dk on dk.kode_kegiatan = dt.kode_kegiatan
+								inner join data_program dpo on dpo.kode_program = dt.kode_program
+                inner join bulan_target bt on bt.id_paket = dt.id_paket
+                inner join users u on u.user_id = dt.ppk where dt.id = '$code'";
+
+        $result = $this->db->query($sql);
+        $row = $result->getResult();
+        return $row;
+      }
+
+      $sql = "SELECT dt.*, dp.nama_paket as nama_paket FROM `data_target` dt
+              inner join data_paket dp on dp.id = dt.id_paket";
+
+      $result = $this->db->query($sql);
+      $row = $result->getResult();
+      return $row;
+    }
+
     public function getsubKegiatan($code = null)
     {
           $builder = $this->db->table('data_subkegiatan');
@@ -80,6 +105,55 @@ class TargetModel extends Model{
       $query->update($data);
       // echo $this->db->getLastQuery();die;
       return true;
+    }
+
+    public function getnip($code = null)
+    {
+
+      $sql = "SELECT dt.*, dp.nama_paket as nama_paket, u.* FROM `data_target` dt
+              inner join data_paket dp on dp.id = dt.id_paket
+              inner join users u on u.user_id = dt.ppk";
+
+      $result = $this->db->query($sql);
+      $row = $result->getResult();
+      return $row;
+    }
+
+    public function getrealisasi($id_paket = null, $ppk = null, $type = null, $kodebulan = null)
+    {
+
+      $sql = "SELECT kode_bulan, m1, m2, m3, m4, m5 from bulan_realisasi where id_paket = '$id_paket' and created_by = '$ppk' and type = '$type' and kode_bulan = '$kodebulan'";
+
+      $result = $this->db->query($sql);
+      $row = $result->getResult();
+      $val = [];
+      if((array)$row){
+        foreach ($row as $key => $value) {
+
+          if($value->m1){
+            $val['m1'] = $value->m1;
+            $val['tot'] = $value->m1;
+          }
+          if($value->m2){
+            $val['m2'] = $value->m2;
+            $val['tot'] = $value->m2;
+          }
+          if($value->m3){
+            $val['m3'] = $value->m3;
+            $val['tot'] = $value->m3;
+          }
+          if($value->m4){
+            $val['m4'] = $value->m4;
+            $val['tot'] = $value->m4;
+          }
+          if($value->m5){
+            $val['m5'] = $value->m5;
+            $val['tot'] = $value->m5;
+          }
+        }
+
+      }
+      return (object)$val;
     }
 
 }

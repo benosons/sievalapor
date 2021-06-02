@@ -180,6 +180,29 @@ class View extends \CodeIgniter\Controller
 				}
 	}
 
+	public function rekap()
+	{
+				if($this->logged){
+					helper('form');
+					$request  = $this->request;
+					$param 	  = $request->getGet('param');
+
+					if($param == 'insert'){
+							$this->data['script'] = $this->data['baseURL'].'/action-js/admin/rekap/rekap-insert.js';
+							return \Twig::instance()->display('admin/rekap/rekap-insert.html', $this->data);
+					}else if($param == 'view'){
+						$this->data['script'] = $this->data['baseURL'].'/action-js/admin/rekap/rekap-view.js';
+						$this->data['ids'] = $request->getGet('ids');
+						return \Twig::instance()->display('admin/rekap/rekap-view.html', $this->data);
+					}else{
+							$this->data['script'] = $this->data['baseURL'].'/action-js/admin/rekap/rekap-index.js';
+							return \Twig::instance()->display('admin/rekap/rekap-index.html', $this->data);
+					}
+				}else{
+					return redirect('home');
+				}
+	}
+
 	public function target()
 	{
 				if($this->logged){
