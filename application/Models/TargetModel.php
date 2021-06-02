@@ -62,8 +62,10 @@ class TargetModel extends Model{
 
     public function getminggu($code = null)
     {
+      $str = substr($code, -1);
+      $last = $str - 1;
 
-      $sql = "SELECT * from bulan_realisasi where kode_bulan = '$code'";
+      $sql = "SELECT *, (select total from bulan_realisasi where kode_bulan = 'n$last' ORDER BY id DESC LIMIT 0, 1) as total_sebelumnya from bulan_realisasi where kode_bulan = '$code'";
 
       $result = $this->db->query($sql);
       $row = $result->getResult();
@@ -72,9 +74,11 @@ class TargetModel extends Model{
 
     public function updateDong($table = null, $id = null, $data = null)
     {
+
       $builder = $this->db->table($table);
       $query   = $builder->where('id', $id);
       $query->update($data);
+      // echo $this->db->getLastQuery();die;
       return true;
     }
 

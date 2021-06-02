@@ -1476,26 +1476,39 @@ class Jsondata extends \CodeIgniter\Controller
 		}
 
 		$edited = $request->getVar('edited');
+		if($edited){
 
-		$data = [
+			$data = [
+				'created_by'		=> $userid,
+				'updated_date'	=> $this->now
+			];
+		}else{
+			$data = [
 					'id_paket'			=> $request->getVar('id_paket'),
 					'type'					=> $type,
 					'kode_bulan'		=> $request->getVar('kode_bulan'),
 					'created_by'		=> $userid,
 					'created_date'	=> $this->now,
-					'updated_date'	=> $this->now
+					'updated_date'	=> $this->now,
+					'total'				  => $request->getVar('total_progres')
 				];
+			}
 
 		if($request->getVar('m1')){
 			$data['m1'] = $request->getVar('m1');
+			$data['total']	= $request->getVar('m1');
 		}else if($request->getVar('m2')){
 			$data['m2'] = $request->getVar('m2');
+			$data['total']	= $request->getVar('m2');
 		}else if($request->getVar('m3')){
 			$data['m3'] = $request->getVar('m3');
+			$data['total']	= $request->getVar('m3');
 		}else if($request->getVar('m4')){
 			$data['m4'] = $request->getVar('m4');
+			$data['total']	= $request->getVar('m4');
 		}else if($request->getVar('m5')){
 			$data['m5'] = $request->getVar('m5');
+			$data['total']	= $request->getVar('m5');
 		}
 
 		if($edited){

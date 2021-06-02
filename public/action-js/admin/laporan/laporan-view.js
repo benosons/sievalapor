@@ -23,6 +23,7 @@ function saveminggu(ke){
   formData.append('kode_bulan', $('#pilih_bulan').val());
   formData.append('id_paket', $('#id_paket').val());
   formData.append('m'+ke, $('#progres_mingu_'+ke).val());
+  formData.append('total_progres', $('#total_progres').val());
   if($('#edit_'+ke).is(":checked")){
     formData.append('edited', 1);
     formData.append('idnya', $('#edit_'+ke).attr("idnya"));
@@ -281,6 +282,8 @@ function saveminggu(ke){
               if(typeof data[0] !== 'undefined'){
                 $('#progres_mingu_1').val(data[0].m1);
                 $('#edit_1').attr('idnya',data[0].id);
+                $('#total_progres').val(data[0].m1);
+                $('#progres_bulan_lalu').val(data[0].total_sebelumnya);
               }else{
                 $('#progres_mingu_1').val('');
                 $('#progres_mingu_1').prop('disabled', false);
@@ -290,6 +293,8 @@ function saveminggu(ke){
               if(typeof data[1] !== 'undefined'){
                 $('#progres_mingu_2').val(data[1].m2);
                 $('#edit_2').attr('idnya',data[1].id);
+                $('#total_progres').val(data[1].m2);
+                $('#progres_bulan_lalu').val(data[1].total_sebelumnya);
               }else{
                 $('#progres_mingu_2').val('');
                 $('#progres_mingu_2').prop('disabled', false);
@@ -299,6 +304,8 @@ function saveminggu(ke){
               if(typeof data[2] !== 'undefined'){
                 $('#progres_mingu_3').val(data[2].m3);
                 $('#edit_3').attr('idnya',data[2].id);
+                $('#total_progres').val(data[2].m3);
+                $('#progres_bulan_lalu').val(data[2].total_sebelumnya);
               }else{
                 $('#progres_mingu_3').val('');
                 $('#progres_mingu_3').prop('disabled', false);
@@ -308,6 +315,8 @@ function saveminggu(ke){
               if(typeof data[3] !== 'undefined'){
                 $('#progres_mingu_4').val(data[3].m4);
                 $('#edit_4').attr('idnya',data[3].id);
+                $('#total_progres').val(data[3].m4);
+                $('#progres_bulan_lalu').val(data[3].total_sebelumnya);
               }else{
                 $('#progres_mingu_4').val('');
                 $('#progres_mingu_4').prop('disabled', false);
@@ -317,6 +326,8 @@ function saveminggu(ke){
               if(typeof data[4] !== 'undefined'){
                 $('#progres_mingu_5').val(data[4].m5);
                 $('#edit_5').attr('idnya',data[4].id);
+                $('#total_progres').val(data[4].m5);
+                $('#progres_bulan_lalu').val(data[4].total_sebelumnya);
               }else{
                 $('#progres_mingu_5').val('');
                 $('#progres_mingu_5').prop('disabled', false);
