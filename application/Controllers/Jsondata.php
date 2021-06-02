@@ -1475,6 +1475,8 @@ class Jsondata extends \CodeIgniter\Controller
 			$type = 'keuangan';
 		}
 
+		$edited = $request->getVar('edited');
+
 		$data = [
 					'id_paket'			=> $request->getVar('id_paket'),
 					'type'					=> $type,
@@ -1496,9 +1498,13 @@ class Jsondata extends \CodeIgniter\Controller
 			$data['m5'] = $request->getVar('m5');
 		}
 
-		// print_r($data);die;
+		if($edited){
+			$idnya = $request->getVar('idnya');
+			$res = $model->updateDong('bulan_realisasi', $idnya , $data);
+		}else{
+			$res = $model->saveParam('bulan_realisasi', $data);
+		}
 
-		$res = $model->saveParam('bulan_realisasi', $data);
 		$id  = $model->insertID();
 
 		$response = [

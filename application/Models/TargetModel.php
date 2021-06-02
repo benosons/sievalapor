@@ -70,4 +70,12 @@ class TargetModel extends Model{
       return $row;
     }
 
+    public function updateDong($table = null, $id = null, $data = null)
+    {
+      $builder = $this->db->table($table);
+      $query   = $builder->where('id', $id);
+      $query->update($data);
+      return true;
+    }
+
 }
