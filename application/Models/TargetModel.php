@@ -60,4 +60,14 @@ class TargetModel extends Model{
         return  $this->db->table($table)->insert($data);
     }
 
+    public function getminggu($code = null)
+    {
+
+      $sql = "SELECT * from bulan_realisasi where kode_bulan = '$code'";
+
+      $result = $this->db->query($sql);
+      $row = $result->getResult();
+      return $row;
+    }
+
 }

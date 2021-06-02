@@ -21,6 +21,7 @@ class Jsondata extends \CodeIgniter\Controller
 				'username' => $this->session->get('user_name'),
 				'role' => $this->session->get('user_role'),
 				'satuan' => $this->session->get('user_satuan'),
+				'nip' => $this->session->get('nip'),
 			);
   }
 
@@ -521,6 +522,91 @@ class Jsondata extends \CodeIgniter\Controller
 				$id		 	  = $request->getVar('id');
 				$role 		= $this->data['role'];
 				$userid		= $this->data['userid'];
+				$code 		= $request->getVar('code');
+
+					$model = new \App\Models\TargetModel();
+					$modelparam = new \App\Models\ParamModel();
+					$modelfiles = new \App\Models\FilesModel();
+
+					$fulldata = [];
+					$datapaket = $model->gettarget($code);
+
+					if($datapaket){
+						$response = [
+							'status'   => 'sukses',
+							'code'     => '1',
+							'data' 		 => $datapaket
+						];
+					}else{
+						$response = [
+								'status'   => 'gagal',
+								'code'     => '0',
+								'data'     => 'tidak ada data',
+						];
+					}
+
+				header('Content-Type: application/json');
+				echo json_encode($response);
+				exit;
+			}
+		catch (\Exception $e)
+		{
+			die($e->getMessage());
+		}
+	}
+
+	public function loadminggu()
+	{
+		try
+		{
+				$request  = $this->request;
+				$param 	  = $request->getVar('param');
+				$id		 	  = $request->getVar('id');
+				$role 		= $this->data['role'];
+				$userid		= $this->data['userid'];
+				$code 		= $request->getVar('code');
+
+					$model = new \App\Models\TargetModel();
+					$modelparam = new \App\Models\ParamModel();
+					$modelfiles = new \App\Models\FilesModel();
+
+					$fulldata = [];
+					$datapaket = $model->getminggu($code);
+
+					if($datapaket){
+						$response = [
+							'status'   => 'sukses',
+							'code'     => '1',
+							'data' 		 => $datapaket
+						];
+					}else{
+						$response = [
+								'status'   => 'gagal',
+								'code'     => '0',
+								'data'     => 'tidak ada data',
+						];
+					}
+
+				header('Content-Type: application/json');
+				echo json_encode($response);
+				exit;
+			}
+		catch (\Exception $e)
+		{
+			die($e->getMessage());
+		}
+	}
+
+	public function loadrealisasi()
+	{
+		try
+		{
+				$request  = $this->request;
+				$param 	  = $request->getVar('param');
+				$id		 	  = $request->getVar('id');
+				$role 		= $this->data['role'];
+				$userid		= $this->data['userid'];
+				$nip			= $this->data['nip'];
 				$code 		= $request->getVar('code');
 
 					$model = new \App\Models\TargetModel();
@@ -1361,6 +1447,58 @@ class Jsondata extends \CodeIgniter\Controller
 		// }
 
 		$res = $model->saveParam($param, $data);
+		$id  = $model->insertID();
+
+		$response = [
+				'status'   => 'sukses',
+				'code'     => '0',
+				'data' 		 => 'terkirim'
+		];
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+
+	}
+
+	public function addRealisasi(){
+
+		$request  = $this->request;
+		$param 	  = $request->getVar('param');
+		$role 		= $this->data['role'];
+		$userid 	= $this->data['userid'];
+
+		$model 	  = new \App\Models\TargetModel();
+
+		if($role == '30'){
+			$type = 'fisik';
+		}else{
+			$type = 'keuangan';
+		}
+
+		$data = [
+					'id_paket'			=> $request->getVar('id_paket'),
+					'type'					=> $type,
+					'kode_bulan'		=> $request->getVar('kode_bulan'),
+					'created_by'		=> $userid,
+					'created_date'	=> $this->now,
+					'updated_date'	=> $this->now
+				];
+
+		if($request->getVar('m1')){
+			$data['m1'] = $request->getVar('m1');
+		}else if($request->getVar('m2')){
+			$data['m2'] = $request->getVar('m2');
+		}else if($request->getVar('m3')){
+			$data['m3'] = $request->getVar('m3');
+		}else if($request->getVar('m4')){
+			$data['m4'] = $request->getVar('m4');
+		}else if($request->getVar('m5')){
+			$data['m5'] = $request->getVar('m5');
+		}
+
+		// print_r($data);die;
+
+		$res = $model->saveParam('bulan_realisasi', $data);
 		$id  = $model->insertID();
 
 		$response = [

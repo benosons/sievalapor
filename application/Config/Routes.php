@@ -103,12 +103,15 @@ $routes->post('loadkegiatan', 'Jsondata::loadkegiatan');
 $routes->post('loadsubkegiatan', 'Jsondata::loadsubkegiatan');
 $routes->post('loadpaket', 'Jsondata::loadpaket');
 $routes->post('loadtarget', 'Jsondata::loadtarget');
+$routes->post('loadrealisasi', 'Jsondata::loadrealisasi');
+$routes->post('loadminggu', 'Jsondata::loadminggu');
 
 $routes->post('actionUsers', 'Jsondata::actionUsers');
 $routes->post('addUser', 'Jsondata::addUser');
 $routes->post('addProgram', 'Jsondata::addProgram');
 $routes->post('addKegiatan', 'Jsondata::addKegiatan');
 $routes->post('addTarget', 'Jsondata::addTarget');
+$routes->post('addRealisasi', 'Jsondata::addRealisasi');
 
 
 

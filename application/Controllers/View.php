@@ -22,6 +22,7 @@ class View extends \CodeIgniter\Controller
 				'username' => $this->session->get('user_name'),
 				'role' => $this->session->get('user_role'),
 				'satuan' => $this->session->get('user_satuan'),
+				'nip' => $this->session->get('nip'),
 			);
   }
 
@@ -150,6 +151,29 @@ class View extends \CodeIgniter\Controller
 					}else{
 							$this->data['script'] = $this->data['baseURL'].'/action-js/admin/rencana/rencana-index.js';
 							return \Twig::instance()->display('admin/rencana/rencana-index.html', $this->data);
+					}
+				}else{
+					return redirect('home');
+				}
+	}
+
+	public function laporan()
+	{
+				if($this->logged){
+					helper('form');
+					$request  = $this->request;
+					$param 	  = $request->getGet('param');
+
+					if($param == 'insert'){
+							$this->data['script'] = $this->data['baseURL'].'/action-js/admin/laporan/laporan-insert.js';
+							return \Twig::instance()->display('admin/laporan/laporan-insert.html', $this->data);
+					}else if($param == 'view'){
+						$this->data['script'] = $this->data['baseURL'].'/action-js/admin/laporan/laporan-view.js';
+						$this->data['ids'] = $request->getGet('ids');
+						return \Twig::instance()->display('admin/laporan/laporan-view.html', $this->data);
+					}else{
+							$this->data['script'] = $this->data['baseURL'].'/action-js/admin/laporan/laporan-index.js';
+							return \Twig::instance()->display('admin/laporan/laporan-index.html', $this->data);
 					}
 				}else{
 					return redirect('home');
