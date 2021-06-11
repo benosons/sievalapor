@@ -99,6 +99,7 @@ $routes->add('logout', 'Auth::logout');
 
 // sievalapor new
 $routes->post('loadusers', 'Jsondata::loadusers');
+$routes->post('loadppk', 'Jsondata::loadppk');
 $routes->post('loadprogram', 'Jsondata::loadprogram');
 $routes->post('loadkegiatan', 'Jsondata::loadkegiatan');
 $routes->post('loadsubkegiatan', 'Jsondata::loadsubkegiatan');

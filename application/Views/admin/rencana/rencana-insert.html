@@ -142,6 +142,39 @@
                           </div>
                 				</div>
 
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Bidang </label>
+                    					<div class="col-sm-9">
+                                <select class="chosen-select form-control" id="pilih_bidang" data-placeholder="Pilih Bidang...">
+                						  		<option value="">  </option>
+                						  		<option value="Infrastruktur Permukiman">Infrastruktur Permukiman</option>
+                						  		<option value="Perumahan">Perumahan</option>
+                						  		<option value="Kawasan Permukiman">Kawasan Permukiman</option>
+                						  		<option value="Pertanahan">Pertanahan</option>
+                						  		<option value="Sekretariat">Sekretariat</option>
+                						  		<option value="UPT P3JB">UPT P3JB</option>
+                						  	</select>
+                    					</div>
+                            </div>
+
+                          </div>
+                				</div>
+
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Seksi </label>
+                    					<div class="col-sm-9">
+                                <select class="chosen-select form-control" id="pilih_seksi" data-placeholder="Pilih Seksi...">
+                						  	</select>
+                    					</div>
+                            </div>
+
+                          </div>
+                				</div>
+
                         <div class="space-4"></div>
 
                 				<div class="form-group">
@@ -149,13 +182,26 @@
                             <div class="col-sm-12">
                               <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pagu Kegiatan (Rp.) </label>
                     					<div class="col-sm-9">
-                    						<input type="text" id="pagu_kegiatan" placeholder="" class="col-xs-12 col-sm-12"/>
+                    						<input type="text" id="pagu_kegiatan" placeholder="" class="col-xs-12 col-sm-12 uang-pagu"/>
                     					</div>
                             </div>
                           </div>
                 				</div>
 
                         <div class="space-4"></div>
+
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama PPK  </label>
+                    					<div class="col-sm-9">
+                                <select class="chosen-select form-control" id="pilih_ppk" data-placeholder="Pilih Seksi...">
+                						  	</select>
+                    					</div>
+                            </div>
+
+                          </div>
+                				</div>
 
 
 
@@ -200,7 +246,7 @@
                               <a href="#">Januari</a>
                             </td>
                             <td>
-                              <input type="text" id="k1" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="k1" placeholder="" class="col-xs-12 col-sm-12 uang"/>
                             </td>
 
                           </tr>
@@ -216,7 +262,7 @@
                               <a href="#">Februari</a>
                             </td>
                             <td>
-                              <input type="text" id="k2" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="k2" placeholder="" class="col-xs-12 col-sm-12 uang"/>
                             </td>
 
                           </tr>
@@ -231,7 +277,7 @@
                               <a href="#">Maret</a>
                             </td>
                             <td>
-                              <input type="text" id="k3" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="k3" placeholder="" class="col-xs-12 col-sm-12 uang"/>
                             </td>
 
                           </tr>
@@ -247,7 +293,7 @@
                               <a href="#">April</a>
                             </td>
                             <td>
-                              <input type="text" id="k4" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="k4" placeholder="" class="col-xs-12 col-sm-12 uang"/>
                             </td>
 
                           </tr>
@@ -263,7 +309,7 @@
                               <a href="#">Mei</a>
                             </td>
                             <td>
-                              <input type="text" id="k5" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="k5" placeholder="" class="col-xs-12 col-sm-12 uang"/>
                             </td>
 
                           </tr>
@@ -279,7 +325,7 @@
                               <a href="#">Juni</a>
                             </td>
                             <td>
-                              <input type="text" id="k6" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="k6" placeholder="" class="col-xs-12 col-sm-12 uang"/>
                             </td>
 
                           </tr>
@@ -295,7 +341,7 @@
                               <a href="#">Juli</a>
                             </td>
                             <td>
-                              <input type="text" id="k7" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="k7" placeholder="" class="col-xs-12 col-sm-12 uang"/>
                             </td>
 
                           </tr>
@@ -311,7 +357,7 @@
                               <a href="#">Agustus</a>
                             </td>
                             <td>
-                              <input type="text" id="k8" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="k8" placeholder="" class="col-xs-12 col-sm-12 uang"/>
                             </td>
 
                           </tr>
@@ -327,7 +373,7 @@
                               <a href="#">September</a>
                             </td>
                             <td>
-                              <input type="text" id="k9" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="k9" placeholder="" class="col-xs-12 col-sm-12 uang"/>
                             </td>
 
                           </tr>
@@ -343,7 +389,7 @@
                               <a href="#">Oktober</a>
                             </td>
                             <td>
-                              <input type="text" id="k10" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="k10" placeholder="" class="col-xs-12 col-sm-12 uang"/>
                             </td>
 
                           </tr>
@@ -359,7 +405,7 @@
                               <a href="#">November</a>
                             </td>
                             <td>
-                              <input type="text" id="k11" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="k11" placeholder="" class="col-xs-12 col-sm-12 uang"/>
                             </td>
 
                           </tr>
@@ -375,11 +421,17 @@
                               <a href="#">Desember</a>
                             </td>
                             <td>
-                              <input type="text" id="k12" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="k12" placeholder="" class="col-xs-12 col-sm-12 uang"/>
                             </td>
 
                           </tr>
                         </tbody>
+                        <tfoot>
+                          <tr>
+                            <th colspan=2><center>Total</center></th>
+                            <th><input type="text" id="ktot" placeholder="" class="col-xs-12 col-sm-12" disabled/></th>
+                          </tr>
+                        </tfoot>
                       </table>
 
                     </div>
@@ -390,7 +442,7 @@
               <div class="col-xs-6 widget-container-col" >
                 <div class="widget-box">
                   <div class="widget-header">
-                    <h4 class="widget-title lighter">Fisik (Kumulasi)</h4>
+                    <h4 class="widget-title lighter">Fisik (Kumulasi) </h4><code> *contoh penulisan : 000,00 </code>
                   </div>
                   <div class="widget-body">
                     <div class="widget-main">
@@ -419,7 +471,7 @@
                               <a href="#">Januari</a>
                             </td>
                             <td>
-                              <input type="text" id="f1" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="f1" placeholder="" class="fis col-xs-12 col-sm-12"/>
                             </td>
 
                           </tr>
@@ -435,7 +487,7 @@
                               <a href="#">Februari</a>
                             </td>
                             <td>
-                              <input type="text" id="f2" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="f2" placeholder="" class="fis col-xs-12 col-sm-12"/>
                             </td>
 
                           </tr>
@@ -450,7 +502,7 @@
                               <a href="#">Maret</a>
                             </td>
                             <td>
-                              <input type="text" id="f3" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="f3" placeholder="" class="fis col-xs-12 col-sm-12"/>
                             </td>
 
                           </tr>
@@ -466,7 +518,7 @@
                               <a href="#">April</a>
                             </td>
                             <td>
-                              <input type="text" id="f4" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="f4" placeholder="" class="fis col-xs-12 col-sm-12"/>
                             </td>
 
                           </tr>
@@ -482,7 +534,7 @@
                               <a href="#">Mei</a>
                             </td>
                             <td>
-                              <input type="text" id="f5" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="f5" placeholder="" class="fis col-xs-12 col-sm-12"/>
                             </td>
 
                           </tr>
@@ -498,7 +550,7 @@
                               <a href="#">Juni</a>
                             </td>
                             <td>
-                              <input type="text" id="f6" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="f6" placeholder="" class="fis col-xs-12 col-sm-12"/>
                             </td>
 
                           </tr>
@@ -514,7 +566,7 @@
                               <a href="#">Juli</a>
                             </td>
                             <td>
-                              <input type="text" id="f7" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="f7" placeholder="" class="fis col-xs-12 col-sm-12"/>
                             </td>
 
                           </tr>
@@ -530,7 +582,7 @@
                               <a href="#">Agustus</a>
                             </td>
                             <td>
-                              <input type="text" id="f8" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="f8" placeholder="" class="fis col-xs-12 col-sm-12"/>
                             </td>
 
                           </tr>
@@ -546,7 +598,7 @@
                               <a href="#">September</a>
                             </td>
                             <td>
-                              <input type="text" id="f9" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="f9" placeholder="" class="fis col-xs-12 col-sm-12"/>
                             </td>
 
                           </tr>
@@ -562,7 +614,7 @@
                               <a href="#">Oktober</a>
                             </td>
                             <td>
-                              <input type="text" id="f10" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="f10" placeholder="" class="fis col-xs-12 col-sm-12"/>
                             </td>
 
                           </tr>
@@ -578,7 +630,7 @@
                               <a href="#">November</a>
                             </td>
                             <td>
-                              <input type="text" id="f11" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="f11" placeholder="" class="fis col-xs-12 col-sm-12"/>
                             </td>
 
                           </tr>
@@ -594,11 +646,17 @@
                               <a href="#">Desember</a>
                             </td>
                             <td>
-                              <input type="text" id="f12" placeholder="" class="col-xs-12 col-sm-12"/>
+                              <input type="text" id="f12" placeholder="" class="fis col-xs-12 col-sm-12"/>
                             </td>
 
                           </tr>
                         </tbody>
+                        <tfoot>
+                          <tr>
+                            <th colspan=2><center>Total</center></th>
+                            <th><input type="text" id="ftot" placeholder="" class="col-xs-12 col-sm-12" disabled/></th>
+                          </tr>
+                        </tfoot>
                       </table>
 
                     </div>

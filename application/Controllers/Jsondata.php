@@ -629,6 +629,7 @@ class Jsondata extends \CodeIgniter\Controller
 				$id		 	  = $request->getVar('id');
 				$role 		= $this->data['role'];
 				$userid		= $this->data['userid'];
+				$type 		= $request->getVar('type');
 				$code 		= $request->getVar('code');
 
 					$model = new \App\Models\TargetModel();
@@ -636,7 +637,7 @@ class Jsondata extends \CodeIgniter\Controller
 					$modelfiles = new \App\Models\FilesModel();
 
 					$fulldata = [];
-					$datapaket = $model->getminggu($code);
+					$datapaket = $model->getminggu($type,$code);
 
 					if($datapaket){
 						$response = [
@@ -1529,6 +1530,9 @@ class Jsondata extends \CodeIgniter\Controller
 						'created_date'		=> $this->now,
 						'updated_date'		=> $this->now,
 						'pagu'						=> $request->getVar('pagu_kegiatan'),
+						'ppk'							=> $request->getVar('ppk'),
+						'bidang'					=> $request->getVar('bidang'),
+						'seksi'						=> $request->getVar('seksi'),
 				];
 
 		$databulan_k = [];
@@ -1543,6 +1547,8 @@ class Jsondata extends \CodeIgniter\Controller
 			$databulan_f['n'.$i] = $request->getVar('f'.$i);
 		}
 
+		$databulan_k['tot'] = $request->getVar('ktot');
+		$databulan_f['tot'] = $request->getVar('ftot');
 		// for ($i=1; $i <= 2; $i++) {
 			// if($=1){
 				$res_k = $model->saveParam('bulan_target', $databulan_k);
@@ -1576,11 +1582,7 @@ class Jsondata extends \CodeIgniter\Controller
 
 		$model 	  = new \App\Models\TargetModel();
 
-		if($role == '30'){
-			$type = 'fisik';
-		}else{
-			$type = 'keuangan';
-		}
+		$type = $request->getVar('type');
 
 		$edited = $request->getVar('edited');
 		if($edited){
@@ -1600,7 +1602,17 @@ class Jsondata extends \CodeIgniter\Controller
 					'total'				  => $request->getVar('total_progres')
 				];
 			}
-
+	if($request->getVar('type') == 'keuangan'){
+		if($request->getVar('m1')){
+			$data['m1'] = $request->getVar('m1');
+		}else if($request->getVar('m2')){
+			$data['m2'] = $request->getVar('m2');
+		}else if($request->getVar('m3')){
+			$data['m3'] = $request->getVar('m3');
+		}else if($request->getVar('m4')){
+			$data['m4'] = $request->getVar('m4');
+		}
+	}else if($request->getVar('type') == 'fisik'){
 		if($request->getVar('m1')){
 			$data['m1'] = $request->getVar('m1');
 			$data['total']	= $request->getVar('m1');
@@ -1613,10 +1625,8 @@ class Jsondata extends \CodeIgniter\Controller
 		}else if($request->getVar('m4')){
 			$data['m4'] = $request->getVar('m4');
 			$data['total']	= $request->getVar('m4');
-		}else if($request->getVar('m5')){
-			$data['m5'] = $request->getVar('m5');
-			$data['total']	= $request->getVar('m5');
 		}
+	}
 
 		if($edited){
 			$idnya = $request->getVar('idnya');
@@ -2141,6 +2151,54 @@ class Jsondata extends \CodeIgniter\Controller
 							$datafiles = $modelfiles->getWhere(['id_parent' => $valueuser['user_id']])->getRow();
 							$datasatuan= $model->getSatuanByCode($valueuser['user_satuan']);
 							$obj_merged = (object) array_merge((array) $valueuser, (array) $datafiles, (array) $datasatuan);
+							array_push($fulldata, $obj_merged);
+						}
+						$users = $fulldata;
+
+					if($users){
+						$response = [
+							'status'   => 'sukses',
+							'code'     => '1',
+							'data' 		 => $users
+						];
+					}else{
+						$response = [
+						    'status'   => 'gagal',
+						    'code'     => '0',
+						    'data'     => 'tidak ada data',
+						];
+					}
+
+				header('Content-Type: application/json');
+				echo json_encode($response);
+				exit;
+			}
+		catch (\Exception $e)
+		{
+			die($e->getMessage());
+		}
+	}
+
+	public function loadppk()
+	{
+		try
+		{
+
+				$request  = $this->request;
+				$param 	  = $request->getVar('param');
+				$id		 	  = $request->getVar('id');
+				$role 		= $this->data['role'];
+				$userid		= $this->data['userid'];
+
+					$model = new \App\Models\UserModel();
+					$modelparam = new \App\Models\ParamModel();
+					$modelfiles = new \App\Models\FilesModel();
+						$fulldata = [];
+						$datauser = $model->getUsersPpk($userid);
+
+						foreach ($datauser as $keyuser => $valueuser) {
+							$datafiles = $modelfiles->getWhere(['id_parent' => $valueuser['user_id']])->getRow();
+							$obj_merged = (object) array_merge((array) $valueuser, (array) $datafiles);
 							array_push($fulldata, $obj_merged);
 						}
 						$users = $fulldata;

@@ -19,6 +19,19 @@ class UserModel extends Model{
       return $result;
     }
 
+    public function getUsersPpk($id = null)
+    {
+      $this->join('users_role', 'users_role.role_id = users.user_role', 'LEFT');
+      $this->select('*');
+      $this->whereNotIn('user_id', $id);
+      $this->where('user_role', '30');
+      $result = $this->findAll();
+
+      // echo $this->db->getLastQuery();
+
+      return $result;
+    }
+
     public function getSatuanByCode($code)
     {
           $builder = $this->db->table('satuan');

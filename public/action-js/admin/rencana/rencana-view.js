@@ -32,10 +32,14 @@ function loadtarget(param){
           // $('#kode_subkegiatan').html('<option value="'+data[0].kode_subkegiatan+'">'+data[0].kode_subkegiatan+'</option>').trigger("chosen:updated");
           $('#kode_subkegiatan').val(data[0].kode_subkegiatan);
           $('#nama_subkegiatan').val(data[0].nama_subkegiatan);
+          $('#ppk').val(data[0].nama_ppk);
+          $('#bidang').val(data[0].bidang);
+          $('#seksi').val(data[0].seksi);
 
           // $('#paket').html('<option value="'+data[0].id_paket+'">'+data[0].nama_paket+'</option>').trigger("chosen:updated");
-          $('#paket').val(data[0].id_paket);
+          $('#paket').val(data[0].nama_paket);
           $('#pagu_kegiatan').val(data[0].pagu);
+
 
           for (var i = 0; i < data.length; i++) {
             if(data[i].type == 'keuangan'){
@@ -51,6 +55,7 @@ function loadtarget(param){
               $('#k10').val(data[i].n10);
               $('#k11').val(data[i].n11);
               $('#k12').val(data[i].n12);
+              $('#ktot').val(data[i].tot)
             }else if(data[i].type == 'fisik'){
               $('#f1').val(data[i].n1);
               $('#f2').val(data[i].n2);
@@ -64,6 +69,7 @@ function loadtarget(param){
               $('#f10').val(data[i].n10);
               $('#f11').val(data[i].n11);
               $('#f12').val(data[i].n12);
+              $('#ftot').val(data[i].tot)
             }
           }
         }

@@ -12,13 +12,14 @@ class TargetModel extends Model{
     public function gettarget($code = null)
     {
       if($code){
-        $sql = "SELECT dt.*, dp.nama_paket as nama_paket, bt.*, dsk.nama_subkegiatan, dk.nama_kegiatan, dpo.nama_program
+        $sql = "SELECT dt.*, dp.nama_paket as nama_paket, bt.*, dsk.nama_subkegiatan, dk.nama_kegiatan, dpo.nama_program, u.user_fullname as nama_ppk
                 FROM data_target dt
                 inner join data_paket dp on dp.id = dt.id_paket
 								inner join data_subkegiatan dsk on dsk.kode_subkegiatan = dt.kode_subkegiatan
 								inner join data_kegiatan dk on dk.kode_kegiatan = dt.kode_kegiatan
 								inner join data_program dpo on dpo.kode_program = dt.kode_program
-                inner join bulan_target bt on bt.id_paket = dt.id_paket where dt.id = '$code'";
+                inner join bulan_target bt on bt.id_paket = dt.id_paket
+                inner join users u on u.user_id = dt.ppk where dt.id = '$code'";
 
         $result = $this->db->query($sql);
         $row = $result->getResult();
@@ -85,13 +86,21 @@ class TargetModel extends Model{
         return  $this->db->table($table)->insert($data);
     }
 
-    public function getminggu($code = null)
+    public function getminggu($type = null, $code = null)
     {
       $str = substr($code, -1);
       $last = $str - 1;
+      $toto = '';
+      $now = '';
+      if($type == 'keuangan'){
+        $toto = "(select sum(replace(m1, '.','')) + sum(replace(m2, '.','')) + sum(replace(m3, '.','')) + sum(replace(m4, '.','')) from bulan_realisasi where type = '$type' and kode_bulan = 'n$last' ORDER BY id DESC LIMIT 0, 1)";
+        $now  = ",(select sum(replace(m1, '.','')) + sum(replace(m2, '.','')) + sum(replace(m3, '.','')) + sum(replace(m4, '.','')) from bulan_realisasi where type = '$type' and kode_bulan = '$code' ORDER BY id DESC LIMIT 0, 1) as totalnya";
+      }else if($type == 'fisik'){
+        $toto = "(select total from bulan_realisasi where type = '$type' and kode_bulan = 'n$last' ORDER BY id DESC LIMIT 0, 1)";
+      }
 
-      $sql = "SELECT *, (select total from bulan_realisasi where kode_bulan = 'n$last' ORDER BY id DESC LIMIT 0, 1) as total_sebelumnya from bulan_realisasi where kode_bulan = '$code'";
-
+      $sql = "SELECT *, $toto as total_sebelumnya $now from bulan_realisasi where type = '$type' and kode_bulan = '$code'";
+      // print_r($sql);die;
       $result = $this->db->query($sql);
       $row = $result->getResult();
       return $row;
