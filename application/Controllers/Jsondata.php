@@ -1659,12 +1659,11 @@ class Jsondata extends \CodeIgniter\Controller
 			$res = $model->updateDong('bulan_realisasi', $idnya , $data);
 		}else{
 
-			$cekrealisasi = $model->cekrealisasi($request->getVar('id_paket'), $request->getVar('kode_bulan'), $userid, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'));
+			$cekrealisasi = $model->cekrealisasi($request->getVar('id_paket'), $request->getVar('kode_bulan'), $userid, $type, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'));
 			if(empty($cekrealisasi)){
 				$res = $model->saveParam('bulan_realisasi', $data);
 			}else{
-				
-				$res = $model->updateRealisasi($cekrealisasi[0]->id, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'));
+				$res = $model->updateRealisasi($cekrealisasi[0]->id, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'), @$data['total']);
 			}
 
 			$cekpaket	= $model->cekpaket($request->getVar('id_paket'), $request->getVar('kode_bulan'));

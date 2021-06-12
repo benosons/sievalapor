@@ -346,18 +346,19 @@ function saveminggu(type,ke){
 
 
                 }else if(type = 'fisik'){
-                  var reverse22 = $('#ftotal_progres').val().toString().split('').reverse().join(''),
-                  ribuan_lalu22 = reverse22.match(/\d{1,3}/g);
-                  ribuan_lalu22 = ribuan_lalu22.join('.').split('').reverse().join('');
-
-                  if($('#fprogres_bulan_lalu').val() == ''){
-                    $('#fprogres_bulan_lalu').val(ribuan_lalu22);
-                  }
-
                   $('#fprogres_mingu_'+i).val('');
                   $('#ftotal_progres').val('');
                   $('#fprogres_mingu_'+i).prop('disabled', false);
                   $('#fsave_minggu_'+i).prop('disabled', false);
+                  $('#koordinat').val('');
+                  $('#latar_belakang').val('');
+                  $('#uraian').val('');
+                  $('#permasalahan').val('');
+
+                  $('#koordinat').prop('disabled', false);
+                  $('#latar_belakang').prop('disabled', false);
+                  $('#uraian').prop('disabled', false);
+                  $('#permasalahan').prop('disabled', false);
 
                 }
 
@@ -424,97 +425,37 @@ function saveminggu(type,ke){
 
               }else if(data[i].type == 'fisik'){
 
-                if(typeof data[0] !== 'undefined'){
-                  $('#fprogres_mingu_1').val(data[0].m1);
-                  $('#fedit_1').attr('idnya',data[0].id);
-                  $('#ftotal_progres').val(data[0].m1);
-                  $('#fprogres_bulan_lalu').val(data[0].total_sebelumnya);
-                }else{
-                  $('#fprogres_mingu_1').val('');
-                  $('#fprogres_mingu_1').prop('disabled', false);
-                  $('#fsave_minggu_1').prop('disabled', false);
-                }
+                if(typeof data[i] !== 'undefined'){
+                  console.log(data[i].total);
+                  $('#ftotal_progres').val(data[i].total);
+                  $('#koordinat').val(data[i].koordinat);
+                  $('#koordinat').prop('disabled', true);
 
-                if(typeof data[1] !== 'undefined'){
-                  $('#fprogres_mingu_2').val(data[1].m2);
-                  $('#fedit_2').attr('idnya',data[1].id);
-                  $('#ftotal_progres').val(data[1].m2);
-                  $('#fprogres_bulan_lalu').val(data[1].total_sebelumnya);
-                }else{
-                  $('#fprogres_mingu_2').val('');
-                  $('#fprogres_mingu_2').prop('disabled', false);
-                  $('#fsave_minggu_2').prop('disabled', false);
-                }
+                  $('#latar_belakang').val(data[i].latar_belakang);
+                  $('#latar_belakang').prop('disabled', true);
 
-                if(typeof data[2] !== 'undefined'){
-                  $('#fprogres_mingu_3').val(data[2].m3);
-                  $('#fedit_3').attr('idnya',data[2].id);
-                  $('#ftotal_progres').val(data[2].m3);
-                  $('#fprogres_bulan_lalu').val(data[2].total_sebelumnya);
-                }else{
-                  $('#fprogres_mingu_3').val('');
-                  $('#fprogres_mingu_3').prop('disabled', false);
-                  $('#fsave_minggu_3').prop('disabled', false);
-                }
+                  $('#uraian').val(data[i].uraian);
+                  $('#uraian').prop('disabled', true);
 
-                if(typeof data[3] !== 'undefined'){
-                  $('#fprogres_mingu_4').val(data[3].m4);
-                  $('#fedit_4').attr('idnya',data[3].id);
-                  $('#ftotal_progres').val(data[3].m4);
-                  $('#fprogres_bulan_lalu').val(data[3].total_sebelumnya);
-                }else{
-                  $('#ffprogres_mingu_4').val('');
-                  $('#ffprogres_mingu_4').prop('disabled', false);
-                  $('#ffsave_minggu_4').prop('disabled', false);
-                }
+                  $('#permasalahan').val(data[i].permasalahan);
+                  $('#permasalahan').prop('disabled', true);
 
-                  if(typeof data[0] !== 'undefined'){
-                    if(data[0].m1){
-                      $('#fprogres_mingu_1').prop('disabled', true);
-                      $('#fsave_minggu_1').prop('disabled', true);
-                    }else{
-                      $('#fprogres_mingu_1').prop('disabled', false);
-                      $('#fsave_minggu_1').prop('disabled', false);
-                    }
-                  }else{
-                    $('#fprogres_mingu_1').val('');
+
+                  for (var ii = 1; ii <= 4; ii++) {
+
+                    $('#fprogres_mingu_'+ii).val(data[i]['m'+ii]);
+                    $('#fprogres_mingu_'+ii).prop('disabled', true);
+                    $('#fsave_minggu_'+ii).prop('disabled', true);
                   }
 
-                  if(typeof data[1] !== 'undefined'){
-                    if(data[1].m2){
-                      $('#fprogres_mingu_2').prop('disabled', true);
-                      $('#fsave_minggu_2').prop('disabled', true);
-                    }else{
-                      $('#fprogres_mingu_2').prop('disabled', false);
-                      $('#fsave_minggu_2').prop('disabled', false);
-                    }
-                  }else{
-                    $('#fprogres_mingu_2').val('');
-                  }
+                  $('#fprogres_bulan_lalu').val(data[i].total_sebelumnya);
 
-                  if(typeof data[2] !== 'undefined'){
-                    if(data[2].m3){
-                      $('#fprogres_mingu_3').prop('disabled', true);
-                      $('#fsave_minggu_3').prop('disabled', true);
-                    }else{
-                      $('#fprogres_mingu_3').prop('disabled', false);
-                      $('#fsave_minggu_3').prop('disabled', false);
-                    }
-                  }else{
-                    $('#fprogres_mingu_3').val('');
-                  }
 
-                  if(typeof data[3] !== 'undefined'){
-                    if(data[3].m4){
-                      $('#fprogres_mingu_4').prop('disabled', true);
-                      $('#fsave_minggu_4').prop('disabled', true);
-                    }else{
-                      $('#fprogres_mingu_4').prop('disabled', false);
-                      $('#fsave_minggu_4').prop('disabled', false);
-                    }
-                  }else{
-                    $('#fprogres_mingu_4').val('');
-                  }
+                  // $('#kedit_1').attr('idnya',data[i].id);
+                  // $('#kedit_2').attr('idnya',data[i].id);
+                  // $('#kedit_3').attr('idnya',data[i].id);
+                  // $('#kedit_4').attr('idnya',data[i].id);
+                }
 
                 }
               }

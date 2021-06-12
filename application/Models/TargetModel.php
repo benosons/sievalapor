@@ -98,7 +98,7 @@ class TargetModel extends Model{
         $toto = "(select replace(m1, '.','') + replace(m2, '.','') + replace(m3, '.','') + replace(m4, '.','') from bulan_realisasi where type = '$type' and kode_bulan = 'n$last')";
         $now  = ", replace(m1, '.','') + replace(m2, '.','') + replace(m3, '.','') + replace(m4, '.','') as totalnya";
       }else if($type == 'fisik'){
-        $toto = "(select total from bulan_realisasi where type = '$type' and kode_bulan = 'n$last' ORDER BY id DESC LIMIT 0, 1)";
+        $toto = "(select total from bulan_realisasi where type = '$type' and kode_bulan = 'n$last' ORDER BY id DESC LIMIT 1)";
       }
 
       $sql = "SELECT
@@ -126,22 +126,35 @@ class TargetModel extends Model{
       return true;
     }
 
-    public function updateRealisasi($id = null, $m1 = null, $m2 = null, $m3 = null, $m4 = null)
+    public function updateRealisasi($id = null, $m1 = null, $m2 = null, $m3 = null, $m4 = null, $total = null)
     {
       $data = [];
 
       if($m1){
         $data['m1'] = $m1;
+        if($total){
+          $data['total'] = $m1;
+        }
       }
       if($m2){
         $data['m2'] = $m2;
+        if($total){
+          $data['total'] = $m2;
+        }
       }
       if($m3){
         $data['m3'] = $m3;
+        if($total){
+          $data['total'] = $m3;
+        }
       }
       if($m4){
         $data['m4'] = $m4;
+        if($total){
+          $data['total'] = $m4;
+        }
       }
+
       // print_r($data);die;
       $builder = $this->db->table('bulan_realisasi');
       $query   = $builder->where('id', $id);
@@ -277,7 +290,7 @@ class TargetModel extends Model{
       return $row;
     }
 
-    public function cekrealisasi($paket = null, $bulan = null, $userid = null, $m1 = null, $m2 = null, $m3 = null, $m4 = null)
+    public function cekrealisasi($paket = null, $bulan = null, $userid = null, $type = null, $m1 = null, $m2 = null, $m3 = null, $m4 = null)
     {
       $field = '';
       if($m1){
@@ -292,7 +305,7 @@ class TargetModel extends Model{
       if($m4){
         $field = "m4 = '$m4'";
       }
-      $sql = "select * from bulan_realisasi where id_paket = '$paket' and kode_bulan = '$bulan' and created_by = '$userid'";
+      $sql = "select * from bulan_realisasi where id_paket = '$paket' and kode_bulan = '$bulan' and type= '$type' and created_by = '$userid'";
 
       $result = $this->db->query($sql);
       $row = $result->getResult();
