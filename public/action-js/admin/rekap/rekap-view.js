@@ -97,6 +97,72 @@ function saveminggu(ke){
             $('#k10').val(data[i].n10);
             $('#k11').val(data[i].n11);
             $('#k12').val(data[i].n12);
+
+            $('#kr1').val(data[i].progres.n1.tot);
+            $('#kr2').val(data[i].progres.n2.tot);
+            $('#kr3').val(data[i].progres.n3.tot);
+            $('#kr4').val(data[i].progres.n4.tot);
+            $('#kr5').val(data[i].progres.n5.tot);
+            $('#kr6').val(data[i].progres.n6.tot);
+            $('#kr7').val(data[i].progres.n7.tot);
+            $('#kr8').val(data[i].progres.n8.tot);
+            $('#kr9').val(data[i].progres.n9.tot);
+            $('#kr10').val(data[i].progres.n10.tot);
+            $('#kr11').val(data[i].progres.n11.tot);
+            $('#kr12').val(data[i].progres.n12.tot);
+
+            $('#k_koor_1').val(data[i].progres.n1.koordinat);
+            $('#k_koor_2').val(data[i].progres.n2.koordinat);
+            $('#k_koor_3').val(data[i].progres.n3.koordinat);
+            $('#k_koor_4').val(data[i].progres.n4.koordinat);
+            $('#k_koor_5').val(data[i].progres.n5.koordinat);
+            $('#k_koor_6').val(data[i].progres.n6.koordinat);
+            $('#k_koor_7').val(data[i].progres.n7.koordinat);
+            $('#k_koor_8').val(data[i].progres.n8.koordinat);
+            $('#k_koor_9').val(data[i].progres.n9.koordinat);
+            $('#k_koor_10').val(data[i].progres.n10.koordinat);
+            $('#k_koor_11').val(data[i].progres.n11.koordinat);
+            $('#k_koor_12').val(data[i].progres.n12.koordinat);
+
+            $('#k_latar_1').val(data[i].progres.n1.latar_belakang);
+            $('#k_latar_2').val(data[i].progres.n2.latar_belakang);
+            $('#k_latar_3').val(data[i].progres.n3.latar_belakang);
+            $('#k_latar_4').val(data[i].progres.n4.latar_belakang);
+            $('#k_latar_5').val(data[i].progres.n5.latar_belakang);
+            $('#k_latar_6').val(data[i].progres.n6.latar_belakang);
+            $('#k_latar_7').val(data[i].progres.n7.latar_belakang);
+            $('#k_latar_8').val(data[i].progres.n8.latar_belakang);
+            $('#k_latar_9').val(data[i].progres.n9.latar_belakang);
+            $('#k_latar_10').val(data[i].progres.n10.latar_belakang);
+            $('#k_latar_11').val(data[i].progres.n11.latar_belakang);
+            $('#k_latar_12').val(data[i].progres.n12.latar_belakang);
+
+            $('#k_uraian_1').val(data[i].progres.n1.uraian);
+            $('#k_uraian_2').val(data[i].progres.n2.uraian);
+            $('#k_uraian_3').val(data[i].progres.n3.uraian);
+            $('#k_uraian_4').val(data[i].progres.n4.uraian);
+            $('#k_uraian_5').val(data[i].progres.n5.uraian);
+            $('#k_uraian_6').val(data[i].progres.n6.uraian);
+            $('#k_uraian_7').val(data[i].progres.n7.uraian);
+            $('#k_uraian_8').val(data[i].progres.n8.uraian);
+            $('#k_uraian_9').val(data[i].progres.n9.uraian);
+            $('#k_uraian_10').val(data[i].progres.n10.uraian);
+            $('#k_uraian_11').val(data[i].progres.n11.uraian);
+            $('#k_uraian_12').val(data[i].progres.n12.uraian);
+
+            $('#k_masalah_1').val(data[i].progres.n1.permasalahan);
+            $('#k_masalah_2').val(data[i].progres.n2.permasalahan);
+            $('#k_masalah_3').val(data[i].progres.n3.permasalahan);
+            $('#k_masalah_4').val(data[i].progres.n4.permasalahan);
+            $('#k_masalah_5').val(data[i].progres.n5.permasalahan);
+            $('#k_masalah_6').val(data[i].progres.n6.permasalahan);
+            $('#k_masalah_7').val(data[i].progres.n7.permasalahan);
+            $('#k_masalah_8').val(data[i].progres.n8.permasalahan);
+            $('#k_masalah_9').val(data[i].progres.n9.permasalahan);
+            $('#k_masalah_10').val(data[i].progres.n10.permasalahan);
+            $('#k_masalah_11').val(data[i].progres.n11.permasalahan);
+            $('#k_masalah_12').val(data[i].progres.n12.permasalahan);
+
           }else if(data[i].type == 'fisik'){
 
             $('#f1').val(data[i].n1);
@@ -112,18 +178,18 @@ function saveminggu(ke){
             $('#f11').val(data[i].n11);
             $('#f12').val(data[i].n12);
 
-              $('#fr1').val(data[i]['progres'].n1.tot);
-              $('#fr2').val(data[i]['progres'].n2.tot);
-              $('#fr3').val(data[i]['progres'].n3.tot);
-              $('#fr4').val(data[i]['progres'].n4.tot);
-              $('#fr5').val(data[i]['progres'].n5.tot);
-              $('#fr6').val(data[i]['progres'].n6.tot);
-              $('#fr7').val(data[i]['progres'].n7.tot);
-              $('#fr8').val(data[i]['progres'].n8.tot);
-              $('#fr9').val(data[i]['progres'].n9.tot);
-              $('#fr10').val(data[i]['progres'].n10.tot);
-              $('#fr11').val(data[i]['progres'].n11.tot);
-              $('#fr12').val(data[i]['progres'].n12.tot);
+            $('#fr1').val(data[i].progres.n1.tot);
+            $('#fr2').val(data[i].progres.n2.tot);
+            $('#fr3').val(data[i].progres.n3.tot);
+            $('#fr4').val(data[i].progres.n4.tot);
+            $('#fr5').val(data[i].progres.n5.tot);
+            $('#fr6').val(data[i].progres.n6.tot);
+            $('#fr7').val(data[i].progres.n7.tot);
+            $('#fr8').val(data[i].progres.n8.tot);
+            $('#fr9').val(data[i].progres.n9.tot);
+            $('#fr10').val(data[i].progres.n10.tot);
+            $('#fr11').val(data[i].progres.n11.tot);
+            $('#fr12').val(data[i].progres.n12.tot);
 
           }
         }

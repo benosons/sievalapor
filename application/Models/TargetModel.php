@@ -83,7 +83,9 @@ class TargetModel extends Model{
 
     public function saveParam($table = null, $data = null)
     {
-        return  $this->db->table($table)->insert($data);
+        $res = $this->db->table($table)->insert($data);
+        // echo $this->db->getLastQuery();die;
+        return  $res;
     }
 
     public function getminggu($type = null, $code = null)
@@ -131,37 +133,102 @@ class TargetModel extends Model{
     public function getrealisasi($id_paket = null, $ppk = null, $type = null, $kodebulan = null)
     {
 
-      $sql = "SELECT kode_bulan, m1, m2, m3, m4, m5 from bulan_realisasi where id_paket = '$id_paket' and created_by = '$ppk' and type = '$type' and kode_bulan = '$kodebulan'";
+      $sql = "SELECT kode_bulan, m1, m2, m3, m4 ,koordinat, latar_belakang, uraian, permasalahan from bulan_realisasi where id_paket = '$id_paket' and created_by = '$ppk' and type = '$type' and kode_bulan = '$kodebulan'";
 
       $result = $this->db->query($sql);
       $row = $result->getResult();
       $val = [];
+      $toto = [];
       if((array)$row){
-        foreach ($row as $key => $value) {
 
-          if($value->m1){
-            $val['m1'] = $value->m1;
-            $val['tot'] = $value->m1;
+        if($type == 'fisik'){
+          foreach ($row as $key => $value) {
+
+            if($value->m1){
+              $val['m1'] = $value->m1;
+              $val['tot'] = $value->m1;
+              $val['koordinat'] = $value->koordinat;
+              $val['latar_belakang'] = $value->latar_belakang;
+              $val['uraian'] = $value->uraian;
+              $val['permasalahan'] = $value->permasalahan;
+
+            }
+            if($value->m2){
+              $val['m2'] = $value->m2;
+              $val['tot'] = $value->m2;
+              $val['koordinat'] = $value->koordinat;
+              $val['latar_belakang'] = $value->latar_belakang;
+              $val['uraian'] = $value->uraian;
+              $val['permasalahan'] = $value->permasalahan;
+
+            }
+            if($value->m3){
+              $val['m3'] = $value->m3;
+              $val['tot'] = $value->m3;
+              $val['koordinat'] = $value->koordinat;
+              $val['latar_belakang'] = $value->latar_belakang;
+              $val['uraian'] = $value->uraian;
+              $val['permasalahan'] = $value->permasalahan;
+
+            }
+            if($value->m4){
+              $val['m4'] = $value->m4;
+              $val['tot'] = $value->m4;
+              $val['koordinat'] = $value->koordinat;
+              $val['latar_belakang'] = $value->latar_belakang;
+              $val['uraian'] = $value->uraian;
+              $val['permasalahan'] = $value->permasalahan;
+
+            }
           }
-          if($value->m2){
-            $val['m2'] = $value->m2;
-            $val['tot'] = $value->m2;
+
+
+        }else{
+          foreach ($row as $key => $value) {
+            if($value->m1){
+              $toto['m1'] = $value->m1;
+              $val['m1'] = $value->m1;
+              $val['koordinat'] = $value->koordinat;
+              $val['latar_belakang'] = $value->latar_belakang;
+              $val['uraian'] = $value->uraian;
+              $val['permasalahan'] = $value->permasalahan;
+            }
+            if($value->m2){
+              $toto['m2'] = $value->m2;
+              $val['m2'] = $value->m2;
+              $val['koordinat'] = $value->koordinat;
+              $val['latar_belakang'] = $value->latar_belakang;
+              $val['uraian'] = $value->uraian;
+              $val['permasalahan'] = $value->permasalahan;
+            }
+            if($value->m3){
+              $toto['m3'] = $value->m3;
+              $val['m3'] = $value->m3;
+              $val['koordinat'] = $value->koordinat;
+              $val['latar_belakang'] = $value->latar_belakang;
+              $val['uraian'] = $value->uraian;
+              $val['permasalahan'] = $value->permasalahan;
+            }
+            if($value->m4){
+              $toto['m4'] = $value->m4;
+              $val['m4'] = $value->m4;
+              $val['koordinat'] = $value->koordinat;
+              $val['latar_belakang'] = $value->latar_belakang;
+              $val['uraian'] = $value->uraian;
+              $val['permasalahan'] = $value->permasalahan;
+            }
           }
-          if($value->m3){
-            $val['m3'] = $value->m3;
-            $val['tot'] = $value->m3;
+
+          $sum = 0;
+          foreach($toto as $key => $value){
+               $sum += (int)str_replace('.','',$toto[$key]);
           }
-          if($value->m4){
-            $val['m4'] = $value->m4;
-            $val['tot'] = $value->m4;
-          }
-          if($value->m5){
-            $val['m5'] = $value->m5;
-            $val['tot'] = $value->m5;
-          }
+          $val['tot'] =$sum;
+
         }
 
       }
+
       return (object)$val;
     }
 

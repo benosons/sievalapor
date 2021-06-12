@@ -22,22 +22,26 @@ $(document).ready(function(){
       $('#fpilih_bulan_chosen').show();
       $('#fprogres_bulan_lalu').show();
       $('#ftotal_progres').show();
+      $('#fpermasalahan').show();
       $('#inifisik').show();
 
       $('#kpilih_bulan_chosen').hide();
       $('#kprogres_bulan_lalu').hide();
       $('#ktotal_progres').hide();
+      $('#kpermasalahan').hide();
       $('#inikeuangan').hide();
     }else if($(this).prop("checked") == false){
       window.type = 'keuangan';
       $('#kpilih_bulan_chosen').show();
       $('#kprogres_bulan_lalu').show();
       $('#ktotal_progres').show();
+      $('#kpermasalahan').show();
       $('#inikeuangan').show();
 
       $('#fpilih_bulan_chosen').hide();
       $('#fprogres_bulan_lalu').hide();
       $('#ftotal_progres').hide();
+      $('#fpermasalahan').hide();
       $('#inifisik').hide();
     }
 
@@ -91,6 +95,11 @@ function saveminggu(type,ke){
   formData.append('id_paket', $('#id_paket').val());
   formData.append('m'+ke, $('#'+keys+'progres_mingu_'+ke).val());
   formData.append('total_progres', $('#'+keys+'tot_prog').val());
+  formData.append('koordinat', $('#koordinat').val());
+  formData.append('latar_belakang', $('#latar_belakang').val());
+  formData.append('uraian', $('#uraian').val());
+  formData.append('permasalahan', $('#'+keys+'permasalahan').val());
+
   if($('#'+keys+'edit_'+ke).is(":checked")){
     formData.append('edited', 1);
     formData.append('idnya', $('#'+keys+'edit_'+ke).attr("idnya"));
@@ -304,18 +313,43 @@ function saveminggu(type,ke){
               let data = result.data;
 
             if(!Array.isArray(data)){
+
               for (var i = 1; i <= 4; i++) {
                 if(type == 'keuangan'){
+                  var reverse11 = $('#ktotal_progres').val().toString().split('').reverse().join(''),
+                  ribuan_lalu11 = reverse11.match(/\d{1,3}/g);
+                  ribuan_lalu11 = ribuan_lalu11.join('.').split('').reverse().join('');
+                  
+                  if($('#kprogres_bulan_lalu').val() == ''){
+                    $('#kprogres_bulan_lalu').val(ribuan_lalu11);
+                  }
+
                   $('#kprogres_mingu_'+i).val('');
                   $('#ktotal_progres').val('');
                   $('#kprogres_mingu_'+i).prop('disabled', false);
                   $('#ksave_minggu_'+i).prop('disabled', false);
+                  $('#koordinat').val('');
+                  $('#latar_belakang').val('');
+                  $('#uraian').val('');
+                  $('#kpermasalahan').val('');
 
                 }else if(type = 'fisik'){
+                  var reverse22 = $('#ftotal_progres').val().toString().split('').reverse().join(''),
+                  ribuan_lalu22 = reverse22.match(/\d{1,3}/g);
+                  ribuan_lalu22 = ribuan_lalu22.join('.').split('').reverse().join('');
+
+                  if($('#fprogres_bulan_lalu').val() == ''){
+                    $('#fprogres_bulan_lalu').val(ribuan_lalu22);
+                  }
+
                   $('#fprogres_mingu_'+i).val('');
                   $('#ftotal_progres').val('');
                   $('#fprogres_mingu_'+i).prop('disabled', false);
                   $('#fsave_minggu_'+i).prop('disabled', false);
+                  $('#koordinat').val('');
+                  $('#latar_belakang').val('');
+                  $('#uraian').val('');
+                  $('#fpermasalahan').val('');
                 }
 
               }
@@ -329,7 +363,16 @@ function saveminggu(type,ke){
                   $('#kprogres_mingu_1').val(data[0].m1);
                   $('#kedit_1').attr('idnya',data[0].id);
                   $('#kprogres_bulan_lalu').val(data[i].total_sebelumnya);
-                  $('#ktotal_progres').val(data[0].totalnya);
+
+                  var totnya = data[0].totalnya.toString().split('').reverse().join(''),
+                  ribuan_tot = totnya.match(/\d{1,3}/g);
+                  ribuan_tot = ribuan_tot.join('.').split('').reverse().join('');
+
+                  $('#ktotal_progres').val(ribuan_tot);
+                  $('#koordinat').val(data[0].koordinat);
+                  $('#latar_belakang').val(data[0].latar_belakang);
+                  $('#uraian').val(data[0].uraian);
+                  $('#kpermasalahan').val(data[0].permasalahan);
                 }else{
                   $('#kprogres_mingu_1').val('');
                   $('#kprogres_mingu_1').prop('disabled', false);
@@ -340,7 +383,16 @@ function saveminggu(type,ke){
                   $('#kprogres_mingu_2').val(data[1].m2);
                   $('#kedit_2').attr('idnya',data[1].id);
                   $('#kprogres_bulan_lalu').val(data[1].total_sebelumnya);
-                  $('#ktotal_progres').val(data[i].totalnya);
+
+                  var totnya = data[0].totalnya.toString().split('').reverse().join(''),
+                  ribuan_tot = totnya.match(/\d{1,3}/g);
+                  ribuan_tot = ribuan_tot.join('.').split('').reverse().join('');
+
+                  $('#ktotal_progres').val(ribuan_tot);
+                  $('#koordinat').val(data[1].koordinat);
+                  $('#latar_belakang').val(data[1].latar_belakang);
+                  $('#uraian').val(data[1].uraian);
+                  $('#kpermasalahan').val(data[1].permasalahan);
                 }else{
                   $('#kprogres_mingu_2').val('');
                   $('#kprogres_mingu_2').prop('disabled', false);
@@ -351,7 +403,16 @@ function saveminggu(type,ke){
                   $('#kprogres_mingu_3').val(data[2].m3);
                   $('#kedit_3').attr('idnya',data[2].id);
                   $('#kprogres_bulan_lalu').val(data[2].total_sebelumnya);
-                  $('#ktotal_progres').val(data[i].totalnya);
+
+                  var totnya = data[0].totalnya.toString().split('').reverse().join(''),
+                  ribuan_tot = totnya.match(/\d{1,3}/g);
+                  ribuan_tot = ribuan_tot.join('.').split('').reverse().join('');
+
+                  $('#ktotal_progres').val(ribuan_tot);
+                  $('#koordinat').val(data[1].koordinat);
+                  $('#latar_belakang').val(data[1].latar_belakang);
+                  $('#uraian').val(data[1].uraian);
+                  $('#kpermasalahan').val(data[1].permasalahan);
                 }else{
                   $('#kprogres_mingu_3').val('');
                   $('#kprogres_mingu_3').prop('disabled', false);
@@ -362,7 +423,16 @@ function saveminggu(type,ke){
                   $('#kprogres_mingu_4').val(data[3].m4);
                   $('#kedit_4').attr('idnya',data[3].id);
                   $('#kprogres_bulan_lalu').val(data[3].total_sebelumnya);
-                  $('#ktotal_progres').val(data[i].totalnya);
+
+                  var totnya = data[0].totalnya.toString().split('').reverse().join(''),
+                  ribuan_tot = totnya.match(/\d{1,3}/g);
+                  ribuan_tot = ribuan_tot.join('.').split('').reverse().join('');
+
+                  $('#ktotal_progres').val(ribuan_tot);
+                  $('#koordinat').val(data[3].koordinat);
+                  $('#latar_belakang').val(data[3].latar_belakang);
+                  $('#uraian').val(data[3].uraian);
+                  $('#kpermasalahan').val(data[3].permasalahan);
                 }else{
                   $('#kprogres_mingu_4').val('');
                   $('#kprogres_mingu_4').prop('disabled', false);
@@ -416,6 +486,7 @@ function saveminggu(type,ke){
                 }else{
                   $('#kprogres_mingu_4').val('');
                 }
+
                 let angkanya_bulan_lalu = $('#kprogres_bulan_lalu').val();
                 let angkanya_progres = $('#ktotal_progres').val();
                 var ribuan_lalu;
