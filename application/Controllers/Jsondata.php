@@ -1614,11 +1614,18 @@ class Jsondata extends \CodeIgniter\Controller
 					'created_by'		=> $userid,
 					'created_date'	=> $this->now,
 					'updated_date'	=> $this->now,
-					'total'				  => $request->getVar('total_progres'),
+				];
+
+			$data_new = [
+					'id_paket'			=> $request->getVar('id_paket'),
+					'created_by'		=> $userid,
+					'created_date'	=> $this->now,
+					'updated_date'	=> $this->now,
 					'koordinat'			=> $request->getVar('koordinat'),
 					'latar_belakang'=> $request->getVar('latar_belakang'),
 					'uraian'				=> $request->getVar('uraian'),
-					'permasalahan'	=> $request->getVar('permasalahan')
+					'permasalahan'	=> $request->getVar('permasalahan'),
+					'kode_bulan'		=> $request->getVar('kode_bulan')
 				];
 			}
 	if($request->getVar('type') == 'keuangan'){
@@ -1651,7 +1658,20 @@ class Jsondata extends \CodeIgniter\Controller
 			$idnya = $request->getVar('idnya');
 			$res = $model->updateDong('bulan_realisasi', $idnya , $data);
 		}else{
-			$res = $model->saveParam('bulan_realisasi', $data);
+
+			$cekrealisasi = $model->cekrealisasi($request->getVar('id_paket'), $request->getVar('kode_bulan'), $userid, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'));
+			if(empty($cekrealisasi)){
+				$res = $model->saveParam('bulan_realisasi', $data);
+			}else{
+				
+				$res = $model->updateRealisasi($cekrealisasi[0]->id, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'));
+			}
+
+			$cekpaket	= $model->cekpaket($request->getVar('id_paket'), $request->getVar('kode_bulan'));
+
+			if(empty($cekpaket)){
+				$res_new = $model->saveParam('data_realisasi', $data_new);
+			}
 		}
 
 		$id  = $model->insertID();

@@ -98,7 +98,7 @@ function saveminggu(type,ke){
   formData.append('koordinat', $('#koordinat').val());
   formData.append('latar_belakang', $('#latar_belakang').val());
   formData.append('uraian', $('#uraian').val());
-  formData.append('permasalahan', $('#'+keys+'permasalahan').val());
+  formData.append('permasalahan', $('#permasalahan').val());
 
   if($('#'+keys+'edit_'+ke).is(":checked")){
     formData.append('edited', 1);
@@ -301,6 +301,10 @@ function saveminggu(type,ke){
         }
 
     function loadbulan(type, param){
+      $('#ktot_prog').val('');
+      $('#ftot_prog').val('');
+      $('#kprogres_bulan_lalu').val('');
+      $('#fprogres_bulan_lalu').val('');
       $.ajax({
           type: 'post',
           dataType: 'json',
@@ -316,13 +320,15 @@ function saveminggu(type,ke){
 
               for (var i = 1; i <= 4; i++) {
                 if(type == 'keuangan'){
-                  var reverse11 = $('#ktotal_progres').val().toString().split('').reverse().join(''),
-                  ribuan_lalu11 = reverse11.match(/\d{1,3}/g);
-                  ribuan_lalu11 = ribuan_lalu11.join('.').split('').reverse().join('');
-                  
-                  if($('#kprogres_bulan_lalu').val() == ''){
-                    $('#kprogres_bulan_lalu').val(ribuan_lalu11);
-                  }
+                    if($('#ktotal_progres').val()){
+                      var reverse11 = $('#ktotal_progres').val().toString().split('').reverse().join(''),
+                      ribuan_lalu11 = reverse11.match(/\d{1,3}/g);
+                      ribuan_lalu11 = ribuan_lalu11.join('.').split('').reverse().join('');
+
+                      if($('#kprogres_bulan_lalu').val() == ''){
+                        $('#kprogres_bulan_lalu').val(ribuan_lalu11);
+                      }
+                    }
 
                   $('#kprogres_mingu_'+i).val('');
                   $('#ktotal_progres').val('');
@@ -331,7 +337,13 @@ function saveminggu(type,ke){
                   $('#koordinat').val('');
                   $('#latar_belakang').val('');
                   $('#uraian').val('');
-                  $('#kpermasalahan').val('');
+                  $('#permasalahan').val('');
+
+                  $('#koordinat').prop('disabled', false);
+                  $('#latar_belakang').prop('disabled', false);
+                  $('#uraian').prop('disabled', false);
+                  $('#permasalahan').prop('disabled', false);
+
 
                 }else if(type = 'fisik'){
                   var reverse22 = $('#ftotal_progres').val().toString().split('').reverse().join(''),
@@ -346,10 +358,7 @@ function saveminggu(type,ke){
                   $('#ftotal_progres').val('');
                   $('#fprogres_mingu_'+i).prop('disabled', false);
                   $('#fsave_minggu_'+i).prop('disabled', false);
-                  $('#koordinat').val('');
-                  $('#latar_belakang').val('');
-                  $('#uraian').val('');
-                  $('#fpermasalahan').val('');
+
                 }
 
               }
@@ -359,132 +368,42 @@ function saveminggu(type,ke){
             for (var i = 0; i < data.length; i++) {
               if(data[i].type == 'keuangan'){
                 let totok = [];
-                if(typeof data[0] !== 'undefined'){
-                  $('#kprogres_mingu_1').val(data[0].m1);
-                  $('#kedit_1').attr('idnya',data[0].id);
+                if(typeof data[i] !== 'undefined'){
+
+                  var totnya = data[i].totalnya.toString().split('').reverse().join(''),
+                  ribuan_tot = totnya.match(/\d{1,3}/g);
+                  ribuan_tot = ribuan_tot.join('.').split('').reverse().join('');
+
+                  $('#ktotal_progres').val(ribuan_tot);
+                  $('#koordinat').val(data[i].koordinat);
+                  $('#koordinat').prop('disabled', true);
+
+                  $('#latar_belakang').val(data[i].latar_belakang);
+                  $('#latar_belakang').prop('disabled', true);
+
+                  $('#uraian').val(data[i].uraian);
+                  $('#uraian').prop('disabled', true);
+
+                  $('#permasalahan').val(data[i].permasalahan);
+                  $('#permasalahan').prop('disabled', true);
+
+
+                  for (var ii = 1; ii <= 4; ii++) {
+                    var em = data[i]['m'+ii].toString().split('').reverse().join(''),
+                    ribuan = em.match(/\d{1,3}/g);
+                    ribuan = ribuan.join('.').split('').reverse().join('');
+                    $('#kprogres_mingu_'+ii).val(ribuan);
+                    $('#kprogres_mingu_'+ii).prop('disabled', true);
+                    $('#ksave_minggu_'+ii).prop('disabled', true);
+                  }
+
                   $('#kprogres_bulan_lalu').val(data[i].total_sebelumnya);
 
-                  var totnya = data[0].totalnya.toString().split('').reverse().join(''),
-                  ribuan_tot = totnya.match(/\d{1,3}/g);
-                  ribuan_tot = ribuan_tot.join('.').split('').reverse().join('');
 
-                  $('#ktotal_progres').val(ribuan_tot);
-                  $('#koordinat').val(data[0].koordinat);
-                  $('#latar_belakang').val(data[0].latar_belakang);
-                  $('#uraian').val(data[0].uraian);
-                  $('#kpermasalahan').val(data[0].permasalahan);
-                }else{
-                  $('#kprogres_mingu_1').val('');
-                  $('#kprogres_mingu_1').prop('disabled', false);
-                  $('#ksave_minggu_1').prop('disabled', false);
-                }
-
-                if(typeof data[1] !== 'undefined'){
-                  $('#kprogres_mingu_2').val(data[1].m2);
-                  $('#kedit_2').attr('idnya',data[1].id);
-                  $('#kprogres_bulan_lalu').val(data[1].total_sebelumnya);
-
-                  var totnya = data[0].totalnya.toString().split('').reverse().join(''),
-                  ribuan_tot = totnya.match(/\d{1,3}/g);
-                  ribuan_tot = ribuan_tot.join('.').split('').reverse().join('');
-
-                  $('#ktotal_progres').val(ribuan_tot);
-                  $('#koordinat').val(data[1].koordinat);
-                  $('#latar_belakang').val(data[1].latar_belakang);
-                  $('#uraian').val(data[1].uraian);
-                  $('#kpermasalahan').val(data[1].permasalahan);
-                }else{
-                  $('#kprogres_mingu_2').val('');
-                  $('#kprogres_mingu_2').prop('disabled', false);
-                  $('#ksave_minggu_2').prop('disabled', false);
-                }
-
-                if(typeof data[2] !== 'undefined'){
-                  $('#kprogres_mingu_3').val(data[2].m3);
-                  $('#kedit_3').attr('idnya',data[2].id);
-                  $('#kprogres_bulan_lalu').val(data[2].total_sebelumnya);
-
-                  var totnya = data[0].totalnya.toString().split('').reverse().join(''),
-                  ribuan_tot = totnya.match(/\d{1,3}/g);
-                  ribuan_tot = ribuan_tot.join('.').split('').reverse().join('');
-
-                  $('#ktotal_progres').val(ribuan_tot);
-                  $('#koordinat').val(data[1].koordinat);
-                  $('#latar_belakang').val(data[1].latar_belakang);
-                  $('#uraian').val(data[1].uraian);
-                  $('#kpermasalahan').val(data[1].permasalahan);
-                }else{
-                  $('#kprogres_mingu_3').val('');
-                  $('#kprogres_mingu_3').prop('disabled', false);
-                  $('#ksave_minggu_3').prop('disabled', false);
-                }
-
-                if(typeof data[3] !== 'undefined'){
-                  $('#kprogres_mingu_4').val(data[3].m4);
-                  $('#kedit_4').attr('idnya',data[3].id);
-                  $('#kprogres_bulan_lalu').val(data[3].total_sebelumnya);
-
-                  var totnya = data[0].totalnya.toString().split('').reverse().join(''),
-                  ribuan_tot = totnya.match(/\d{1,3}/g);
-                  ribuan_tot = ribuan_tot.join('.').split('').reverse().join('');
-
-                  $('#ktotal_progres').val(ribuan_tot);
-                  $('#koordinat').val(data[3].koordinat);
-                  $('#latar_belakang').val(data[3].latar_belakang);
-                  $('#uraian').val(data[3].uraian);
-                  $('#kpermasalahan').val(data[3].permasalahan);
-                }else{
-                  $('#kprogres_mingu_4').val('');
-                  $('#kprogres_mingu_4').prop('disabled', false);
-                  $('#ksave_minggu_4').prop('disabled', false);
-                }
-
-                if(typeof data[0] !== 'undefined'){
-                  if(data[0].m1){
-                    $('#kprogres_mingu_1').prop('disabled', true);
-                    $('#ksave_minggu_1').prop('disabled', true);
-                  }else{
-                    $('#kprogres_mingu_1').prop('disabled', false);
-                    $('#ksave_minggu_1').prop('disabled', false);
-                  }
-                }else{
-                  $('#kprogres_mingu_1').val('');
-                }
-
-                if(typeof data[1] !== 'undefined'){
-                  if(data[1].m2){
-                    $('#kprogres_mingu_2').prop('disabled', true);
-                    $('#ksave_minggu_2').prop('disabled', true);
-                  }else{
-                    $('#kprogres_mingu_2').prop('disabled', false);
-                    $('#ksave_minggu_2').prop('disabled', false);
-                  }
-                }else{
-                  $('#kprogres_mingu_2').val('');
-                }
-
-                if(typeof data[2] !== 'undefined'){
-                  if(data[2].m3){
-                    $('#kprogres_mingu_3').prop('disabled', true);
-                    $('#ksave_minggu_3').prop('disabled', true);
-                  }else{
-                    $('#kprogres_mingu_3').prop('disabled', false);
-                    $('#ksave_minggu_3').prop('disabled', false);
-                  }
-                }else{
-                  $('#kprogres_mingu_3').val('');
-                }
-
-                if(typeof data[3] !== 'undefined'){
-                  if(data[3].m4){
-                    $('#kprogres_mingu_4').prop('disabled', true);
-                    $('#ksave_minggu_4').prop('disabled', true);
-                  }else{
-                    $('#kprogres_mingu_4').prop('disabled', false);
-                    $('#ksave_minggu_4').prop('disabled', false);
-                  }
-                }else{
-                  $('#kprogres_mingu_4').val('');
+                  // $('#kedit_1').attr('idnya',data[i].id);
+                  // $('#kedit_2').attr('idnya',data[i].id);
+                  // $('#kedit_3').attr('idnya',data[i].id);
+                  // $('#kedit_4').attr('idnya',data[i].id);
                 }
 
                 let angkanya_bulan_lalu = $('#kprogres_bulan_lalu').val();

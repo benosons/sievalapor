@@ -76,6 +76,9 @@ function saveminggu(ke){
         $('#kode_subkegiatan').val(data[0].kode_subkegiatan);
         $('#nama_subkegiatan').val(data[0].nama_subkegiatan);
 
+        $('#bidang').val(data[0].bidang);
+        $('#seksi').val(data[0].seksi);
+
         // $('#paket').html('<option value="'+data[0].id_paket+'">'+data[0].nama_paket+'</option>').trigger("chosen:updated");
         $('#paket').val(data[0].nama_paket);
         $('#pagu_kegiatan').val(data[0].pagu);
@@ -98,18 +101,18 @@ function saveminggu(ke){
             $('#k11').val(data[i].n11);
             $('#k12').val(data[i].n12);
 
-            $('#kr1').val(data[i].progres.n1.tot);
-            $('#kr2').val(data[i].progres.n2.tot);
-            $('#kr3').val(data[i].progres.n3.tot);
-            $('#kr4').val(data[i].progres.n4.tot);
-            $('#kr5').val(data[i].progres.n5.tot);
-            $('#kr6').val(data[i].progres.n6.tot);
-            $('#kr7').val(data[i].progres.n7.tot);
-            $('#kr8').val(data[i].progres.n8.tot);
-            $('#kr9').val(data[i].progres.n9.tot);
-            $('#kr10').val(data[i].progres.n10.tot);
-            $('#kr11').val(data[i].progres.n11.tot);
-            $('#kr12').val(data[i].progres.n12.tot);
+            $('#kr1').val(rubah(data[i].progres.n1.tot));
+            $('#kr2').val(rubah(data[i].progres.n2.tot));
+            $('#kr3').val(rubah(data[i].progres.n3.tot));
+            $('#kr4').val(rubah(data[i].progres.n4.tot));
+            $('#kr5').val(rubah(data[i].progres.n5.tot));
+            $('#kr6').val(rubah(data[i].progres.n6.tot));
+            $('#kr7').val(rubah(data[i].progres.n7.tot));
+            $('#kr8').val(rubah(data[i].progres.n8.tot));
+            $('#kr9').val(rubah(data[i].progres.n9.tot));
+            $('#kr10').val(rubah(data[i].progres.n10.tot));
+            $('#kr11').val(rubah(data[i].progres.n11.tot));
+            $('#kr12').val(rubah(data[i].progres.n12.tot));
 
             $('#k_koor_1').val(data[i].progres.n1.koordinat);
             $('#k_koor_2').val(data[i].progres.n2.koordinat);
@@ -196,6 +199,16 @@ function saveminggu(ke){
         }
       })
     }
+
+    function rubah(angka){
+        var reverse = '0';
+      if(typeof  angka !== 'undefined'){
+         reverse = angka.toString().split('').reverse().join('');
+       }
+         var ribuan = reverse.match(/\d{1,3}/g);
+         ribuan = ribuan.join('.').split('').reverse().join('');
+     return ribuan;
+   }
 
     function loadkegiatan(param, code){
         var formData = new FormData();

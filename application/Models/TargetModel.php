@@ -95,13 +95,21 @@ class TargetModel extends Model{
       $toto = '';
       $now = '';
       if($type == 'keuangan'){
-        $toto = "(select sum(replace(m1, '.','')) + sum(replace(m2, '.','')) + sum(replace(m3, '.','')) + sum(replace(m4, '.','')) from bulan_realisasi where type = '$type' and kode_bulan = 'n$last' ORDER BY id DESC LIMIT 0, 1)";
-        $now  = ",(select sum(replace(m1, '.','')) + sum(replace(m2, '.','')) + sum(replace(m3, '.','')) + sum(replace(m4, '.','')) from bulan_realisasi where type = '$type' and kode_bulan = '$code' ORDER BY id DESC LIMIT 0, 1) as totalnya";
+        $toto = "(select replace(m1, '.','') + replace(m2, '.','') + replace(m3, '.','') + replace(m4, '.','') from bulan_realisasi where type = '$type' and kode_bulan = 'n$last')";
+        $now  = ", replace(m1, '.','') + replace(m2, '.','') + replace(m3, '.','') + replace(m4, '.','') as totalnya";
       }else if($type == 'fisik'){
         $toto = "(select total from bulan_realisasi where type = '$type' and kode_bulan = 'n$last' ORDER BY id DESC LIMIT 0, 1)";
       }
 
-      $sql = "SELECT *, $toto as total_sebelumnya $now from bulan_realisasi where type = '$type' and kode_bulan = '$code'";
+      $sql = "SELECT
+              br.*,
+              dr.koordinat,
+              dr.latar_belakang,
+              dr.uraian,
+              dr.permasalahan,
+              $toto as total_sebelumnya $now from bulan_realisasi br
+              left join data_realisasi dr on dr.id_paket = br.id_paket and dr.created_by = br.created_by and dr.kode_bulan = br.kode_bulan
+              where type = '$type' and br.kode_bulan = '$code'";
       // print_r($sql);die;
       $result = $this->db->query($sql);
       $row = $result->getResult();
@@ -112,6 +120,30 @@ class TargetModel extends Model{
     {
 
       $builder = $this->db->table($table);
+      $query   = $builder->where('id', $id);
+      $query->update($data);
+      // echo $this->db->getLastQuery();die;
+      return true;
+    }
+
+    public function updateRealisasi($id = null, $m1 = null, $m2 = null, $m3 = null, $m4 = null)
+    {
+      $data = [];
+
+      if($m1){
+        $data['m1'] = $m1;
+      }
+      if($m2){
+        $data['m2'] = $m2;
+      }
+      if($m3){
+        $data['m3'] = $m3;
+      }
+      if($m4){
+        $data['m4'] = $m4;
+      }
+      // print_r($data);die;
+      $builder = $this->db->table('bulan_realisasi');
       $query   = $builder->where('id', $id);
       $query->update($data);
       // echo $this->db->getLastQuery();die;
@@ -133,7 +165,10 @@ class TargetModel extends Model{
     public function getrealisasi($id_paket = null, $ppk = null, $type = null, $kodebulan = null)
     {
 
-      $sql = "SELECT kode_bulan, m1, m2, m3, m4 ,koordinat, latar_belakang, uraian, permasalahan from bulan_realisasi where id_paket = '$id_paket' and created_by = '$ppk' and type = '$type' and kode_bulan = '$kodebulan'";
+      $sql = "SELECT br.kode_bulan, br.m1, br.m2, br.m3, br.m4 , dr.koordinat, dr.latar_belakang, dr.uraian, dr.permasalahan
+              from bulan_realisasi br
+              inner join data_realisasi dr on dr.id_paket = br.id_paket and dr.created_by = br.created_by and dr.kode_bulan = br.kode_bulan
+              where br.id_paket = '$id_paket' and br.created_by = '$ppk' and br.type = '$type' and br.kode_bulan = '$kodebulan'";
 
       $result = $this->db->query($sql);
       $row = $result->getResult();
@@ -230,6 +265,39 @@ class TargetModel extends Model{
       }
 
       return (object)$val;
+    }
+
+    public function cekpaket($paket = null, $bulan = null)
+    {
+
+      $sql = "select * from data_realisasi where id_paket = '$paket' and kode_bulan = '$bulan'";
+
+      $result = $this->db->query($sql);
+      $row = $result->getResult();
+      return $row;
+    }
+
+    public function cekrealisasi($paket = null, $bulan = null, $userid = null, $m1 = null, $m2 = null, $m3 = null, $m4 = null)
+    {
+      $field = '';
+      if($m1){
+        $field = "m1 = '$m1'";
+      }
+      if($m2){
+        $field = "m2 = '$m2'";
+      }
+      if($m3){
+        $field = "m3 = '$m3'";
+      }
+      if($m4){
+        $field = "m4 = '$m4'";
+      }
+      $sql = "select * from bulan_realisasi where id_paket = '$paket' and kode_bulan = '$bulan' and created_by = '$userid'";
+
+      $result = $this->db->query($sql);
+      $row = $result->getResult();
+
+      return $row;
     }
 
 }
