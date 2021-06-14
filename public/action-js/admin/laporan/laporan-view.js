@@ -17,6 +17,10 @@ $(document).ready(function(){
 
 
   $('#tipedong').click(function(){
+    $('#koordinat').val('');
+    $('#latar_belakang').val('');
+    $('#uraian').val('');
+    $('#permasalahan').val('');
     if($(this).prop("checked") == true){
       window.type = 'fisik';
       $('#fpilih_bulan_chosen').show();
@@ -312,6 +316,7 @@ function saveminggu(type,ke){
           data : {
                   type      : type,
                   code      : param,
+                  idpaket   : $('#id_paket').val(),
           },
           success: function(result){
               let data = result.data;
@@ -370,10 +375,13 @@ function saveminggu(type,ke){
               if(data[i].type == 'keuangan'){
                 let totok = [];
                 if(typeof data[i] !== 'undefined'){
-
-                  var totnya = data[i].totalnya.toString().split('').reverse().join(''),
-                  ribuan_tot = totnya.match(/\d{1,3}/g);
-                  ribuan_tot = ribuan_tot.join('.').split('').reverse().join('');
+                  if(data[i].totalnya){
+                    var totnya = data[i].totalnya.toString().split('').reverse().join(''),
+                    ribuan_tot = totnya.match(/\d{1,3}/g);
+                    ribuan_tot = ribuan_tot.join('.').split('').reverse().join('');
+                  }else{
+                  var ribuan_tot = null;
+                  }
 
                   $('#ktotal_progres').val(ribuan_tot);
                   $('#koordinat').val(data[i].koordinat);
@@ -390,12 +398,18 @@ function saveminggu(type,ke){
 
 
                   for (var ii = 1; ii <= 4; ii++) {
-                    var em = data[i]['m'+ii].toString().split('').reverse().join(''),
-                    ribuan = em.match(/\d{1,3}/g);
-                    ribuan = ribuan.join('.').split('').reverse().join('');
-                    $('#kprogres_mingu_'+ii).val(ribuan);
-                    $('#kprogres_mingu_'+ii).prop('disabled', true);
-                    $('#ksave_minggu_'+ii).prop('disabled', true);
+                    if(data[i]['m'+ii]){
+                      var em = data[i]['m'+ii].toString().split('').reverse().join(''),
+                      ribuan = em.match(/\d{1,3}/g);
+                      ribuan = ribuan.join('.').split('').reverse().join('');
+                      $('#kprogres_mingu_'+ii).val(ribuan);
+                      $('#kprogres_mingu_'+ii).prop('disabled', true);
+                      $('#ksave_minggu_'+ii).prop('disabled', true);
+                    }else{
+                      $('#kprogres_mingu_'+ii).prop('disabled', false);
+                      $('#ksave_minggu_'+ii).prop('disabled', false);
+                      $('#kprogres_mingu_'+ii).val('');
+                    }
                   }
 
                   $('#kprogres_bulan_lalu').val(data[i].total_sebelumnya);
@@ -416,9 +430,13 @@ function saveminggu(type,ke){
                   ribuan_lalu = ribuan_lalu.join('.').split('').reverse().join('');
                 }
 
-                var reverse1 = angkanya_progres.toString().split('').reverse().join(''),
-                ribuan = reverse1.match(/\d{1,3}/g);
-                ribuan = ribuan.join('.').split('').reverse().join('');
+                if(angkanya_progres){
+                  var reverse1 = angkanya_progres.toString().split('').reverse().join(''),
+                  ribuan = reverse1.match(/\d{1,3}/g);
+                  ribuan = ribuan.join('.').split('').reverse().join('');
+                }else{
+                  var ribuan = null;
+                }
 
                 $('#kprogres_bulan_lalu').val(ribuan_lalu);
                 $('#ktot_prog').val(ribuan);
@@ -442,10 +460,15 @@ function saveminggu(type,ke){
 
 
                   for (var ii = 1; ii <= 4; ii++) {
-
-                    $('#fprogres_mingu_'+ii).val(data[i]['m'+ii]);
-                    $('#fprogres_mingu_'+ii).prop('disabled', true);
-                    $('#fsave_minggu_'+ii).prop('disabled', true);
+                    if(data[i]['m'+ii]){
+                      $('#fprogres_mingu_'+ii).val(data[i]['m'+ii]);
+                      $('#fprogres_mingu_'+ii).prop('disabled', true);
+                      $('#fsave_minggu_'+ii).prop('disabled', true);
+                    }else{
+                      $('#fprogres_mingu_'+ii).prop('disabled', false);
+                      $('#fsave_minggu_'+ii).prop('disabled', false);
+                      $('#fprogres_mingu_'+ii).val('');
+                    }
                   }
 
                   $('#fprogres_bulan_lalu').val(data[i].total_sebelumnya);

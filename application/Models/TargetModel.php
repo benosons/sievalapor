@@ -313,4 +313,26 @@ class TargetModel extends Model{
       return $row;
     }
 
+    public function cekDataRealisasi($paket = null, $bulan = null, $userid = null, $type = null, $m1 = null, $m2 = null, $m3 = null, $m4 = null)
+    {
+      $field = '';
+      if($m1){
+        $field = "m1 = '$m1'";
+      }
+      if($m2){
+        $field = "m2 = '$m2'";
+      }
+      if($m3){
+        $field = "m3 = '$m3'";
+      }
+      if($m4){
+        $field = "m4 = '$m4'";
+      }
+      $sql = "select * from data_realisasi where id_paket = '$paket' and kode_bulan = '$bulan' and created_by = '$userid'";
+      $result = $this->db->query($sql);
+      $row = $result->getResult();
+
+      return $row;
+    }
+
 }

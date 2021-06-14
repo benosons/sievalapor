@@ -646,13 +646,25 @@ class Jsondata extends \CodeIgniter\Controller
 				$userid		= $this->data['userid'];
 				$type 		= $request->getVar('type');
 				$code 		= $request->getVar('code');
+				$idpaket 		= $request->getVar('idpaket');
 
 					$model = new \App\Models\TargetModel();
 					$modelparam = new \App\Models\ParamModel();
 					$modelfiles = new \App\Models\FilesModel();
 
-					$fulldata = [];
 					$datapaket = $model->getminggu($type,$code);
+					$cekrealisasi = $model->cekDataRealisasi($idpaket, $code, $userid);
+					if(empty($datapaket)){
+						$datapaket = [];
+						if(!empty($cekrealisasi)){
+							$cekrealisasi[0]->type = $type;
+							$datapaket[0] = $cekrealisasi[0];
+						}else{
+							$datapaket = [];
+						}
+					}else{
+						$datapaket = $datapaket;
+					}
 
 					if($datapaket){
 						$response = [
@@ -1658,11 +1670,13 @@ class Jsondata extends \CodeIgniter\Controller
 			$idnya = $request->getVar('idnya');
 			$res = $model->updateDong('bulan_realisasi', $idnya , $data);
 		}else{
-
 			$cekrealisasi = $model->cekrealisasi($request->getVar('id_paket'), $request->getVar('kode_bulan'), $userid, $type, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'));
 			if(empty($cekrealisasi)){
 				$res = $model->saveParam('bulan_realisasi', $data);
 			}else{
+				if(!array_key_exists("total",$data)){
+					$data['total'] = '';
+				}
 				$res = $model->updateRealisasi($cekrealisasi[0]->id, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'), @$data['total']);
 			}
 
