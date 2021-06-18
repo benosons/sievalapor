@@ -361,7 +361,8 @@ class Jsondata extends \CodeIgniter\Controller
 					$modelfiles = new \App\Models\FilesModel();
 
 						$fulldata = [];
-						$dataprogram = $model->getProgram($id);
+						$dataprogram = $model->getProgram($role);
+
 
 					if($dataprogram){
 						$response = [
@@ -652,8 +653,9 @@ class Jsondata extends \CodeIgniter\Controller
 					$modelparam = new \App\Models\ParamModel();
 					$modelfiles = new \App\Models\FilesModel();
 
-					$datapaket = $model->getminggu($type,$code);
+					$datapaket = $model->getminggu($type,$code, $idpaket);
 					$cekrealisasi = $model->cekDataRealisasi($idpaket, $code, $userid);
+
 					if(empty($datapaket)){
 						$datapaket = [];
 						if(!empty($cekrealisasi)){
@@ -1618,6 +1620,15 @@ class Jsondata extends \CodeIgniter\Controller
 				'created_by'		=> $userid,
 				'updated_date'	=> $this->now
 			];
+
+			$data_new = [
+					'created_by'		=> $userid,
+					'updated_date'	=> $this->now,
+					'koordinat'			=> $request->getVar('koordinat'),
+					'latar_belakang'=> $request->getVar('latar_belakang'),
+					'uraian'				=> $request->getVar('uraian'),
+					'permasalahan'	=> $request->getVar('permasalahan'),
+				];
 		}else{
 			$data = [
 					'id_paket'			=> $request->getVar('id_paket'),
@@ -1669,6 +1680,8 @@ class Jsondata extends \CodeIgniter\Controller
 		if($edited){
 			$idnya = $request->getVar('idnya');
 			$res = $model->updateDong('bulan_realisasi', $idnya , $data);
+			$res2 = $model->updateDong2('data_realisasi', $request->getVar('id_paket'), $request->getVar('kode_bulan') , $data_new);
+
 		}else{
 			$cekrealisasi = $model->cekrealisasi($request->getVar('id_paket'), $request->getVar('kode_bulan'), $userid, $type, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'));
 			if(empty($cekrealisasi)){
@@ -2260,6 +2273,120 @@ class Jsondata extends \CodeIgniter\Controller
 							'status'   => 'sukses',
 							'code'     => '1',
 							'data' 		 => $users
+						];
+					}else{
+						$response = [
+						    'status'   => 'gagal',
+						    'code'     => '0',
+						    'data'     => 'tidak ada data',
+						];
+					}
+
+				header('Content-Type: application/json');
+				echo json_encode($response);
+				exit;
+			}
+		catch (\Exception $e)
+		{
+			die($e->getMessage());
+		}
+	}
+
+	public function loadall()
+	{
+		try
+		{
+
+				$request  = $this->request;
+				$param 	  = $request->getVar('param');
+				$id		 	  = $request->getVar('id');
+				$role 		= $this->data['role'];
+				$userid		= $this->data['userid'];
+				$code			= $request->getVar('code');
+
+					$model = new \App\Models\TargetModel();
+					$modelparam = new \App\Models\ParamModel();
+					$modelfiles = new \App\Models\FilesModel();
+						$fulldata = [];
+						$dataprogram = $model->getall('data_program', 'kode_program, nama_program', ['kode_program' => '1.03.03']);
+						$dataprogram = json_decode(json_encode($dataprogram), true);
+						foreach ($dataprogram as $key => $value) {
+							$datakegiatan = $model->getall('data_kegiatan','kode_kegiatan, nama_kegiatan', ['kode_program' => $value['kode_program']]);
+							$datakegiatan = json_decode(json_encode($datakegiatan), true);
+							foreach ($datakegiatan as $key1 => $value1) {
+								$datasubkegiatan = $model->getall('data_subkegiatan', 'kode_subkegiatan,nama_subkegiatan', ['kode_kegiatan' => $value1['kode_kegiatan']]);
+								$datasubkegiatan = json_decode(json_encode($datasubkegiatan), true);
+								foreach ($datasubkegiatan as $key2 => $value2) {
+									$datapaket = $model->getall('data_paket', 'id, nama_paket', ['kode_subkegiatan' => $value2['kode_subkegiatan']]);
+									$datapaket = json_decode(json_encode($datapaket), true);
+									foreach ($datapaket as $key3 => $value3) {
+										$datatarget = $model->getall('data_target', 'id_paket, pagu, bidang, seksi', ['id_paket' => $value3['id'] ]);
+										$datatarget = json_decode(json_encode($datatarget), true);
+										foreach ($datatarget as $key4 => $value4) {
+											$databulantarget_k = $model->getall('bulan_target', $code, ['id_paket' => $value4['id_paket'], 'type' => 'keuangan']);
+											$databulantarget_k = json_decode(json_encode($databulantarget_k), true);
+
+											$databulantarget_f = $model->getall('bulan_target', $code, ['id_paket' => $value4['id_paket'], 'type' => 'fisik']);
+											$databulantarget_f = json_decode(json_encode($databulantarget_f), true);
+
+											$datatarget[$key4]['keuangan'] = $databulantarget_k[0][$code];
+											$datatarget[$key4]['fisik'] = $databulantarget_f[0][$code];
+										}
+
+										$datarealisasi = $model->getall('data_realisasi', 'id_paket, koordinat, latar_belakang, uraian, permasalahan ,kode_bulan', ['id_paket' => $value3['id'], 'kode_bulan' => $code ]);
+										$datarealisasi = json_decode(json_encode($datarealisasi), true);
+										foreach ($datarealisasi as $key5 => $value5) {
+											$dataprogres_k = $model->getall('bulan_realisasi', "* , replace(m1, '.','') + replace(m2, '.','') + replace(m3, '.','') + replace(m4, '.','') as new_total", ['id_paket' => $value5['id_paket'], 'type' => 'keuangan', 'kode_bulan' => $value5['kode_bulan']]);
+											$dataprogres_k = json_decode(json_encode($dataprogres_k), true);
+											$dataprogres_f = $model->getall('bulan_realisasi', '*', ['id_paket' => $value5['id_paket'], 'type' => 'fisik', 'kode_bulan' => $value5['kode_bulan']]);
+											$dataprogres_f = json_decode(json_encode($dataprogres_f), true);
+											$datarealisasi[$key5]['keuangan'] = $dataprogres_k[0];
+											$datarealisasi[$key5]['fisik'] = $dataprogres_f[0];
+										}
+
+										// $datatarget = empty($datatarget) ? 0 : $datatarget[0];
+										// $datarealisasi = empty($datarealisasi) ? 0 : $datarealisasi[0];
+
+										$datapaket[$key3]['target'] = $datatarget;
+										$datapaket[$key3]['realisasi'] = $datarealisasi;
+
+										foreach ($datapaket[$key3]['target'] as $keytar => $valuetar) {
+											$datapaket[$key3]['pagu_paket'] = $valuetar['keuangan'];
+										}
+
+									}
+
+									$datasubkegiatan[$key2]['paket'] = $datapaket;
+									$pagu_sub = [];
+									foreach ($datasubkegiatan[$key2]['paket'] as $keypak => $valuepak) {
+										if(array_key_exists("pagu_paket",$valuepak)){
+											array_push($pagu_sub, str_replace(".","",$valuepak['pagu_paket']));
+										}
+									}
+									$datasubkegiatan[$key]['pagu_subkegiatan'] = array_sum($pagu_sub);
+								}
+
+								$datakegiatan[$key1]['subkegiatan'] = $datasubkegiatan;
+								$pagu_keg = [];
+								foreach ($datakegiatan[$key1]['subkegiatan'] as $keysub => $valuesub) {
+										array_push($pagu_keg, $valuesub['pagu_subkegiatan']);
+								}
+								$datakegiatan[$key]['pagu_kegiatan']= array_sum($pagu_keg);
+							}
+
+							$dataprogram[$key]['kegiatan'] = $datakegiatan;
+							$pagu_prog = [];
+							foreach ($dataprogram[$key]['kegiatan'] as $keykeg => $valuekeg) {
+								array_push($pagu_prog, $valuekeg['pagu_kegiatan']);
+							}
+							$dataprogram[$key]['pagu_program']	   = array_sum($pagu_prog);
+						}
+
+					if($dataprogram){
+						$response = [
+							'status'   => 'sukses',
+							'code'     => '1',
+							'data' 		 => $dataprogram
 						];
 					}else{
 						$response = [

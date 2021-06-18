@@ -33,12 +33,18 @@ class KegiatanModel extends Model{
 
     public function getpaket($code = null)
     {
-          $builder = $this->db->table('data_paket');
           if($code){
-            $query   = $builder->getWhere(['kode_subkegiatan' => $code]);
+            $sql = "SELECT * FROM `data_paket` WHERE `kode_subkegiatan` = '$code' and
+                    id not in (select id_paket from data_realisasi where id_paket = data_paket.id )";
+
+            $result = $this->db->query($sql);
+            $row = $result->getResult();
+            return $row;
           }else{
+            $builder = $this->db->table('data_paket');
             $query   = $builder->get();
           }
+          // echo $this->db->getLastQuery();die;
           return  $query->getResult();
     }
 

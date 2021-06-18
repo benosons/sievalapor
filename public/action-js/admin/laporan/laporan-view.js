@@ -322,7 +322,6 @@ function saveminggu(type,ke){
               let data = result.data;
 
             if(!Array.isArray(data)){
-
               for (var i = 1; i <= 4; i++) {
                 if(type == 'keuangan'){
                     if($('#ktotal_progres').val()){
@@ -384,17 +383,23 @@ function saveminggu(type,ke){
                   }
 
                   $('#ktotal_progres').val(ribuan_tot);
-                  $('#koordinat').val(data[i].koordinat);
-                  $('#koordinat').prop('disabled', true);
 
-                  $('#latar_belakang').val(data[i].latar_belakang);
-                  $('#latar_belakang').prop('disabled', true);
-
-                  $('#uraian').val(data[i].uraian);
-                  $('#uraian').prop('disabled', true);
-
-                  $('#permasalahan').val(data[i].permasalahan);
-                  $('#permasalahan').prop('disabled', true);
+                  if(data[i].koordinat){
+                    $('#koordinat').val(data[i].koordinat);
+                    $('#koordinat').prop('disabled', true);
+                  }
+                  if(data[i].latar_belakang){
+                    $('#latar_belakang').val(data[i].latar_belakang);
+                    $('#latar_belakang').prop('disabled', true);
+                  }
+                  if(data[i].uraian){
+                    $('#uraian').val(data[i].uraian);
+                    $('#uraian').prop('disabled', true);
+                  }
+                  if(data[i].permasalahan){
+                    $('#permasalahan').val(data[i].permasalahan);
+                    $('#permasalahan').prop('disabled', true);
+                  }
 
 
                   for (var ii = 1; ii <= 4; ii++) {
@@ -444,19 +449,24 @@ function saveminggu(type,ke){
               }else if(data[i].type == 'fisik'){
 
                 if(typeof data[i] !== 'undefined'){
-                  console.log(data[i].total);
+
                   $('#ftotal_progres').val(data[i].total);
-                  $('#koordinat').val(data[i].koordinat);
-                  $('#koordinat').prop('disabled', true);
-
-                  $('#latar_belakang').val(data[i].latar_belakang);
-                  $('#latar_belakang').prop('disabled', true);
-
-                  $('#uraian').val(data[i].uraian);
-                  $('#uraian').prop('disabled', true);
-
-                  $('#permasalahan').val(data[i].permasalahan);
-                  $('#permasalahan').prop('disabled', true);
+                  if(data[i].koordinat){
+                    $('#koordinat').val(data[i].koordinat);
+                    $('#koordinat').prop('disabled', true);
+                  }
+                  if(data[i].latar_belakang){
+                    $('#latar_belakang').val(data[i].latar_belakang);
+                    $('#latar_belakang').prop('disabled', true);
+                  }
+                  if(data[i].uraian){
+                    $('#uraian').val(data[i].uraian);
+                    $('#uraian').prop('disabled', true);
+                  }
+                  if(data[i].permasalahan){
+                    $('#permasalahan').val(data[i].permasalahan);
+                    $('#permasalahan').prop('disabled', true);
+                  }
 
 
                   for (var ii = 1; ii <= 4; ii++) {
@@ -488,13 +498,21 @@ function saveminggu(type,ke){
         }
 
   function editdong(type, ke){
-    if($('#progres_mingu_'+ke).val()){
-      if($('#edit_'+ke).is(":checked")){
-        $('#progres_mingu_'+ke).prop('disabled', false);
-        $('#save_minggu_'+ke).prop('disabled', false);
+    switch (window.type) {
+      case 'fisik':
+          var kunci = 'f';
+        break;
+      default:
+        var kunci = 'k';
+    }
+
+    if($('#'+kunci+'progres_mingu_'+ke).val()){
+      if($('#'+kunci+'edit_'+ke).is(":checked")){
+        $('#'+kunci+'progres_mingu_'+ke).prop('disabled', false);
+        $('#'+kunci+'save_minggu_'+ke).prop('disabled', false);
       }else{
-        $('#progres_mingu_'+ke).prop('disabled', true);
-        $('#save_minggu_'+ke).prop('disabled', true);
+        $('#'+kunci+'progres_mingu_'+ke).prop('disabled', true);
+        $('#'+kunci+'save_minggu_'+ke).prop('disabled', true);
       }
     }
 

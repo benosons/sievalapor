@@ -92,6 +92,7 @@ $routes->add('biodata', 'View::biodata');
 $routes->add('rencana', 'View::rencana');
 $routes->add('laporan', 'View::laporan');
 $routes->add('rekap', 'View::rekap');
+$routes->add('report', 'View::report');
 
 $routes->add('auth', 'Auth::auth');
 $routes->add('reg', 'Auth::reg');
@@ -110,6 +111,7 @@ $routes->post('loadrealisasi', 'Jsondata::loadrealisasi');
 $routes->post('loadminggu', 'Jsondata::loadminggu');
 $routes->post('loadnip', 'Jsondata::loadnip');
 $routes->post('loadrekap', 'Jsondata::loadrekap');
+$routes->post('loadall', 'Jsondata::loadall');
 
 $routes->post('actionUsers', 'Jsondata::actionUsers');
 $routes->post('addUser', 'Jsondata::addUser');

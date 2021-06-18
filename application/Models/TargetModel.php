@@ -88,7 +88,7 @@ class TargetModel extends Model{
         return  $res;
     }
 
-    public function getminggu($type = null, $code = null)
+    public function getminggu($type = null, $code = null, $idpaket = null)
     {
       $str = substr($code, -1);
       $last = $str - 1;
@@ -109,8 +109,8 @@ class TargetModel extends Model{
               dr.permasalahan,
               $toto as total_sebelumnya $now from bulan_realisasi br
               left join data_realisasi dr on dr.id_paket = br.id_paket and dr.created_by = br.created_by and dr.kode_bulan = br.kode_bulan
-              where type = '$type' and br.kode_bulan = '$code'";
-      // print_r($sql);die;
+              where type = '$type' and br.kode_bulan = '$code' and br.id_paket = $idpaket";
+
       $result = $this->db->query($sql);
       $row = $result->getResult();
       return $row;
@@ -121,6 +121,16 @@ class TargetModel extends Model{
 
       $builder = $this->db->table($table);
       $query   = $builder->where('id', $id);
+      $query->update($data);
+      // echo $this->db->getLastQuery();die;
+      return true;
+    }
+
+    public function updateDong2($table = null, $id = null, $kode = null, $data = null)
+    {
+      $builder = $this->db->table($table);
+      $query   = $builder->where('id_paket', $id);
+      $query   = $builder->where('kode_bulan', $kode);
       $query->update($data);
       // echo $this->db->getLastQuery();die;
       return true;
@@ -333,6 +343,23 @@ class TargetModel extends Model{
       $row = $result->getResult();
 
       return $row;
+    }
+
+    public function getall($table = null, $select = null, $where = null){
+
+      $builder = $this->db->table($table);
+      $builder->select($select);
+      if($where){
+        $query   = $builder->getWhere($where);
+      }else{
+        $query = $builder->get();
+      }
+      // if($table == 'data_kegiatan'){
+      //   echo $this->db->getLastQuery();die;
+      // }
+
+
+      return  $query->getResult();
     }
 
 }

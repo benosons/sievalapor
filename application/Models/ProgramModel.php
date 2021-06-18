@@ -9,8 +9,14 @@ class ProgramModel extends Model{
     protected $createdField  = 'create_date';
     protected $updatedField  = 'update_date';
 
-    public function getProgram()
+    public function getProgram($role=null)
     {
+          if($role == '30'){ //ppk
+            $builder = $this->db->table('data_program');
+            $query   = $builder->get();
+            return  $query->getResult();
+          }
+          
           $builder = $this->db->table('data_program');
           $query   = $builder->get();
           return  $query->getResult();
