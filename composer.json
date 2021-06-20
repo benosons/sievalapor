@@ -16,7 +16,7 @@
 		}
 	},
 	"require": {
-		"php": ">=7.0",
+		"php": ">=7.4",
 		"zendframework/zend-escaper": "^2.5"
 	},
 	"require-dev": {
