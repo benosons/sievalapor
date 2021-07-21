@@ -96,7 +96,7 @@ class TargetModel extends Model{
       $now = '';
       if($type == 'keuangan'){
         $toto = "(select replace(m1, '.','') + replace(m2, '.','') + replace(m3, '.','') + replace(m4, '.','') from bulan_realisasi where type = '$type' and kode_bulan = 'n$last')";
-        $now  = ", replace(m1, '.','') + replace(m2, '.','') + replace(m3, '.','') + replace(m4, '.','') as totalnya";
+        $now  = ", replace(IFNULL(m1, 0), '.','') + replace(IFNULL(m2, 0), '.','') + replace(IFNULL(m3,0), '.','') + replace(IFNULL(m4,0), '.','') as totalnya";
       }else if($type == 'fisik'){
         $toto = "(select total from bulan_realisasi where type = '$type' and kode_bulan = 'n$last' ORDER BY id DESC LIMIT 1)";
       }
@@ -104,15 +104,13 @@ class TargetModel extends Model{
       $sql = "SELECT
               br.*,
               dr.koordinat,
-              dr.latar_belakang,
-              dr.uraian,
-              dr.permasalahan,
               $toto as total_sebelumnya $now from bulan_realisasi br
               left join data_realisasi dr on dr.id_paket = br.id_paket and dr.created_by = br.created_by and dr.kode_bulan = br.kode_bulan
               where type = '$type' and br.kode_bulan = '$code' and br.id_paket = $idpaket";
 
       $result = $this->db->query($sql);
       $row = $result->getResult();
+      // echo $this->db->getLastQuery();die;
       return $row;
     }
 
@@ -338,6 +336,7 @@ class TargetModel extends Model{
       if($m4){
         $field = "m4 = '$m4'";
       }
+      
       $sql = "select * from data_realisasi where id_paket = '$paket' and kode_bulan = '$bulan' and created_by = '$userid'";
       $result = $this->db->query($sql);
       $row = $result->getResult();
@@ -360,6 +359,35 @@ class TargetModel extends Model{
 
 
       return  $query->getResult();
+    }
+
+    public function updateTarget($table = null, $id = null, $data = null)
+    {
+
+      $builder = $this->db->table($table);
+      $query   = $builder->where($id);
+      $query->update($data);
+      // echo $this->db->getLastQuery();die;
+      return true;
+    }
+
+    public function cekParam($table = null, $paket = null, $bulan = null, $type = null)
+    {
+
+      $sql = "select * from $table where id_paket = '$paket'";
+
+      if($bulan){
+        $sql .= " and kode_bulan = '$bulan' ";
+        // print_r($sql);die;
+      }
+
+      if($type){
+        $sql .= " and type = '$type'";
+      }
+
+      $result = $this->db->query($sql);
+      $row = $result->getResult();
+      return $row;
     }
 
 }

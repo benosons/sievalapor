@@ -34,6 +34,7 @@ $(document).ready(function(){
 
       for (var i = 1; i <= 12; i++) {
         formData.append('k'+i, $('#k'+i).val());
+        formData.append('kp'+i, $('#kp'+i).val());
         formData.append('f'+i, $('#f'+i).val());
       }
 
@@ -120,6 +121,12 @@ $(document).ready(function(){
       let lue = vlue.replaceAll('.', '');
       let vl = ($('#k'+i).val() == '') ? 0 : parseInt(lue);
       ktot.push(vl);
+      if($('#pagu_kegiatan').val()){
+        let pagu = $('#pagu_kegiatan').val();
+        let persen = (vlue / pagu) * 100;
+        console.log(persen)
+        $('#kp'+i).val(persen.toFixed(2) + '%');
+      }
     }
     ;
     $('#ktot').val(rubah(ktot.reduce((a, b) => a + b, 0)));

@@ -653,21 +653,106 @@ class Jsondata extends \CodeIgniter\Controller
 					$modelparam = new \App\Models\ParamModel();
 					$modelfiles = new \App\Models\FilesModel();
 
-					$datapaket = $model->getminggu($type,$code, $idpaket);
+					$datapaket = $model->getminggu($type, $code, $idpaket);
 					$cekrealisasi = $model->cekDataRealisasi($idpaket, $code, $userid);
 
+					
 					if(empty($datapaket)){
+						
 						$datapaket = [];
+						
 						if(!empty($cekrealisasi)){
+							
 							$cekrealisasi[0]->type = $type;
+							
+							if($type == 'keuangan'){
+
+								$cekuraian = $model->cekParam('param_uraian', $idpaket, null, $type);
+								$cekrealisasi[0]->uraian = $cekuraian[0]->desc;
+
+								$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, $type);
+								$cekrealisasi[0]->latar_belakang = $ceklatar[0]->desc;
+
+								$cekmasalah = $model->cekParam('param_masalah', $idpaket, $cekrealisasi[0]->kode_bulan, $type);
+								$cekrealisasi[0]->permasalahan = $cekmasalah[0]->desc;
+
+							}else if($type = 'fisik'){
+								
+								$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, null);
+
+								
+								$cekrealisasi[0]->latar_belakang = $ceklatar[0]->desc;
+								$cekuraian = $model->cekParam('param_uraian', $idpaket, $cekrealisasi[0]->kode_bulan, $type);
+								if($cekuraian){
+									$cekrealisasi[0]->uraian = $cekuraian[0]->desc;
+								}
+
+								$cekmasalah = $model->cekParam('param_masalah', $idpaket, $cekrealisasi[0]->kode_bulan, $type);
+								if($cekmasalah){
+									$cekrealisasi[0]->permasalahan = $cekmasalah[0]->desc;
+								}
+							}
 							$datapaket[0] = $cekrealisasi[0];
+							
 						}else{
-							$datapaket = [];
+							$adadata = [];
+							if($type == 'keuangan'){
+								$adadata[0] = new \stdClass();
+								$adadata[0]->type = $type;
+								$cekuraian = $model->cekParam('param_uraian', $idpaket, null, $type);
+								$adadata[0]->uraian = $cekuraian[0]->desc;
+								$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, $type);
+								$adadata[0]->latar_belakang = $ceklatar[0]->desc;
+								$str = substr($code, -1);
+      							$last = $str - 1;
+								$cektotalsebelumnya = $model->cekParam('bulan_realisasi', $idpaket , 'n'.$last, $type);
+								
+								$m1 = $cektotalsebelumnya[0]->m1;
+								$m2 = $cektotalsebelumnya[0]->m2;
+								$m3 = $cektotalsebelumnya[0]->m3;
+								$m4 = $cektotalsebelumnya[0]->m4;
+								
+								$tot_sebelum = $m1 ? str_replace(".","", $m1) : '0' ;
+								$tot_sebelum += $m2 ? str_replace(".","", $m2) : '0' ;
+								$tot_sebelum += $m3 ? str_replace(".","", $m3) : '0' ;
+								$tot_sebelum += $m4 ? str_replace(".","", $m4) : '0' ;
+								
+								// $cekmasalah = $model->cekParam('param_masalah', $idpaket, $cekrealisasi[0]->kode_bulan);
+								$adadata[0]->total_sebelumnya = $tot_sebelum;
+							}else if($type == 'fisik'){
+
+							}
+							$datapaket = $adadata;
 						}
 					}else{
+						
+
+						if($type == 'keuangan'){
+							$cekuraian = $model->cekParam('param_uraian', $idpaket, null, $type);
+							$datapaket[0]->uraian = $cekuraian[0]->desc;
+
+							$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, $type);
+							$datapaket[0]->latar_belakang = $ceklatar[0]->desc;
+
+							$cekmasalah = $model->cekParam('param_masalah', $idpaket, $code, $type);
+							$datapaket[0]->permasalahan = $cekmasalah[0]->desc;
+						}else if($type == 'fisik'){
+							$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, null);
+							$datapaket[0]->latar_belakang = $ceklatar[0]->desc;
+							$cekuraian = $model->cekParam('param_uraian', $idpaket, $code, $type);
+							if(!empty($cekuraian)){
+								$datapaket[0]->uraian = $cekuraian[0]->desc;
+							}
+
+							$cekmasalah = $model->cekParam('param_masalah', $idpaket, $code, $type);
+							if(!empty($cekmasalah)){
+								$datapaket[0]->permasalahan = $cekmasalah[0]->desc;
+							}
+						}
+						
 						$datapaket = $datapaket;
 					}
-
+					
 					if($datapaket){
 						$response = [
 							'status'   => 'sukses',
@@ -1566,6 +1651,7 @@ class Jsondata extends \CodeIgniter\Controller
 
 		$databulan_k = [];
 		$databulan_f = [];
+		$databulan_kp = [];
 		for ($i=1; $i <= 12; $i++) {
 			$databulan_k['id_paket'] = $request->getVar('id_paket');
 			$databulan_f['id_paket'] = $request->getVar('id_paket');
@@ -1574,6 +1660,8 @@ class Jsondata extends \CodeIgniter\Controller
 			$databulan_k['n'.$i] = $request->getVar('k'.$i);
 			$databulan_f['type'] = 'fisik';
 			$databulan_f['n'.$i] = $request->getVar('f'.$i);
+			$databulan_kp['type'] = 'persen';
+			$databulan_kp['n'.$i] = $request->getVar('kp'.$i);
 		}
 
 		$databulan_k['tot'] = $request->getVar('ktot');
@@ -1585,11 +1673,68 @@ class Jsondata extends \CodeIgniter\Controller
 			// }else if($=2){
 				$res_f = $model->saveParam('bulan_target', $databulan_f);
 			// }
+
+				$res_kp = $model->saveParam('bulan_target', $databulan_kp);
 			// code...
 		// }
 
 		$res = $model->saveParam($param, $data);
 		$id  = $model->insertID();
+
+		$response = [
+				'status'   => 'sukses',
+				'code'     => '0',
+				'data' 		 => 'terkirim'
+		];
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+
+	}
+
+	public function updateTarget(){
+
+		$request  = $this->request;
+		$param 	  = $request->getVar('param');
+		$role 		= $this->data['role'];
+
+		$model 	  = new \App\Models\TargetModel();
+		
+		$data = [
+					'updated_date'		=> $this->now,
+					'pagu'						=> $request->getVar('pagu_kegiatan'),
+				];
+
+		$databulan_k = [];
+		$databulan_f = [];
+		$databulan_kp = [];
+		for ($i=1; $i <= 12; $i++) {
+			$databulan_k['id_paket'] = $request->getVar('id_paket');
+			$databulan_f['id_paket'] = $request->getVar('id_paket');
+
+			$databulan_k['type'] = 'keuangan';
+			$databulan_k['n'.$i] = $request->getVar('k'.$i);
+			$databulan_f['type'] = 'fisik';
+			$databulan_f['n'.$i] = $request->getVar('f'.$i);
+			$databulan_kp['type'] = 'persen';
+			$databulan_kp['n'.$i] = $request->getVar('kp'.$i);
+		}
+
+		$databulan_k['tot'] = $request->getVar('ktot');
+		$databulan_f['tot'] = $request->getVar('ftot');
+		// for ($i=1; $i <= 2; $i++) {
+			// if($=1){
+				$res_k 	= $model->updateTarget('bulan_target',  ['id_paket' => $request->getVar('id_paket'), 'type' => $databulan_k['type'] ], $databulan_k);
+
+			// }else if($=2){
+				$res_f 	= $model->updateTarget('bulan_target',  ['id_paket' => $request->getVar('id_paket'), 'type' => $databulan_f['type'] ], $databulan_f);
+
+			// }
+				$res_kp = $model->updateTarget('bulan_target', ['id_paket' => $request->getVar('id_paket'), 'type' => $databulan_kp['type'] ] ,  $databulan_kp);
+			// code...
+		// }
+				
+		$res = $model->updateTarget($param , [ 'id' => $request->getVar('id_paket') ], $data);
 
 		$response = [
 				'status'   => 'sukses',
@@ -1614,6 +1759,7 @@ class Jsondata extends \CodeIgniter\Controller
 		$type = $request->getVar('type');
 
 		$edited = $request->getVar('edited');
+
 		if($edited){
 
 			$data = [
@@ -1630,13 +1776,15 @@ class Jsondata extends \CodeIgniter\Controller
 					'permasalahan'	=> $request->getVar('permasalahan'),
 				];
 		}else{
+
+			
 			$data = [
 					'id_paket'			=> $request->getVar('id_paket'),
-					'type'					=> $type,
+					'type'				=> $type,
 					'kode_bulan'		=> $request->getVar('kode_bulan'),
 					'created_by'		=> $userid,
-					'created_date'	=> $this->now,
-					'updated_date'	=> $this->now,
+					'created_date'		=> $this->now,
+					'updated_date'		=> $this->now,
 				];
 
 			$data_new = [
@@ -1645,12 +1793,31 @@ class Jsondata extends \CodeIgniter\Controller
 					'created_date'	=> $this->now,
 					'updated_date'	=> $this->now,
 					'koordinat'			=> $request->getVar('koordinat'),
-					'latar_belakang'=> $request->getVar('latar_belakang'),
-					'uraian'				=> $request->getVar('uraian'),
-					'permasalahan'	=> $request->getVar('permasalahan'),
+					'kode_bulan'		=> $request->getVar('kode_bulan')
+				];
+
+			$data_permasalahan = [
+					'id_paket'			=> $request->getVar('id_paket'),
+					'type'				=> $type,
+					'desc'				=> $request->getVar('permasalahan'),
+					'kode_bulan'		=> $request->getVar('kode_bulan')
+				];
+
+			$data_uraian = [
+					'id_paket'			=> $request->getVar('id_paket'),
+					'type'				=> $type,
+					'desc'				=> $request->getVar('uraian'),
+					'kode_bulan'		=> $request->getVar('kode_bulan')
+				];
+
+			$data_latar = [
+					'id_paket'			=> $request->getVar('id_paket'),
+					'type'				=> $type,
+					'desc'				=> $request->getVar('latar_belakang'),
 					'kode_bulan'		=> $request->getVar('kode_bulan')
 				];
 			}
+
 	if($request->getVar('type') == 'keuangan'){
 		if($request->getVar('m1')){
 			$data['m1'] = $request->getVar('m1');
@@ -1661,6 +1828,7 @@ class Jsondata extends \CodeIgniter\Controller
 		}else if($request->getVar('m4')){
 			$data['m4'] = $request->getVar('m4');
 		}
+
 	}else if($request->getVar('type') == 'fisik'){
 		if($request->getVar('m1')){
 			$data['m1'] = $request->getVar('m1');
@@ -1684,6 +1852,7 @@ class Jsondata extends \CodeIgniter\Controller
 
 		}else{
 			$cekrealisasi = $model->cekrealisasi($request->getVar('id_paket'), $request->getVar('kode_bulan'), $userid, $type, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'));
+			
 			if(empty($cekrealisasi)){
 				$res = $model->saveParam('bulan_realisasi', $data);
 			}else{
@@ -1694,9 +1863,87 @@ class Jsondata extends \CodeIgniter\Controller
 			}
 
 			$cekpaket	= $model->cekpaket($request->getVar('id_paket'), $request->getVar('kode_bulan'));
-
+			
 			if(empty($cekpaket)){
 				$res_new = $model->saveParam('data_realisasi', $data_new);
+
+				if($request->getVar('type') == 'keuangan'){
+					$data_latar['type'] = 'keuangan';
+					$data_uraian['type'] = 'keuangan';
+					$data_permasalahan['type'] = 'keuangan';
+
+					$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'));
+					if(empty($ceklatar)){
+						$res_latar = $model->saveParam('param_latar_belakang', $data_latar);
+					}
+					$cekuraian = $model->cekParam('param_uraian', $request->getVar('id_paket'));
+					if(empty($cekuraian)){
+						$res_uraian = $model->saveParam('param_uraian', $data_uraian);
+					}
+					$cekmasalah = $model->cekParam('param_masalah', $request->getVar('id_paket'), $request->getVar('kode_bulan'));
+					if(empty($cekmasalah)){
+						$res_masalah = $model->saveParam('param_masalah', $data_permasalahan);
+					}
+				}else if($request->getVar('type') == 'fisik'){
+					$data_latar['type'] = 'fisik';
+					$data_uraian['type'] = 'fisik';
+					$data_permasalahan['type'] = 'fisik';
+
+					$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'));
+					
+					if(empty($ceklatar)){
+						$res_latar = $model->saveParam('param_latar_belakang', $data_latar);
+					}
+					$cekuraian = $model->cekParam('param_uraian', $request->getVar('id_paket'), $request->getVar('kode_bulan'));
+					if(empty($cekuraian)){
+						$res_uraian = $model->saveParam('param_uraian', $data_uraian);
+					}
+					$cekmasalah = $model->cekParam('param_masalah', $request->getVar('id_paket'), $request->getVar('kode_bulan'));
+					if(empty($cekmasalah)){
+						$res_masalah = $model->saveParam('param_masalah', $data_permasalahan);
+					}
+
+				}
+
+			}else{
+				
+				if($request->getVar('type') == 'keuangan'){
+					$data_latar['type'] = 'keuangan';
+					$data_uraian['type'] = 'keuangan';
+					$data_permasalahan['type'] = 'keuangan';
+
+					$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'));
+					if(empty($ceklatar)){
+						$res_latar = $model->saveParam('param_latar_belakang', $data_latar);
+					}
+					$cekuraian = $model->cekParam('param_uraian', $request->getVar('id_paket'));
+					if(empty($cekuraian)){
+						$res_uraian = $model->saveParam('param_uraian', $data_uraian);
+					}
+					$cekmasalah = $model->cekParam('param_masalah', $request->getVar('id_paket'), $request->getVar('kode_bulan'), $request->getVar('type'));
+					if(empty($cekmasalah)){
+						$res_masalah = $model->saveParam('param_masalah', $data_permasalahan);
+					}
+				}else if($request->getVar('type') == 'fisik'){
+					$data_latar['type'] = 'fisik';
+					$data_uraian['type'] = 'fisik';
+					$data_permasalahan['type'] = 'fisik';
+
+					$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'));
+					
+					if(empty($ceklatar)){
+						$res_latar = $model->saveParam('param_latar_belakang', $data_latar);
+					}
+					$cekuraian = $model->cekParam('param_uraian', $request->getVar('id_paket'), $request->getVar('kode_bulan'), $request->getVar('type'));
+					if(empty($cekuraian)){
+						$res_uraian = $model->saveParam('param_uraian', $data_uraian);
+					}
+					$cekmasalah = $model->cekParam('param_masalah', $request->getVar('id_paket'), $request->getVar('kode_bulan'), $request->getVar('type'));
+					if(empty($cekmasalah)){
+						$res_masalah = $model->saveParam('param_masalah', $data_permasalahan);
+					}
+
+				}
 			}
 		}
 
@@ -2314,7 +2561,7 @@ class Jsondata extends \CodeIgniter\Controller
 							$datakegiatan = $model->getall('data_kegiatan','kode_kegiatan, nama_kegiatan', ['kode_program' => $value['kode_program']]);
 							$datakegiatan = json_decode(json_encode($datakegiatan), true);
 							foreach ($datakegiatan as $key1 => $value1) {
-								$datasubkegiatan = $model->getall('data_subkegiatan', 'kode_subkegiatan,nama_subkegiatan', ['kode_kegiatan' => $value1['kode_kegiatan']]);
+								$datasubkegiatan = $model->getall('data_subkegiatan', 'kode_subkegiatan, nama_subkegiatan', ['kode_kegiatan' => $value1['kode_kegiatan']]);
 								$datasubkegiatan = json_decode(json_encode($datasubkegiatan), true);
 								foreach ($datasubkegiatan as $key2 => $value2) {
 									$datapaket = $model->getall('data_paket', 'id, nama_paket', ['kode_subkegiatan' => $value2['kode_subkegiatan']]);
@@ -2364,11 +2611,14 @@ class Jsondata extends \CodeIgniter\Controller
 										}
 									}
 									$datasubkegiatan[$key]['pagu_subkegiatan'] = array_sum($pagu_sub);
+
 								}
 
 								$datakegiatan[$key1]['subkegiatan'] = $datasubkegiatan;
 								$pagu_keg = [];
+
 								foreach ($datakegiatan[$key1]['subkegiatan'] as $keysub => $valuesub) {
+									print_r($valuesub['pagu_subkegiatan']);die;
 										array_push($pagu_keg, $valuesub['pagu_subkegiatan']);
 								}
 								$datakegiatan[$key]['pagu_kegiatan']= array_sum($pagu_keg);

@@ -120,6 +120,9 @@ $routes->post('addKegiatan', 'Jsondata::addKegiatan');
 $routes->post('addTarget', 'Jsondata::addTarget');
 $routes->post('addRealisasi', 'Jsondata::addRealisasi');
 
+$routes->post('updateTarget', 'Jsondata::updateTarget');
+
+
 
 
 /**

@@ -30,6 +30,7 @@
   <input hidden id="userid" value="{{userid}}">
   <input hidden id="role" value="{{role}}">
   <input hidden id="ids" value="{{ids}}">
+  <input hidden id="id_paket">
   <div class="page-header">
     <h1>
       RENCANA / TARGET FORM
@@ -213,6 +214,7 @@
                             </th>
                             <th>Bulan</th>
                             <th>Target</th>
+                            <th>Persen</th>
                           </tr>
                         </thead>
 
@@ -228,7 +230,10 @@
                               <a href="#">Januari</a>
                             </td>
                             <td>
-                              <input type="text" id="k1" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="k1" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
+                            </td>
+                            <td>
+                              <input type="text" id="kp1" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
                             </td>
 
                           </tr>
@@ -244,7 +249,10 @@
                               <a href="#">Februari</a>
                             </td>
                             <td>
-                              <input type="text" id="k2" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="k2" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
+                            </td>
+                            <td>
+                              <input type="text" id="kp2" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
                             </td>
 
                           </tr>
@@ -259,7 +267,10 @@
                               <a href="#">Maret</a>
                             </td>
                             <td>
-                              <input type="text" id="k3" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="k3" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
+                            </td>
+                            <td>
+                              <input type="text" id="kp3" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
                             </td>
 
                           </tr>
@@ -275,7 +286,10 @@
                               <a href="#">April</a>
                             </td>
                             <td>
-                              <input type="text" id="k4" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="k4" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
+                            </td>
+                            <td>
+                              <input type="text" id="kp4" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
                             </td>
 
                           </tr>
@@ -291,7 +305,10 @@
                               <a href="#">Mei</a>
                             </td>
                             <td>
-                              <input type="text" id="k5" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="k5" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
+                            </td>
+                            <td>
+                              <input type="text" id="kp5" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
                             </td>
 
                           </tr>
@@ -307,7 +324,10 @@
                               <a href="#">Juni</a>
                             </td>
                             <td>
-                              <input type="text" id="k6" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="k6" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
+                            </td>
+                            <td>
+                              <input type="text" id="kp6" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
                             </td>
 
                           </tr>
@@ -323,7 +343,10 @@
                               <a href="#">Juli</a>
                             </td>
                             <td>
-                              <input type="text" id="k7" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="k7" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
+                            </td>
+                            <td>
+                              <input type="text" id="kp7" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
                             </td>
 
                           </tr>
@@ -339,7 +362,10 @@
                               <a href="#">Agustus</a>
                             </td>
                             <td>
-                              <input type="text" id="k8" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="k8" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
+                            </td>
+                            <td>
+                              <input type="text" id="kp8" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
                             </td>
 
                           </tr>
@@ -355,7 +381,10 @@
                               <a href="#">September</a>
                             </td>
                             <td>
-                              <input type="text" id="k9" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="k9" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
+                            </td>
+                            <td>
+                              <input type="text" id="kp9" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
                             </td>
 
                           </tr>
@@ -371,7 +400,10 @@
                               <a href="#">Oktober</a>
                             </td>
                             <td>
-                              <input type="text" id="k10" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="k10" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
+                            </td>
+                            <td>
+                              <input type="text" id="kp10" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
                             </td>
 
                           </tr>
@@ -387,7 +419,10 @@
                               <a href="#">November</a>
                             </td>
                             <td>
-                              <input type="text" id="k11" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="k11" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
+                            </td>
+                            <td>
+                              <input type="text" id="kp11" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
                             </td>
 
                           </tr>
@@ -403,7 +438,10 @@
                               <a href="#">Desember</a>
                             </td>
                             <td>
-                              <input type="text" id="k12" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="k12" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
+                            </td>
+                            <td>
+                              <input type="text" id="kp12" placeholder="" class="col-xs-12 col-sm-12 uang" disabled/>
                             </td>
 
                           </tr>
@@ -453,7 +491,7 @@
                               <a href="#">Januari</a>
                             </td>
                             <td>
-                              <input type="text" id="f1" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="f1" placeholder="" class="col-xs-12 col-sm-12 fis" disabled/>
                             </td>
 
                           </tr>
@@ -469,7 +507,7 @@
                               <a href="#">Februari</a>
                             </td>
                             <td>
-                              <input type="text" id="f2" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="f2" placeholder="" class="col-xs-12 col-sm-12 fis" disabled/>
                             </td>
 
                           </tr>
@@ -484,7 +522,7 @@
                               <a href="#">Maret</a>
                             </td>
                             <td>
-                              <input type="text" id="f3" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="f3" placeholder="" class="col-xs-12 col-sm-12 fis" disabled/>
                             </td>
 
                           </tr>
@@ -500,7 +538,7 @@
                               <a href="#">April</a>
                             </td>
                             <td>
-                              <input type="text" id="f4" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="f4" placeholder="" class="col-xs-12 col-sm-12 fis" disabled/>
                             </td>
 
                           </tr>
@@ -516,7 +554,7 @@
                               <a href="#">Mei</a>
                             </td>
                             <td>
-                              <input type="text" id="f5" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="f5" placeholder="" class="col-xs-12 col-sm-12 fis" disabled/>
                             </td>
 
                           </tr>
@@ -532,7 +570,7 @@
                               <a href="#">Juni</a>
                             </td>
                             <td>
-                              <input type="text" id="f6" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="f6" placeholder="" class="col-xs-12 col-sm-12 fis" disabled/>
                             </td>
 
                           </tr>
@@ -548,7 +586,7 @@
                               <a href="#">Juli</a>
                             </td>
                             <td>
-                              <input type="text" id="f7" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="f7" placeholder="" class="col-xs-12 col-sm-12 fis" disabled/>
                             </td>
 
                           </tr>
@@ -564,7 +602,7 @@
                               <a href="#">Agustus</a>
                             </td>
                             <td>
-                              <input type="text" id="f8" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="f8" placeholder="" class="col-xs-12 col-sm-12 fis" disabled/>
                             </td>
 
                           </tr>
@@ -580,7 +618,7 @@
                               <a href="#">September</a>
                             </td>
                             <td>
-                              <input type="text" id="f9" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="f9" placeholder="" class="col-xs-12 col-sm-12 fis" disabled/>
                             </td>
 
                           </tr>
@@ -596,7 +634,7 @@
                               <a href="#">Oktober</a>
                             </td>
                             <td>
-                              <input type="text" id="f10" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="f10" placeholder="" class="col-xs-12 col-sm-12 fis" disabled/>
                             </td>
 
                           </tr>
@@ -612,7 +650,7 @@
                               <a href="#">November</a>
                             </td>
                             <td>
-                              <input type="text" id="f11" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="f11" placeholder="" class="col-xs-12 col-sm-12 fis" disabled/>
                             </td>
 
                           </tr>
@@ -628,7 +666,7 @@
                               <a href="#">Desember</a>
                             </td>
                             <td>
-                              <input type="text" id="f12" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                              <input type="text" id="f12" placeholder="" class="col-xs-12 col-sm-12 fis" disabled/>
                             </td>
 
                           </tr>
@@ -654,11 +692,11 @@
 							<span class="bigger-110">Kembali</span>
 						</button>
 
-						<!-- <button id="save_target" class="btn btn-xs btn-success pull-right">
+						<button id="save_target" class="btn btn-xs btn-success pull-right">
 							<span class="bigger-110">Simpan</span>
 
 							<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
-						</button> -->
+						</button>
 					</div>
         </div>
       </div>

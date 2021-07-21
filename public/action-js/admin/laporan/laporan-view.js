@@ -108,6 +108,7 @@ function saveminggu(type,ke){
     formData.append('edited', 1);
     formData.append('idnya', $('#'+keys+'edit_'+ke).attr("idnya"));
   }
+
   $.ajax({
       type: 'post',
       processData: false,
@@ -324,6 +325,7 @@ function saveminggu(type,ke){
             if(!Array.isArray(data)){
               for (var i = 1; i <= 4; i++) {
                 if(type == 'keuangan'){
+                  
                     if($('#ktotal_progres').val()){
                       var reverse11 = $('#ktotal_progres').val().toString().split('').reverse().join(''),
                       ribuan_lalu11 = reverse11.match(/\d{1,3}/g);
@@ -372,6 +374,7 @@ function saveminggu(type,ke){
 
             for (var i = 0; i < data.length; i++) {
               if(data[i].type == 'keuangan'){
+                
                 let totok = [];
                 if(typeof data[i] !== 'undefined'){
                   if(data[i].totalnya){
@@ -383,7 +386,7 @@ function saveminggu(type,ke){
                   }
 
                   $('#ktotal_progres').val(ribuan_tot);
-
+                  console.log(data);
                   if(data[i].koordinat){
                     $('#koordinat').val(data[i].koordinat);
                     $('#koordinat').prop('disabled', true);
@@ -396,9 +399,13 @@ function saveminggu(type,ke){
                     $('#uraian').val(data[i].uraian);
                     $('#uraian').prop('disabled', true);
                   }
+
                   if(data[i].permasalahan){
                     $('#permasalahan').val(data[i].permasalahan);
                     $('#permasalahan').prop('disabled', true);
+                  }else{
+                    $('#permasalahan').val('');
+                    $('#permasalahan').prop('disabled', false);
                   }
 
 
@@ -462,10 +469,16 @@ function saveminggu(type,ke){
                   if(data[i].uraian){
                     $('#uraian').val(data[i].uraian);
                     $('#uraian').prop('disabled', true);
+                    
+                  }else{
+                    $('#uraian').prop('disabled', false);
                   }
+                  
                   if(data[i].permasalahan){
                     $('#permasalahan').val(data[i].permasalahan);
                     $('#permasalahan').prop('disabled', true);
+                  }else{
+                    $('#permasalahan').prop('disabled', false);
                   }
 
 

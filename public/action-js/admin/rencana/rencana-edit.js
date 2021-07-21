@@ -2,16 +2,100 @@
 console.log('You are running jQuery version: ' + $.fn.jquery);
 $(document).ready(function(){
   const ids = $('#ids').val();
+  
   $('#nav-menu li').removeClass();
   $('#nav-menu li#menu-rencana').addClass('active');
+
+  $( '.uang, .uang-pagu' ).mask('000.000.000.000.000', {reverse: true});
 
   // loadkegiatan("program",0);
   loadtarget(ids);
 
+  var ktot = [];
+  $('.uang').keyup(function(){
+    ktot = [];
+    for (var i = 1; i <= 12; i++) {
+      let vlue = $('#k'+i).val();
+      let lue = vlue.replaceAll('.', '');
+      let vl = ($('#k'+i).val() == '') ? 0 : parseInt(lue);
+      ktot.push(vl);
+      
+      if($('#pagu_kegiatan').val().replaceAll('.', '')){
+        let pagu = $('#pagu_kegiatan').val().replaceAll('.', '');
+        let persen = (vl / pagu) * 100;
+        $('#kp'+i).val(persen.toFixed(2) + '%');
+      }
+    };
+
+    $('#ktot').val(rubah(ktot.reduce((a, b) => a + b, 0)));
+  })
+
+  let ftot = [];
+  $('.fis').keyup(function(){
+    ftot = [];
+    for (var i = 1; i <= 12; i++) {
+      let vlue = $('#f'+i).val();
+      if(vlue){
+        ftot.push(vlue);
+      }
+    }
+    $('#ftot').val(ftot[ftot.length - 1]);
+  });
+
+  $('#pagu_kegiatan').keyup(function(){
+    let inipagu = this.value.replaceAll('.', '');
+
+    for (var i = 1; i <= 12; i++) {
+      let vlue = $('#k'+i).val();
+      let lue = vlue.replaceAll('.', '');
+      let vl = ($('#k'+i).val() == '') ? 0 : parseInt(lue);
+      
+        let persen = (vl / inipagu) * 100;
+        $('#kp'+i).val(persen.toFixed(2) + '%');
+    };
+
+  })
+
+  function rubah(angka){
+   var reverse = angka.toString().split('').reverse().join(''),
+   ribuan = reverse.match(/\d{1,3}/g);
+   ribuan = ribuan.join('.').split('').reverse().join('');
+   return ribuan;
+ }
+
+ $('#save_target').on('click', function(){
+  var id_paket = $('#id_paket').val();
+  var pagu_kegiatan = $('#pagu_kegiatan').val();
+  var ktot = $('#ktot').val();
+  var ftot = $('#ftot').val();
+
+  var formData = new FormData();
+  formData.append('id', ids);
+  formData.append('param', 'data_target');
+  formData.append('id_paket', id_paket);
+  formData.append('pagu_kegiatan', pagu_kegiatan);
+  formData.append('ktot', ktot);
+  formData.append('ftot', ftot);
+
+  for (var i = 1; i <= 12; i++) {
+    formData.append('k'+i, $('#k'+i).val());
+    formData.append('kp'+i, $('#kp'+i).val());
+    formData.append('f'+i, $('#f'+i).val());
+  }
+  console.log(id_paket);
+  update(formData);
+});
+
 });
 
 function loadtarget(param){
-  $('#save_target').hide();
+  $('#save_target').show();
+  $('#pagu_kegiatan').prop('disabled', false);
+  for (let index = 1; index <= 12; index++) {
+    $('#k'+index).prop('disabled', false);
+    $('#f'+index).prop('disabled', false);
+  }
+
   $.ajax({
       type: 'post',
       dataType: 'json',
@@ -40,6 +124,8 @@ function loadtarget(param){
           $('#paket').val(data[0].nama_paket);
           $('#pagu_kegiatan').val(data[0].pagu);
 
+          $('#id_paket').val(data[0].id_paket);
+          
 
           for (var i = 0; i < data.length; i++) {
             if(data[i].type == 'keuangan'){
@@ -136,3 +222,31 @@ function loadtarget(param){
             }
           })
         }
+
+        function update(formData){
+
+          $.ajax({
+              type: 'post',
+              processData: false,
+              contentType: false,
+              url: 'updateTarget',
+              data : formData,
+              success: function(result){
+                Swal.fire({
+                  type: 'success',
+                  title: 'Berhasil Update Target !',
+                  showConfirmButton: true,
+                  // showCancelButton: true,
+                  confirmButtonText: `Ok`,
+                }).then((result) => {
+                  $(document).ready(function(){
+                      // loadprogram('');
+                      // $('#kode_program').val('');
+                      // $('#nama_program').val('');
+                      location.reload()
+        
+                  });
+                })
+              }
+            });
+          };
