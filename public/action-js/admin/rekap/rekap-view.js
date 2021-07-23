@@ -86,6 +86,8 @@ function saveminggu(ke){
         $('#nip').val(data[0].nip);
         $('#ppk').val(data[0].user_fullname);
 
+        $('#latar_belakang').val(data[0].latar_belakang);
+
         for (var i = 0; i < data.length; i++) {
           if(data[i].type == 'keuangan'){
             $('#k1').html(data[i].n1);
@@ -127,31 +129,36 @@ function saveminggu(ke){
             $('#k_koor_11').html(data[i].progres.n11.koordinat);
             $('#k_koor_12').html(data[i].progres.n12.koordinat);
 
-            $('#k_latar_1').html(data[i].progres.n1.latar_belakang);
-            $('#k_latar_2').html(data[i].progres.n2.latar_belakang);
-            $('#k_latar_3').html(data[i].progres.n3.latar_belakang);
-            $('#k_latar_4').html(data[i].progres.n4.latar_belakang);
-            $('#k_latar_5').html(data[i].progres.n5.latar_belakang);
-            $('#k_latar_6').html(data[i].progres.n6.latar_belakang);
-            $('#k_latar_7').html(data[i].progres.n7.latar_belakang);
-            $('#k_latar_8').html(data[i].progres.n8.latar_belakang);
-            $('#k_latar_9').html(data[i].progres.n9.latar_belakang);
-            $('#k_latar_10').html(data[i].progres.n10.latar_belakang);
-            $('#k_latar_11').html(data[i].progres.n11.latar_belakang);
-            $('#k_latar_12').html(data[i].progres.n12.latar_belakang);
-
-            $('#k_uraian_1').html(data[i].progres.n1.uraian);
-            $('#k_uraian_2').html(data[i].progres.n2.uraian);
-            $('#k_uraian_3').html(data[i].progres.n3.uraian);
-            $('#k_uraian_4').html(data[i].progres.n4.uraian);
-            $('#k_uraian_5').html(data[i].progres.n5.uraian);
-            $('#k_uraian_6').html(data[i].progres.n6.uraian);
-            $('#k_uraian_7').html(data[i].progres.n7.uraian);
-            $('#k_uraian_8').html(data[i].progres.n8.uraian);
-            $('#k_uraian_9').html(data[i].progres.n9.uraian);
-            $('#k_uraian_10').html(data[i].progres.n10.uraian);
-            $('#k_uraian_11').html(data[i].progres.n11.uraian);
-            $('#k_uraian_12').html(data[i].progres.n12.uraian);
+            // $('#k_latar_1').html(data[i].progres.n1.latar_belakang);
+            // $('#k_latar_2').html(data[i].progres.n2.latar_belakang);
+            // $('#k_latar_3').html(data[i].progres.n3.latar_belakang);
+            // $('#k_latar_4').html(data[i].progres.n4.latar_belakang);
+            // $('#k_latar_5').html(data[i].progres.n5.latar_belakang);
+            // $('#k_latar_6').html(data[i].progres.n6.latar_belakang);
+            // $('#k_latar_7').html(data[i].progres.n7.latar_belakang);
+            // $('#k_latar_8').html(data[i].progres.n8.latar_belakang);
+            // $('#k_latar_9').html(data[i].progres.n9.latar_belakang);
+            // $('#k_latar_10').html(data[i].progres.n10.latar_belakang);
+            // $('#k_latar_11').html(data[i].progres.n11.latar_belakang);
+            // $('#k_latar_12').html(data[i].progres.n12.latar_belakang);
+            for (let index = 1; index <= 12; index++) {
+              if(typeof data[i].progres['n'+index].tot != 'undefined'){
+                $('#k_uraian_'+index).html(data[i].uraian);
+              }
+              
+            }
+            // $('#k_uraian_1').html(data[i].uraian);
+            // $('#k_uraian_2').html(data[i].uraian);
+            // $('#k_uraian_3').html(data[i].uraian);
+            // $('#k_uraian_4').html(data[i].uraian);
+            // $('#k_uraian_5').html(data[i].uraian);
+            // $('#k_uraian_6').html(data[i].uraian);
+            // $('#k_uraian_7').html(data[i].uraian);
+            // $('#k_uraian_8').html(data[i].uraian);
+            // $('#k_uraian_9').html(data[i].uraian);
+            // $('#k_uraian_10').html(data[i].uraian);
+            // $('#k_uraian_11').html(data[i].uraian);
+            // $('#k_uraian_12').html(data[i].uraian);
 
             $('#k_masalah_1').html(data[i].progres.n1.permasalahan);
             $('#k_masalah_2').html(data[i].progres.n2.permasalahan);
@@ -207,18 +214,18 @@ function saveminggu(ke){
             $('#f_koor_11').html(data[i].progres.n11.koordinat);
             $('#f_koor_12').html(data[i].progres.n12.koordinat);
 
-            $('#f_latar_1').html(data[i].progres.n1.latar_belakang);
-            $('#f_latar_2').html(data[i].progres.n2.latar_belakang);
-            $('#f_latar_3').html(data[i].progres.n3.latar_belakang);
-            $('#f_latar_4').html(data[i].progres.n4.latar_belakang);
-            $('#f_latar_5').html(data[i].progres.n5.latar_belakang);
-            $('#f_latar_6').html(data[i].progres.n6.latar_belakang);
-            $('#f_latar_7').html(data[i].progres.n7.latar_belakang);
-            $('#f_latar_8').html(data[i].progres.n8.latar_belakang);
-            $('#f_latar_9').html(data[i].progres.n9.latar_belakang);
-            $('#f_latar_10').html(data[i].progres.n10.latar_belakang);
-            $('#f_latar_11').html(data[i].progres.n11.latar_belakang);
-            $('#f_latar_12').html(data[i].progres.n12.latar_belakang);
+            // $('#f_latar_1').html(data[i].progres.n1.latar_belakang);
+            // $('#f_latar_2').html(data[i].progres.n2.latar_belakang);
+            // $('#f_latar_3').html(data[i].progres.n3.latar_belakang);
+            // $('#f_latar_4').html(data[i].progres.n4.latar_belakang);
+            // $('#f_latar_5').html(data[i].progres.n5.latar_belakang);
+            // $('#f_latar_6').html(data[i].progres.n6.latar_belakang);
+            // $('#f_latar_7').html(data[i].progres.n7.latar_belakang);
+            // $('#f_latar_8').html(data[i].progres.n8.latar_belakang);
+            // $('#f_latar_9').html(data[i].progres.n9.latar_belakang);
+            // $('#f_latar_10').html(data[i].progres.n10.latar_belakang);
+            // $('#f_latar_11').html(data[i].progres.n11.latar_belakang);
+            // $('#f_latar_12').html(data[i].progres.n12.latar_belakang);
 
             $('#f_uraian_1').html(data[i].progres.n1.uraian);
             $('#f_uraian_2').html(data[i].progres.n2.uraian);

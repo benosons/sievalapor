@@ -386,7 +386,7 @@ function saveminggu(type,ke){
                   }
 
                   $('#ktotal_progres').val(ribuan_tot);
-                  console.log(data);
+                  
                   if(data[i].koordinat){
                     $('#koordinat').val(data[i].koordinat);
                     $('#koordinat').prop('disabled', true);
@@ -399,7 +399,7 @@ function saveminggu(type,ke){
                     $('#uraian').val(data[i].uraian);
                     $('#uraian').prop('disabled', true);
                   }
-
+                  
                   if(data[i].permasalahan){
                     $('#permasalahan').val(data[i].permasalahan);
                     $('#permasalahan').prop('disabled', true);
@@ -471,6 +471,7 @@ function saveminggu(type,ke){
                     $('#uraian').prop('disabled', true);
                     
                   }else{
+                    $('#uraian').val('');
                     $('#uraian').prop('disabled', false);
                   }
                   
@@ -478,6 +479,7 @@ function saveminggu(type,ke){
                     $('#permasalahan').val(data[i].permasalahan);
                     $('#permasalahan').prop('disabled', true);
                   }else{
+                    $('#permasalahan').val('');
                     $('#permasalahan').prop('disabled', false);
                   }
 

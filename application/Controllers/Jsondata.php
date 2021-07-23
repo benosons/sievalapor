@@ -578,36 +578,261 @@ class Jsondata extends \CodeIgniter\Controller
 					$bulan = [];
 					$newreal = [];
 					foreach ($datapaket as $key => $value) {
+						$ceklatar = $model->cekParam('param_latar_belakang', $value->id_paket);
+						if(!empty($ceklatar)){
+							$latarbelakang = $ceklatar[0]->desc;
+						}
 
 						if($value->type == 'keuangan'){
+							$cekuraian = $model->cekParam('param_uraian', $value->id_paket, null, $value->type);
+							if(!empty($cekuraian)){
+								$uraian = $cekuraian[0]->desc;
+							}
 							$datareal['n1'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n1');
+							$cekmasalah1 = $model->cekParam('param_masalah', $value->id_paket, 'n1', $value->type);
+							if(!empty($cekmasalah1)){
+								$masalah1 = $cekmasalah1[0]->desc;
+								$datareal['n1']->permasalahan = $masalah1;
+							}
+
 							$datareal['n2'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n2');
+							$cekmasalah2 = $model->cekParam('param_masalah', $value->id_paket, 'n2', $value->type);
+							if(!empty($cekmasalah2)){
+								$masalah2 = $cekmasalah2[0]->desc;
+								$datareal['n2']->permasalahan = $masalah2;
+							}
+
 							$datareal['n3'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n3');
+							$cekmasalah3 = $model->cekParam('param_masalah', $value->id_paket, 'n3', $value->type);
+							if(!empty($cekmasalah3)){
+								$masalah3 = $cekmasalah3[0]->desc;
+								$datareal['n3']->permasalahan = $masalah3;
+							}
+
 							$datareal['n4'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n4');
+							$cekmasalah4 = $model->cekParam('param_masalah', $value->id_paket, 'n4', $value->type);
+							if(!empty($cekmasalah4)){
+								$masalah4 = $cekmasalah4[0]->desc;
+								$datareal['n4']->permasalahan = $masalah4;
+							}
+
 							$datareal['n5'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n5');
+							$cekmasalah5 = $model->cekParam('param_masalah', $value->id_paket, 'n5', $value->type);
+							if(!empty($cekmasalah5)){
+								$masalah5 = $cekmasalah5[0]->desc;
+								$datareal['n5']->permasalahan = $masalah5;
+							}
+
 							$datareal['n6'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n6');
+							$cekmasalah6 = $model->cekParam('param_masalah', $value->id_paket, 'n6', $value->type);
+							if(!empty($cekmasalah6)){
+								$masalah6 = $cekmasalah6[0]->desc;
+								$datareal['n6']->permasalahan = $masalah6;
+							}
+
 							$datareal['n7'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n7');
+							$cekmasalah7 = $model->cekParam('param_masalah', $value->id_paket, 'n7', $value->type);
+							if(!empty($cekmasalah7)){
+								$masalah7 = $cekmasalah6[0]->desc;
+								$datareal['n7']->permasalahan = $masalah7;
+							}
+
 							$datareal['n8'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n8');
+							$cekmasalah8 = $model->cekParam('param_masalah', $value->id_paket, 'n8', $value->type);
+							if(!empty($cekmasalah8)){
+								$masalah8 = $cekmasalah8[0]->desc;
+								$datareal['n8']->permasalahan = $masalah8;
+							}
+
 							$datareal['n9'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n9');
+							$cekmasalah9 = $model->cekParam('param_masalah', $value->id_paket, 'n9', $value->type);
+							if(!empty($cekmasalah9)){
+								$masalah9 = $cekmasalah9[0]->desc;
+								$datareal['n9']->permasalahan = $masalah9;
+							}
+
 							$datareal['n10'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n10');
+							$cekmasalah10 = $model->cekParam('param_masalah', $value->id_paket, 'n10', $value->type);
+							if(!empty($cekmasalah10)){
+								$masalah10 = $cekmasalah10[0]->desc;
+								$datareal['n10']->permasalahan = $masalah10;
+							}
+
 							$datareal['n11'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n11');
+							$cekmasalah11 = $model->cekParam('param_masalah', $value->id_paket, 'n11', $value->type);
+							if(!empty($cekmasalah11)){
+								$masalah11 = $cekmasalah11[0]->desc;
+								$datareal['n11']->permasalahan = $masalah11;
+							}
+
 							$datareal['n12'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n12');
+							$cekmasalah12 = $model->cekParam('param_masalah', $value->id_paket, 'n12', $value->type);
+							if(!empty($cekmasalah12)){
+								$masalah12 = $cekmasalah12[0]->desc;
+								$datareal['n12']->permasalahan = $masalah12;
+							}
+
 							$datapaket[$key]->progres = $datareal;
+							
+							$datapaket[$key]->uraian = $uraian;
+
 						}else if($value->type == 'fisik'){
+							
 							$datareal['n1'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n1');
+							$cekuraian1 = $model->cekParam('param_uraian', $value->id_paket, 'n1', $value->type);
+							if(!empty($cekuraian1)){
+								$uraian1 = $cekuraian1[0]->desc;
+								$datareal['n1']->uraian = $uraian1;
+							}
+
+							$cekmasalah1 = $model->cekParam('param_masalah', $value->id_paket, 'n1', $value->type);
+							if(!empty($cekmasalah1)){
+								$masalah1 = $cekmasalah1[0]->desc;
+								$datareal['n1']->permasalahan = $masalah1;
+							}
+							
 							$datareal['n2'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n2');
+							$cekuraian2 = $model->cekParam('param_uraian', $value->id_paket, 'n2', $value->type);
+							if(!empty($cekuraian2)){
+								$uraian2 = $cekuraian2[0]->desc;
+								$datareal['n2']->uraian = $uraian2;
+							}
+
+							$cekmasalah2 = $model->cekParam('param_masalah', $value->id_paket, 'n2', $value->type);
+							if(!empty($cekmasalah2)){
+								$masalah2 = $cekmasalah2[0]->desc;
+								$datareal['n2']->permasalahan = $masalah2;
+							}
+
 							$datareal['n3'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n3');
+							$cekuraian3 = $model->cekParam('param_uraian', $value->id_paket, 'n3', $value->type);
+							if(!empty($cekuraian3)){
+								$uraian3 = $cekuraian3[0]->desc;
+								$datareal['n3']->uraian = $uraian3;
+							}
+
+							$cekmasalah3 = $model->cekParam('param_masalah', $value->id_paket, 'n3', $value->type);
+							if(!empty($cekmasalah3)){
+								$masalah3 = $cekmasalah3[0]->desc;
+								$datareal['n3']->permasalahan = $masalah3;
+							}
+
 							$datareal['n4'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n4');
+							$cekuraian4 = $model->cekParam('param_uraian', $value->id_paket, 'n4', $value->type);
+							if(!empty($cekuraian4)){
+								$uraian4 = $cekuraian4[0]->desc;
+								$datareal['n4']->uraian = $uraian4;
+							}
+
+							$cekmasalah4 = $model->cekParam('param_masalah', $value->id_paket, 'n4', $value->type);
+							if(!empty($cekmasalah4)){
+								$masalah4 = $cekmasalah4[0]->desc;
+								$datareal['n4']->permasalahan = $masalah4;
+							}
+
 							$datareal['n5'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n5');
+							$cekuraian5 = $model->cekParam('param_uraian', $value->id_paket, 'n5', $value->type);
+							if(!empty($cekuraian5)){
+								$uraian5 = $cekuraian5[0]->desc;
+								$datareal['n5']->uraian = $uraian5;
+							}
+
+							$cekmasalah5 = $model->cekParam('param_masalah', $value->id_paket, 'n5', $value->type);
+							if(!empty($cekmasalah5)){
+								$masalah5 = $cekmasalah5[0]->desc;
+								$datareal['n5']->permasalahan = $masalah5;
+							}
+
 							$datareal['n6'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n6');
+							$cekuraian6 = $model->cekParam('param_uraian', $value->id_paket, 'n6', $value->type);
+							if(!empty($cekuraian6)){
+								$uraian6 = $cekuraian6[0]->desc;
+								$datareal['n6']->uraian = $uraian6;
+							}
+
+							if(!empty($cekmasalah6)){
+								$masalah6 = $cekmasalah6[0]->desc;
+								$datareal['n6']->permasalahan = $masalah6;
+							}
+
 							$datareal['n7'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n7');
+							$cekuraian7 = $model->cekParam('param_uraian', $value->id_paket, 'n7', $value->type);
+							if(!empty($cekuraian7)){
+								$uraian7 = $cekuraian7[0]->desc;
+								$datareal['n7']->uraian = $uraian7;
+							}
+
+							if(!empty($cekmasalah7)){
+								$masalah7 = $cekmasalah6[0]->desc;
+								$datareal['n7']->permasalahan = $masalah7;
+							}
+
 							$datareal['n8'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n8');
+							$cekuraian8 = $model->cekParam('param_uraian', $value->id_paket, 'n8', $value->type);
+							if(!empty($cekuraian8)){
+								$uraian8 = $cekuraian8[0]->desc;
+								$datareal['n8']->uraian = $uraian8;
+							}
+
+							if(!empty($cekmasalah8)){
+								$masalah8 = $cekmasalah8[0]->desc;
+								$datareal['n8']->permasalahan = $masalah8;
+							}
+
 							$datareal['n9'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n9');
+							$cekuraian9 = $model->cekParam('param_uraian', $value->id_paket, 'n9', $value->type);
+							if(!empty($cekuraian9)){
+								$uraian6 = $cekuraian9[0]->desc;
+								$datareal['n9']->uraian = $uraian9;
+							}
+
+							if(!empty($cekmasalah9)){
+								$masalah9 = $cekmasalah9[0]->desc;
+								$datareal['n9']->permasalahan = $masalah9;
+							}
+
 							$datareal['n10'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n10');
+							$cekuraian10 = $model->cekParam('param_uraian', $value->id_paket, 'n10', $value->type);
+							if(!empty($cekuraian10)){
+								$uraian10 = $cekuraian10[0]->desc;
+								$datareal['n10']->uraian = $uraian10;
+							}
+
+							if(!empty($cekmasalah10)){
+								$masalah10 = $cekmasalah10[0]->desc;
+								$datareal['n10']->permasalahan = $masalah10;
+							}
+
 							$datareal['n11'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n11');
+							$cekuraian11 = $model->cekParam('param_uraian', $value->id_paket, 'n11', $value->type);
+							if(!empty($cekuraian11)){
+								$uraian11 = $cekuraian11[0]->desc;
+								$datareal['n11']->uraian = $uraian11;
+							}
+
+							$cekmasalah11 = $model->cekParam('param_masalah', $value->id_paket, 'n11', $value->type);
+							if(!empty($cekmasalah11)){
+								$masalah11 = $cekmasalah11[0]->desc;
+								$datareal['n11']->permasalahan = $masalah11;
+							}
+
 							$datareal['n12'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n12');
+							$cekuraian12 = $model->cekParam('param_uraian', $value->id_paket, 'n12', $value->type);
+							if(!empty($cekuraian12)){
+								$uraian12 = $cekuraian12[0]->desc;
+								$datareal['n12']->uraian = $uraian12;
+							}
+
+							$cekmasalah12 = $model->cekParam('param_masalah', $value->id_paket, 'n12', $value->type);
+							if(!empty($cekmasalah12)){
+								$masalah12 = $cekmasalah12[0]->desc;
+								$datareal['n12']->permasalahan = $masalah12;
+							}
+
 							$datapaket[$key]->progres = $datareal;
 						}
+
+						$datapaket[$key]->latar_belakang = $latarbelakang;
 
 					}
 
@@ -653,9 +878,9 @@ class Jsondata extends \CodeIgniter\Controller
 					$modelparam = new \App\Models\ParamModel();
 					$modelfiles = new \App\Models\FilesModel();
 
+					
 					$datapaket = $model->getminggu($type, $code, $idpaket);
 					$cekrealisasi = $model->cekDataRealisasi($idpaket, $code, $userid);
-
 					
 					if(empty($datapaket)){
 						
@@ -695,56 +920,73 @@ class Jsondata extends \CodeIgniter\Controller
 							$datapaket[0] = $cekrealisasi[0];
 							
 						}else{
+							
 							$adadata = [];
 							if($type == 'keuangan'){
 								$adadata[0] = new \stdClass();
 								$adadata[0]->type = $type;
 								$cekuraian = $model->cekParam('param_uraian', $idpaket, null, $type);
-								$adadata[0]->uraian = $cekuraian[0]->desc;
-								$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, $type);
-								$adadata[0]->latar_belakang = $ceklatar[0]->desc;
+								if(!empty($cekuraian)){
+									$adadata[0]->uraian = $cekuraian[0]->desc;
+								}
+
+								$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, null);
+								if(!empty($ceklatar)){
+									$adadata[0]->latar_belakang = $ceklatar[0]->desc;
+								}
+
 								$str = substr($code, -1);
       							$last = $str - 1;
 								$cektotalsebelumnya = $model->cekParam('bulan_realisasi', $idpaket , 'n'.$last, $type);
 								
-								$m1 = $cektotalsebelumnya[0]->m1;
-								$m2 = $cektotalsebelumnya[0]->m2;
-								$m3 = $cektotalsebelumnya[0]->m3;
-								$m4 = $cektotalsebelumnya[0]->m4;
+								if(!empty($cektotalsebelumnya)){
+									$m1 = $cektotalsebelumnya[0]->m1;
+									$m2 = $cektotalsebelumnya[0]->m2;
+									$m3 = $cektotalsebelumnya[0]->m3;
+									$m4 = $cektotalsebelumnya[0]->m4;
+									
+									$tot_sebelum = $m1 ? str_replace(".","", $m1) : '0' ;
+									$tot_sebelum += $m2 ? str_replace(".","", $m2) : '0' ;
+									$tot_sebelum += $m3 ? str_replace(".","", $m3) : '0' ;
+									$tot_sebelum += $m4 ? str_replace(".","", $m4) : '0' ;
+									
+									// $cekmasalah = $model->cekParam('param_masalah', $idpaket, $cekrealisasi[0]->kode_bulan);
+									$adadata[0]->total_sebelumnya = $tot_sebelum;
+								}
 								
-								$tot_sebelum = $m1 ? str_replace(".","", $m1) : '0' ;
-								$tot_sebelum += $m2 ? str_replace(".","", $m2) : '0' ;
-								$tot_sebelum += $m3 ? str_replace(".","", $m3) : '0' ;
-								$tot_sebelum += $m4 ? str_replace(".","", $m4) : '0' ;
-								
-								// $cekmasalah = $model->cekParam('param_masalah', $idpaket, $cekrealisasi[0]->kode_bulan);
-								$adadata[0]->total_sebelumnya = $tot_sebelum;
 							}else if($type == 'fisik'){
+								$adadata[0] = new \stdClass();
+								$adadata[0]->type = $type;
+
+								$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, null);
+								if(!empty($ceklatar)){
+									$adadata[0]->latar_belakang = $ceklatar[0]->desc;
+								}
 
 							}
 							$datapaket = $adadata;
 						}
 					}else{
 						
-
+						
 						if($type == 'keuangan'){
-							$cekuraian = $model->cekParam('param_uraian', $idpaket, null, $type);
+							$cekuraian = $model->cekParam('param_uraian', $idpaket, null, $type, $userid);
 							$datapaket[0]->uraian = $cekuraian[0]->desc;
 
-							$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, $type);
+							$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, $type, $userid);
 							$datapaket[0]->latar_belakang = $ceklatar[0]->desc;
 
-							$cekmasalah = $model->cekParam('param_masalah', $idpaket, $code, $type);
+							$cekmasalah = $model->cekParam('param_masalah', $idpaket, $code, $type, $userid);
 							$datapaket[0]->permasalahan = $cekmasalah[0]->desc;
 						}else if($type == 'fisik'){
-							$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, null);
+							$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, null, $userid);
 							$datapaket[0]->latar_belakang = $ceklatar[0]->desc;
-							$cekuraian = $model->cekParam('param_uraian', $idpaket, $code, $type);
+							$cekuraian = $model->cekParam('param_uraian', $idpaket, $code, $type, $userid);
 							if(!empty($cekuraian)){
 								$datapaket[0]->uraian = $cekuraian[0]->desc;
 							}
 
-							$cekmasalah = $model->cekParam('param_masalah', $idpaket, $code, $type);
+							$cekmasalah = $model->cekParam('param_masalah', $idpaket, $code, $type, $userid);
 							if(!empty($cekmasalah)){
 								$datapaket[0]->permasalahan = $cekmasalah[0]->desc;
 							}
@@ -1800,21 +2042,24 @@ class Jsondata extends \CodeIgniter\Controller
 					'id_paket'			=> $request->getVar('id_paket'),
 					'type'				=> $type,
 					'desc'				=> $request->getVar('permasalahan'),
-					'kode_bulan'		=> $request->getVar('kode_bulan')
+					'kode_bulan'		=> $request->getVar('kode_bulan'),
+					'create_by'			=> $userid,
 				];
 
 			$data_uraian = [
 					'id_paket'			=> $request->getVar('id_paket'),
 					'type'				=> $type,
 					'desc'				=> $request->getVar('uraian'),
-					'kode_bulan'		=> $request->getVar('kode_bulan')
+					'kode_bulan'		=> $request->getVar('kode_bulan'),
+					'create_by'			=> $userid,
 				];
 
 			$data_latar = [
 					'id_paket'			=> $request->getVar('id_paket'),
 					'type'				=> $type,
 					'desc'				=> $request->getVar('latar_belakang'),
-					'kode_bulan'		=> $request->getVar('kode_bulan')
+					'kode_bulan'		=> $request->getVar('kode_bulan'),
+					'create_by'			=> $userid,
 				];
 			}
 
@@ -1862,25 +2107,25 @@ class Jsondata extends \CodeIgniter\Controller
 				$res = $model->updateRealisasi($cekrealisasi[0]->id, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'), @$data['total']);
 			}
 
-			$cekpaket	= $model->cekpaket($request->getVar('id_paket'), $request->getVar('kode_bulan'));
+			$cekpaket	= $model->cekpaket($request->getVar('id_paket'), $request->getVar('kode_bulan'), $userid);
 			
 			if(empty($cekpaket)){
 				$res_new = $model->saveParam('data_realisasi', $data_new);
-
+				
 				if($request->getVar('type') == 'keuangan'){
 					$data_latar['type'] = 'keuangan';
 					$data_uraian['type'] = 'keuangan';
 					$data_permasalahan['type'] = 'keuangan';
 
-					$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'));
+					$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'), null, null, $userid);
 					if(empty($ceklatar)){
 						$res_latar = $model->saveParam('param_latar_belakang', $data_latar);
 					}
-					$cekuraian = $model->cekParam('param_uraian', $request->getVar('id_paket'));
+					$cekuraian = $model->cekParam('param_uraian', $request->getVar('id_paket'), null, null, $userid);
 					if(empty($cekuraian)){
 						$res_uraian = $model->saveParam('param_uraian', $data_uraian);
 					}
-					$cekmasalah = $model->cekParam('param_masalah', $request->getVar('id_paket'), $request->getVar('kode_bulan'));
+					$cekmasalah = $model->cekParam('param_masalah', $request->getVar('id_paket'), $request->getVar('kode_bulan'), 'keuangan' , $userid);
 					if(empty($cekmasalah)){
 						$res_masalah = $model->saveParam('param_masalah', $data_permasalahan);
 					}
@@ -1889,16 +2134,16 @@ class Jsondata extends \CodeIgniter\Controller
 					$data_uraian['type'] = 'fisik';
 					$data_permasalahan['type'] = 'fisik';
 
-					$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'));
+					$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'), null, null, $userid);
 					
 					if(empty($ceklatar)){
 						$res_latar = $model->saveParam('param_latar_belakang', $data_latar);
 					}
-					$cekuraian = $model->cekParam('param_uraian', $request->getVar('id_paket'), $request->getVar('kode_bulan'));
+					$cekuraian = $model->cekParam('param_uraian', $request->getVar('id_paket'), $request->getVar('kode_bulan'), 'fisik', $userid);
 					if(empty($cekuraian)){
 						$res_uraian = $model->saveParam('param_uraian', $data_uraian);
 					}
-					$cekmasalah = $model->cekParam('param_masalah', $request->getVar('id_paket'), $request->getVar('kode_bulan'));
+					$cekmasalah = $model->cekParam('param_masalah', $request->getVar('id_paket'), $request->getVar('kode_bulan'), 'fisik', $userid);
 					if(empty($cekmasalah)){
 						$res_masalah = $model->saveParam('param_masalah', $data_permasalahan);
 					}
@@ -1912,15 +2157,15 @@ class Jsondata extends \CodeIgniter\Controller
 					$data_uraian['type'] = 'keuangan';
 					$data_permasalahan['type'] = 'keuangan';
 
-					$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'));
+					$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'), null, null, $userid);
 					if(empty($ceklatar)){
 						$res_latar = $model->saveParam('param_latar_belakang', $data_latar);
 					}
-					$cekuraian = $model->cekParam('param_uraian', $request->getVar('id_paket'));
+					$cekuraian = $model->cekParam('param_uraian', $request->getVar('id_paket'), null, null, $userid);
 					if(empty($cekuraian)){
 						$res_uraian = $model->saveParam('param_uraian', $data_uraian);
 					}
-					$cekmasalah = $model->cekParam('param_masalah', $request->getVar('id_paket'), $request->getVar('kode_bulan'), $request->getVar('type'));
+					$cekmasalah = $model->cekParam('param_masalah', $request->getVar('id_paket'), $request->getVar('kode_bulan'), $request->getVar('type'), $userid);
 					if(empty($cekmasalah)){
 						$res_masalah = $model->saveParam('param_masalah', $data_permasalahan);
 					}
@@ -1929,16 +2174,16 @@ class Jsondata extends \CodeIgniter\Controller
 					$data_uraian['type'] = 'fisik';
 					$data_permasalahan['type'] = 'fisik';
 
-					$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'));
+					$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'), null, null, $userid);
 					
 					if(empty($ceklatar)){
 						$res_latar = $model->saveParam('param_latar_belakang', $data_latar);
 					}
-					$cekuraian = $model->cekParam('param_uraian', $request->getVar('id_paket'), $request->getVar('kode_bulan'), $request->getVar('type'));
+					$cekuraian = $model->cekParam('param_uraian', $request->getVar('id_paket'), $request->getVar('kode_bulan'), $request->getVar('type'), $userid);
 					if(empty($cekuraian)){
 						$res_uraian = $model->saveParam('param_uraian', $data_uraian);
 					}
-					$cekmasalah = $model->cekParam('param_masalah', $request->getVar('id_paket'), $request->getVar('kode_bulan'), $request->getVar('type'));
+					$cekmasalah = $model->cekParam('param_masalah', $request->getVar('id_paket'), $request->getVar('kode_bulan'), $request->getVar('type'), $userid);
 					if(empty($cekmasalah)){
 						$res_masalah = $model->saveParam('param_masalah', $data_permasalahan);
 					}

@@ -23,6 +23,13 @@ $(document).ready(function(){
       save(formData);
   });
 
+  $('#kode_program').on('change', function(){
+    
+    let toy = $('option:selected', this).attr('text');
+    
+    $('#namprog').val(toy);
+
+  })
 
 });
 
@@ -113,7 +120,7 @@ function loadprogram(param){
           let data = result.data;
           let el   = '<option value="">  </option>';
           for (var i = 0; i < data.length; i++) {
-            el += '<option value="'+data[i].kode_program+'">'+data[i].kode_program+'</option>';
+            el += '<option value="'+data[i].kode_program+'" text="'+data[i].nama_program+'">'+data[i].kode_program+'</option>';
           }
           $('#kode_program').append(el);
           $('#kode_program').trigger("chosen:updated");

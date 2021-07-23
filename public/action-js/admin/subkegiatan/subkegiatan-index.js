@@ -27,6 +27,11 @@ $(document).ready(function(){
 
 $("#kode_program").chosen().change(function(){
   loadkegiatan("kegiatan",this.value);
+  $('#namprog').val($('option:selected', this).attr('text'));
+});
+
+$("#kode_kegiatan").chosen().change(function(){
+  $('#namkeg').val($('option:selected', this).attr('text'));
 });
 
 });
@@ -123,8 +128,8 @@ function loadkegiatan(param, code){
         let el2   = '<option value=""></option>';
         if(typeof data == 'object'){
           for (var i = 0; i < data.length; i++) {
-            el1 += '<option value="'+data[i].kode_program+'">'+data[i].kode_program+'</option>';
-            el2 += '<option value="'+data[i].kode_kegiatan+'">'+data[i].kode_kegiatan+'</option>';
+            el1 += '<option value="'+data[i].kode_program+'" text="'+data[i].nama_program+'">'+data[i].kode_program+'</option>';
+            el2 += '<option value="'+data[i].kode_kegiatan+'" text="'+data[i].nama_kegiatan+'">'+data[i].kode_kegiatan+'</option>';
           }
         }
 

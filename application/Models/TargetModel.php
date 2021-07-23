@@ -107,7 +107,7 @@ class TargetModel extends Model{
               $toto as total_sebelumnya $now from bulan_realisasi br
               left join data_realisasi dr on dr.id_paket = br.id_paket and dr.created_by = br.created_by and dr.kode_bulan = br.kode_bulan
               where type = '$type' and br.kode_bulan = '$code' and br.id_paket = $idpaket";
-
+    // print_r($sql);die;
       $result = $this->db->query($sql);
       $row = $result->getResult();
       // echo $this->db->getLastQuery();die;
@@ -186,13 +186,14 @@ class TargetModel extends Model{
     public function getrealisasi($id_paket = null, $ppk = null, $type = null, $kodebulan = null)
     {
 
-      $sql = "SELECT br.kode_bulan, br.m1, br.m2, br.m3, br.m4 , dr.koordinat, dr.latar_belakang, dr.uraian, dr.permasalahan
+      $sql = "SELECT br.kode_bulan, br.m1, br.m2, br.m3, br.m4 , dr.koordinat
               from bulan_realisasi br
               inner join data_realisasi dr on dr.id_paket = br.id_paket and dr.created_by = br.created_by and dr.kode_bulan = br.kode_bulan
               where br.id_paket = '$id_paket' and br.created_by = '$ppk' and br.type = '$type' and br.kode_bulan = '$kodebulan'";
-
+  
       $result = $this->db->query($sql);
       $row = $result->getResult();
+      // print_r($sql);die;
       $val = [];
       $toto = [];
       if((array)$row){
@@ -204,36 +205,24 @@ class TargetModel extends Model{
               $val['m1'] = $value->m1;
               $val['tot'] = $value->m1;
               $val['koordinat'] = $value->koordinat;
-              $val['latar_belakang'] = $value->latar_belakang;
-              $val['uraian'] = $value->uraian;
-              $val['permasalahan'] = $value->permasalahan;
 
             }
             if($value->m2){
               $val['m2'] = $value->m2;
               $val['tot'] = $value->m2;
               $val['koordinat'] = $value->koordinat;
-              $val['latar_belakang'] = $value->latar_belakang;
-              $val['uraian'] = $value->uraian;
-              $val['permasalahan'] = $value->permasalahan;
 
             }
             if($value->m3){
               $val['m3'] = $value->m3;
               $val['tot'] = $value->m3;
               $val['koordinat'] = $value->koordinat;
-              $val['latar_belakang'] = $value->latar_belakang;
-              $val['uraian'] = $value->uraian;
-              $val['permasalahan'] = $value->permasalahan;
 
             }
             if($value->m4){
               $val['m4'] = $value->m4;
               $val['tot'] = $value->m4;
               $val['koordinat'] = $value->koordinat;
-              $val['latar_belakang'] = $value->latar_belakang;
-              $val['uraian'] = $value->uraian;
-              $val['permasalahan'] = $value->permasalahan;
 
             }
           }
@@ -245,33 +234,21 @@ class TargetModel extends Model{
               $toto['m1'] = $value->m1;
               $val['m1'] = $value->m1;
               $val['koordinat'] = $value->koordinat;
-              $val['latar_belakang'] = $value->latar_belakang;
-              $val['uraian'] = $value->uraian;
-              $val['permasalahan'] = $value->permasalahan;
             }
             if($value->m2){
               $toto['m2'] = $value->m2;
               $val['m2'] = $value->m2;
               $val['koordinat'] = $value->koordinat;
-              $val['latar_belakang'] = $value->latar_belakang;
-              $val['uraian'] = $value->uraian;
-              $val['permasalahan'] = $value->permasalahan;
             }
             if($value->m3){
               $toto['m3'] = $value->m3;
               $val['m3'] = $value->m3;
               $val['koordinat'] = $value->koordinat;
-              $val['latar_belakang'] = $value->latar_belakang;
-              $val['uraian'] = $value->uraian;
-              $val['permasalahan'] = $value->permasalahan;
             }
             if($value->m4){
               $toto['m4'] = $value->m4;
               $val['m4'] = $value->m4;
               $val['koordinat'] = $value->koordinat;
-              $val['latar_belakang'] = $value->latar_belakang;
-              $val['uraian'] = $value->uraian;
-              $val['permasalahan'] = $value->permasalahan;
             }
           }
 
@@ -288,10 +265,10 @@ class TargetModel extends Model{
       return (object)$val;
     }
 
-    public function cekpaket($paket = null, $bulan = null)
+    public function cekpaket($paket = null, $bulan = null, $userid = null)
     {
 
-      $sql = "select * from data_realisasi where id_paket = '$paket' and kode_bulan = '$bulan'";
+      $sql = "select * from data_realisasi where id_paket = '$paket' and kode_bulan = '$bulan' and created_by = '$userid'";
 
       $result = $this->db->query($sql);
       $row = $result->getResult();
@@ -371,18 +348,21 @@ class TargetModel extends Model{
       return true;
     }
 
-    public function cekParam($table = null, $paket = null, $bulan = null, $type = null)
+    public function cekParam($table = null, $paket = null, $bulan = null, $type = null, $userid = null)
     {
 
       $sql = "select * from $table where id_paket = '$paket'";
 
       if($bulan){
         $sql .= " and kode_bulan = '$bulan' ";
-        // print_r($sql);die;
       }
 
       if($type){
         $sql .= " and type = '$type'";
+      }
+
+      if($userid){
+        $sql .= " and create_by = '$userid'";
       }
 
       $result = $this->db->query($sql);
