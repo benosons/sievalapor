@@ -15,6 +15,22 @@ $(document).ready(function(){
   $('#ftotal_progres').hide();
   $('#inifisik').hide();
 
+  $('#iniprogres').hide();
+   $('#iniupload').hide();
+
+  $('#id-input-file-2').ace_file_input({
+    no_file:'No File ...',
+    btn_choose:'Choose',
+    btn_change:'Change',
+    droppable:false,
+    onchange:null,
+    thumbnail:false //| true | large
+    //whitelist:'gif|png|jpg|jpeg'
+    //blacklist:'exe|php'
+    //onchange:''
+    //
+  });
+
 
   $('#tipedong').click(function(){
     $('#koordinat').val('');
@@ -34,6 +50,9 @@ $(document).ready(function(){
       $('#ktotal_progres').hide();
       $('#kpermasalahan').hide();
       $('#inikeuangan').hide();
+
+      $('#iniprogres').show();
+      $('#iniupload').show();
     }else if($(this).prop("checked") == false){
       window.type = 'keuangan';
       $('#kpilih_bulan_chosen').show();
@@ -47,6 +66,9 @@ $(document).ready(function(){
       $('#ftotal_progres').hide();
       $('#fpermasalahan').hide();
       $('#inifisik').hide();
+
+      $('#iniprogres').hide();
+      $('#iniupload').hide();
     }
 
 });
@@ -107,6 +129,11 @@ function saveminggu(type,ke){
   if($('#'+keys+'edit_'+ke).is(":checked")){
     formData.append('edited', 1);
     formData.append('idnya', $('#'+keys+'edit_'+ke).attr("idnya"));
+  }
+
+  if(type == 'fisik'){
+    formData.append('progres', $('#progres').val());
+    formData.append('file[]', $('#id-input-file-2')[0].files[0]);
   }
 
   $.ajax({
@@ -503,6 +530,13 @@ function saveminggu(type,ke){
                   // $('#kedit_2').attr('idnya',data[i].id);
                   // $('#kedit_3').attr('idnya',data[i].id);
                   // $('#kedit_4').attr('idnya',data[i].id);
+                  $('#progres_input').val(data[i].progres);
+                  
+                  $('#img-file').attr('href',$('#baseURL').val() +'/'+ data[i].file);
+                  $('#img-file > img').attr('src',$('#baseURL').val() +'/'+ data[i].file);
+
+                  $('#progres_chosen').hide();
+                  $('.ace-file-input').hide();
                 }
 
                 }

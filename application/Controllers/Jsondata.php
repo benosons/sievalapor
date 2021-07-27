@@ -878,7 +878,6 @@ class Jsondata extends \CodeIgniter\Controller
 					$modelparam = new \App\Models\ParamModel();
 					$modelfiles = new \App\Models\FilesModel();
 
-					
 					$datapaket = $model->getminggu($type, $code, $idpaket);
 					$cekrealisasi = $model->cekDataRealisasi($idpaket, $code, $userid);
 					
@@ -905,7 +904,6 @@ class Jsondata extends \CodeIgniter\Controller
 								
 								$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, null);
 
-								
 								$cekrealisasi[0]->latar_belakang = $ceklatar[0]->desc;
 								$cekuraian = $model->cekParam('param_uraian', $idpaket, $cekrealisasi[0]->kode_bulan, $type);
 								if($cekuraian){
@@ -916,6 +914,7 @@ class Jsondata extends \CodeIgniter\Controller
 								if($cekmasalah){
 									$cekrealisasi[0]->permasalahan = $cekmasalah[0]->desc;
 								}
+
 							}
 							$datapaket[0] = $cekrealisasi[0];
 							
@@ -990,6 +989,13 @@ class Jsondata extends \CodeIgniter\Controller
 							if(!empty($cekmasalah)){
 								$datapaket[0]->permasalahan = $cekmasalah[0]->desc;
 							}
+
+							$cekprogres = $model->cekParam('data_progres', $idpaket, null, $type, $userid);
+							if(!empty($cekmasalah)){
+								$datapaket[0]->progres = $cekprogres[0]->progres;
+								$datapaket[0]->file = $cekprogres[0]->path.$cekprogres[0]->filename;
+							}
+							
 						}
 						
 						$datapaket = $datapaket;
@@ -1889,6 +1895,8 @@ class Jsondata extends \CodeIgniter\Controller
 						'ppk'							=> $request->getVar('ppk'),
 						'bidang'					=> $request->getVar('bidang'),
 						'seksi'						=> $request->getVar('seksi'),
+						'target_output'						=> $request->getVar('target_output'),
+						'satuan'						=> $request->getVar('satuan'),
 				];
 
 		$databulan_k = [];
@@ -2061,6 +2069,39 @@ class Jsondata extends \CodeIgniter\Controller
 					'kode_bulan'		=> $request->getVar('kode_bulan'),
 					'create_by'			=> $userid,
 				];
+				
+				
+				$files	  = $request->getFiles()['file'];
+				$path			= FCPATH.'public';
+				$tipe			= 'uploads/users/progres';
+				$date 		= date('Y/m/d');
+				$folder		= $path.'/'.$tipe.'/'.$date.'/';
+				
+				if (!is_dir($folder)) {
+					mkdir($folder, 0777, TRUE);
+				}
+		
+			$stat = $files[0]->move($folder, $files[0]->getName());
+			
+			$data_progres = [
+					'id_paket'			=> $request->getVar('id_paket'),
+					'progres'			=> $request->getVar('progres'),
+					'filename'			=> $files[0]->getName(),
+					'extention'			=> null,
+					'size'				=> $files[0]->getSize('kb'),
+					'path'				=> $tipe.'/'.$date.'/',
+					'type'				=> 'fisik',
+					'created_date'		=> $this->now,
+					'updated_date'		=> $this->now,
+					'created_by'		=> $userid,
+				];
+
+				
+				$cekprogres = $model->cekParam('data_progres', $request->getVar('id_paket'), null, 'fisik', $userid);
+				
+				if(empty($cekprogres)){
+					$res_progres = $model->saveParam('data_progres', $data_progres);
+				}
 			}
 
 	if($request->getVar('type') == 'keuangan'){
@@ -2129,6 +2170,7 @@ class Jsondata extends \CodeIgniter\Controller
 					if(empty($cekmasalah)){
 						$res_masalah = $model->saveParam('param_masalah', $data_permasalahan);
 					}
+
 				}else if($request->getVar('type') == 'fisik'){
 					$data_latar['type'] = 'fisik';
 					$data_uraian['type'] = 'fisik';
@@ -2147,6 +2189,8 @@ class Jsondata extends \CodeIgniter\Controller
 					if(empty($cekmasalah)){
 						$res_masalah = $model->saveParam('param_masalah', $data_permasalahan);
 					}
+
+					$cekprogres = $model->cekParam('data_progres', $request->getVar('id_paket'), null, null, $userid);
 
 				}
 

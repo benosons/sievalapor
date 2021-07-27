@@ -256,6 +256,44 @@
                           </div>
                 				</div>
 
+                        <div class="form-group" id="iniprogres">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Progres </label>
+                              <div class="col-sm-9">
+                                <select class="chosen-select form-control" id="progres" data-placeholder="Pilih Progress...">
+                                  <option value="0">0</option>
+                                  <option value="25">25 %</option>
+                                  <option value="50">50 %</option>
+                                  <option value="75">75 %</option>
+                                  <option value="100">100 %</option>
+                                </select>
+
+                                <input type="text" id="progres_input" placeholder="" class="col-xs-12 col-sm-12"/ disabled>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="form-group" id="iniupload">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Uplaod Foto </label>
+                    					<div class="col-sm-9">
+                    					  <input type="file" id="id-input-file-2" />
+                                <input type="hidden" id="baseURL" value="{{baseURL}}">
+                                <a href="" data-rel="colorbox" id="img-file">
+                                  <img width="150" height="150" alt="150x150" src="../assets/images/gallery/thumb-2.jpg" />
+                                  <div class="text">
+                                    <div class="inner">Sample Caption on Hover</div>
+                                  </div>
+                                </a>
+                    					</div>
+                            </div>
+                          </div>
+                				</div>
+
                 			</form>
                     </div>
                   </div>

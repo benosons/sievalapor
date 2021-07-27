@@ -35,6 +35,8 @@ function loadtarget(param){
           $('#ppk').val(data[0].nama_ppk);
           $('#bidang').val(data[0].bidang);
           $('#seksi').val(data[0].seksi);
+          $('#target_output').val(data[0].target_output);
+          $('#satuan').val(data[0].satuan);
 
           // $('#paket').html('<option value="'+data[0].id_paket+'">'+data[0].nama_paket+'</option>').trigger("chosen:updated");
           $('#paket').val(data[0].nama_paket);

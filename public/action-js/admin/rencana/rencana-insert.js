@@ -18,6 +18,8 @@ $(document).ready(function(){
       var ppk = $('#pilih_ppk').val();
       var bidang = $('#pilih_bidang').val();
       var seksi = $('#pilih_seksi').val();
+      var target_output = $('#target_output').val();
+      var satuan = $('#satuan').val();
 
       var formData = new FormData();
       formData.append('param', 'data_target');
@@ -31,6 +33,8 @@ $(document).ready(function(){
       formData.append('ppk', ppk);
       formData.append('bidang', bidang);
       formData.append('seksi', seksi);
+      formData.append('target_output', target_output);
+      formData.append('satuan', satuan);
 
       for (var i = 1; i <= 12; i++) {
         formData.append('k'+i, $('#k'+i).val());
