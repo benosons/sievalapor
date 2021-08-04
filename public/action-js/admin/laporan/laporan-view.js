@@ -133,7 +133,10 @@ function saveminggu(type,ke){
 
   if(type == 'fisik'){
     formData.append('progres', $('#progres').val());
-    formData.append('file[]', $('#id-input-file-2')[0].files[0]);
+    
+    if (typeof $('#id-input-file-2')[0].files[0] != 'undefined') {
+      formData.append('file[]', $('#id-input-file-2')[0].files[0]);
+    }
   }
 
   $.ajax({

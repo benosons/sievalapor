@@ -126,8 +126,8 @@ $(document).ready(function(){
       let vl = ($('#k'+i).val() == '') ? 0 : parseInt(lue);
       ktot.push(vl);
       if($('#pagu_kegiatan').val()){
-        let pagu = $('#pagu_kegiatan').val();
-        let persen = (vlue / pagu) * 100;
+        let pagu = $('#pagu_kegiatan').val().replaceAll('.', '');
+        let persen = (vl / pagu) * 100;
         console.log(persen)
         $('#kp'+i).val(persen.toFixed(2) + '%');
       }
