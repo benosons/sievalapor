@@ -364,7 +364,7 @@ class TargetModel extends Model{
       if($userid){
         $sql .= " and create_by = '$userid'";
       }
-
+ 
       $result = $this->db->query($sql);
       $row = $result->getResult();
       return $row;

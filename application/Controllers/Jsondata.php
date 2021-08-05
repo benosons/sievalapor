@@ -961,7 +961,7 @@ class Jsondata extends \CodeIgniter\Controller
 								if(!empty($ceklatar)){
 									$adadata[0]->latar_belakang = $ceklatar[0]->desc;
 								}
-								$cekprogres = $model->cekParam('data_progres', $idpaket, null, $type, $userid);
+								$cekprogres = $model->cekParam('data_progres', $idpaket, $code, $type, $userid);
 								if(!empty($cekprogres)){
 									$adadata[0]->progres = $cekprogres[0]->progres;
 									$adadata[0]->file = $cekprogres[0]->path.$cekprogres[0]->filename;
@@ -996,7 +996,8 @@ class Jsondata extends \CodeIgniter\Controller
 								$datapaket[0]->permasalahan = $cekmasalah[0]->desc;
 							}
 
-							$cekprogres = $model->cekParam('data_progres', $idpaket, null, $type, $userid);
+							$cekprogres = $model->cekParam('data_progres', $idpaket, $code, $type, $userid);
+							
 							if(!empty($cekprogres)){
 								$datapaket[0]->progres = $cekprogres[0]->progres;
 								$datapaket[0]->file = $cekprogres[0]->path.$cekprogres[0]->filename;
@@ -2078,9 +2079,10 @@ class Jsondata extends \CodeIgniter\Controller
 					'create_by'			=> $userid,
 				];
 				
-				
 				if(!empty($_FILES)){
+					
 					$files	  = $request->getFiles()['file'];
+					
 					$path			= FCPATH.'public';
 					$tipe			= 'uploads/users/progres';
 					$date 		= date('Y/m/d');
@@ -2089,9 +2091,9 @@ class Jsondata extends \CodeIgniter\Controller
 					if (!is_dir($folder)) {
 						mkdir($folder, 0777, TRUE);
 					}
-			
+					
 					$stat = $files[0]->move($folder, $files[0]->getName());
-				
+					
 					$data_progres = [
 						'id_paket'			=> $request->getVar('id_paket'),
 						'progres'			=> $request->getVar('progres'),
@@ -2102,12 +2104,11 @@ class Jsondata extends \CodeIgniter\Controller
 						'type'				=> 'fisik',
 						'created_date'		=> $this->now,
 						'updated_date'		=> $this->now,
-						'created_by'		=> $userid,
+						'create_by'			=> $userid,
+						'kode_bulan'		=> $request->getVar('kode_bulan'),
 					];
-
 					
-					$cekprogres = $model->cekParam('data_progres', $request->getVar('id_paket'), null, 'fisik', $userid);
-					
+					$cekprogres = $model->cekParam('data_progres', $request->getVar('id_paket'), $request->getVar('kode_bulan'), 'fisik', $userid);
 					if(empty($cekprogres)){
 						$res_progres = $model->saveParam('data_progres', $data_progres);
 					}

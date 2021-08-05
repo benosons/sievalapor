@@ -135,7 +135,9 @@ function saveminggu(type,ke){
     formData.append('progres', $('#progres').val());
     
     if (typeof $('#id-input-file-2')[0].files[0] != 'undefined') {
-      formData.append('file[]', $('#id-input-file-2')[0].files[0]);
+      for (let index = 0; index < $('#id-input-file-2')[0].files.length; index++) {
+        formData.append('file[]', $('#id-input-file-2')[0].files[index]);
+      }
     }
   }
 
@@ -351,7 +353,7 @@ function saveminggu(type,ke){
           },
           success: function(result){
               let data = result.data;
-
+            console.log(data);
             if(!Array.isArray(data)){
               for (var i = 1; i <= 4; i++) {
                 if(type == 'keuangan'){
@@ -533,13 +535,37 @@ function saveminggu(type,ke){
                   // $('#kedit_2').attr('idnya',data[i].id);
                   // $('#kedit_3').attr('idnya',data[i].id);
                   // $('#kedit_4').attr('idnya',data[i].id);
-                  $('#progres_input').val(data[i].progres);
-                  
-                  $('#img-file').attr('href',$('#baseURL').val() +'/'+ data[i].file);
-                  $('#img-file > img').attr('src',$('#baseURL').val() +'/'+ data[i].file);
+                  if(data[i].progres){
+                    $('#progres_input').val(data[i].progres);
 
-                  $('#progres_chosen').hide();
-                  $('.ace-file-input').hide();
+                    // $('#img-file').attr('href',);
+                    // $('#img-file > img').attr('src',);
+                      let imag = ''
+                          imag = `<div class="col-md-3">
+                                    <a href="`+$('#baseURL').val() +'/'+ data[i].file+`" data-rel="colorbox">
+                                      <img width="150" height="150" alt="150x150" src="`+$('#baseURL').val() +'/'+ data[i].file+`" />
+                                      <div class="text">
+                                        <div class="inner"></div>
+                                      </div>
+                                    </a>
+                                  </div>`;
+
+                    $('#img-file').html(imag);
+
+                    $('#progres_chosen').hide();
+                    $('.ace-file-input').hide();
+                    $('#img-file').show();
+                    $('#progres_input').show();
+                  }else{
+                    $('#progres_chosen').show();
+                    $('.ace-file-input').show();
+                    $('#img-file').hide();
+                    $('#progres_input').hide();
+                  }
+                  
+                  
+
+                  
                 }
 
                 }

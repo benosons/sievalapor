@@ -279,16 +279,22 @@
                         <div class="form-group" id="iniupload">
                           <div class="row">
                             <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Uplaod Foto </label>
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Upload Foto </label>
                     					<div class="col-sm-9">
-                    					  <input type="file" id="id-input-file-2" />
+                    					  <input type="file" id="id-input-file-2" multiple/>
                                 <input type="hidden" id="baseURL" value="{{baseURL}}">
-                                <a href="" data-rel="colorbox" id="img-file">
-                                  <img width="150" height="150" alt="150x150" src="../assets/images/gallery/thumb-2.jpg" />
-                                  <div class="text">
-                                    <div class="inner">Sample Caption on Hover</div>
+                                <div class="row" id="img-file">
+                                  <div class="col-md-3">
+                                    <a href="" data-rel="colorbox">
+                                      <img width="150" height="150" alt="150x150" src="../assets/images/gallery/thumb-2.jpg" />
+                                      <div class="text">
+                                        <div class="inner">Sample Caption on Hover</div>
+                                      </div>
+                                    </a>
                                   </div>
-                                </a>
+                                </div>
+                                
+
                     					</div>
                             </div>
                           </div>
