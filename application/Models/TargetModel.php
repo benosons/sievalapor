@@ -11,16 +11,17 @@ class TargetModel extends Model{
 
     public function gettarget($code = null)
     {
+      
       if($code){
-        $sql = "SELECT dt.*, dp.nama_paket as nama_paket, bt.*, dsk.nama_subkegiatan, dk.nama_kegiatan, dpo.nama_program, u.user_fullname as nama_ppk
+        $sql = "SELECT dt.*, dt.id_paket as id_paket_dt, dp.nama_paket as nama_paket, bt.*, dsk.nama_subkegiatan, dk.nama_kegiatan, dpo.nama_program, u.user_fullname as nama_ppk
                 FROM data_target dt
                 inner join data_paket dp on dp.id = dt.id_paket
 								inner join data_subkegiatan dsk on dsk.kode_subkegiatan = dt.kode_subkegiatan
 								inner join data_kegiatan dk on dk.kode_kegiatan = dt.kode_kegiatan
 								inner join data_program dpo on dpo.kode_program = dt.kode_program
-                inner join bulan_target bt on bt.id_paket = dt.id_paket
+                left join bulan_target bt on bt.id_paket = dt.id_paket
                 inner join users u on u.user_id = dt.ppk where dt.id = '$code'";
-
+        
         $result = $this->db->query($sql);
         $row = $result->getResult();
         return $row;
@@ -368,6 +369,30 @@ class TargetModel extends Model{
       $result = $this->db->query($sql);
       $row = $result->getResult();
       return $row;
+    }
+
+    public function cekbulantarget($code = null)
+    {
+      
+          $builder = $this->db->table('bulan_target');
+          if($code){
+            $query   = $builder->getWhere(['id_paket' => $code]);
+          }else{
+            $query   = $builder->get();
+          }
+          return  $query->getResult();
+    }
+
+    public function getfileprogress($iduser = null, $idpaket = null, $bulan = null)
+    {
+          $builder = $this->db->table('data_progres');
+          if($idpaket){
+            $query   = $builder->getWhere(['id_paket' => $idpaket, 'create_by' => $iduser, 'kode_bulan' => $bulan, 'type' => 'fisik']);
+          }else{
+            $query   = $builder->get();
+          }
+          // echo $this->db->getLastQuery();die;
+          return  $query->getResult();
     }
 
 }

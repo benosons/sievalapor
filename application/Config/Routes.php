@@ -112,6 +112,7 @@ $routes->post('loadminggu', 'Jsondata::loadminggu');
 $routes->post('loadnip', 'Jsondata::loadnip');
 $routes->post('loadrekap', 'Jsondata::loadrekap');
 $routes->post('loadall', 'Jsondata::loadall');
+$routes->post('loadfile', 'Jsondata::loadfile');
 
 $routes->post('actionUsers', 'Jsondata::actionUsers');
 $routes->post('addUser', 'Jsondata::addUser');

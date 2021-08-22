@@ -531,7 +531,7 @@ class Jsondata extends \CodeIgniter\Controller
 
 					$fulldata = [];
 					$datapaket = $model->gettarget($code);
-
+					
 					if($datapaket){
 						$response = [
 							'status'   => 'sukses',
@@ -579,15 +579,18 @@ class Jsondata extends \CodeIgniter\Controller
 					$newreal = [];
 					foreach ($datapaket as $key => $value) {
 						$ceklatar = $model->cekParam('param_latar_belakang', $value->id_paket);
+						$latarbelakang = '';
 						if(!empty($ceklatar)){
 							$latarbelakang = $ceklatar[0]->desc;
 						}
-
+						
 						if($value->type == 'keuangan'){
 							$cekuraian = $model->cekParam('param_uraian', $value->id_paket, null, $value->type);
+							$uraian = '';
 							if(!empty($cekuraian)){
 								$uraian = $cekuraian[0]->desc;
 							}
+
 							$datareal['n1'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n1');
 							$cekmasalah1 = $model->cekParam('param_masalah', $value->id_paket, 'n1', $value->type);
 							if(!empty($cekmasalah1)){
@@ -671,7 +674,6 @@ class Jsondata extends \CodeIgniter\Controller
 								$masalah12 = $cekmasalah12[0]->desc;
 								$datareal['n12']->permasalahan = $masalah12;
 							}
-
 							$datapaket[$key]->progres = $datareal;
 							
 							$datapaket[$key]->uraian = $uraian;
@@ -769,6 +771,7 @@ class Jsondata extends \CodeIgniter\Controller
 
 							$datareal['n8'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n8');
 							$cekuraian8 = $model->cekParam('param_uraian', $value->id_paket, 'n8', $value->type);
+							
 							if(!empty($cekuraian8)){
 								$uraian8 = $cekuraian8[0]->desc;
 								$datareal['n8']->uraian = $uraian8;
@@ -778,7 +781,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$masalah8 = $cekmasalah8[0]->desc;
 								$datareal['n8']->permasalahan = $masalah8;
 							}
-
+							
 							$datareal['n9'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n9');
 							$cekuraian9 = $model->cekParam('param_uraian', $value->id_paket, 'n9', $value->type);
 							if(!empty($cekuraian9)){
@@ -790,7 +793,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$masalah9 = $cekmasalah9[0]->desc;
 								$datareal['n9']->permasalahan = $masalah9;
 							}
-
+							
 							$datareal['n10'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n10');
 							$cekuraian10 = $model->cekParam('param_uraian', $value->id_paket, 'n10', $value->type);
 							if(!empty($cekuraian10)){
@@ -1000,7 +1003,8 @@ class Jsondata extends \CodeIgniter\Controller
 							
 							if(!empty($cekprogres)){
 								$datapaket[0]->progres = $cekprogres[0]->progres;
-								$datapaket[0]->file = $cekprogres[0]->path.$cekprogres[0]->filename;
+								$datapaket[0]->file = $cekprogres;
+								
 							}
 							
 						}
@@ -1049,6 +1053,50 @@ class Jsondata extends \CodeIgniter\Controller
 
 					$fulldata = [];
 					$datapaket = $model->getnip($code);
+
+					if($datapaket){
+						$response = [
+							'status'   => 'sukses',
+							'code'     => '1',
+							'data' 		 => $datapaket
+						];
+					}else{
+						$response = [
+								'status'   => 'gagal',
+								'code'     => '0',
+								'data'     => 'tidak ada data',
+						];
+					}
+
+				header('Content-Type: application/json');
+				echo json_encode($response);
+				exit;
+			}
+		catch (\Exception $e)
+		{
+			die($e->getMessage());
+		}
+	}
+
+	public function loadfile()
+	{
+		try
+		{
+				$request  = $this->request;
+				$param 	  = $request->getVar('param');
+				$id		 	  = $request->getVar('id');
+				$role 		= $this->data['role'];
+				$userid		= $this->data['userid'];
+				$created_by 		= $request->getVar('iduser');
+				$id_paket 		= $request->getVar('idpaket');
+				$kode_bulan 		= $request->getVar('bulan');
+
+					$model = new \App\Models\TargetModel();
+					$modelparam = new \App\Models\ParamModel();
+					$modelfiles = new \App\Models\FilesModel();
+
+					$fulldata = [];
+					$datapaket = $model->getfileprogress($created_by, $id_paket, $kode_bulan);
 
 					if($datapaket){
 						$response = [
@@ -1887,15 +1935,16 @@ class Jsondata extends \CodeIgniter\Controller
 		$request  = $this->request;
 		$param 	  = $request->getVar('param');
 		$role 		= $this->data['role'];
+		$userid 	= $this->data['userid'];
 
 		$model 	  = new \App\Models\TargetModel();
-
-		$data = [
+		if($role == '100' || $role == '10'){
+			$data = [
 						'kode_program'		=> $request->getVar('kode_program'),
 						'kode_kegiatan'		=> $request->getVar('kode_kegiatan'),
 						'kode_subkegiatan'=> $request->getVar('kode_subkegiatan'),
 						'id_paket'				=> $request->getVar('id_paket'),
-						'created_by'			=> $role,
+						'created_by'			=> $userid,
 						'created_date'		=> $this->now,
 						'updated_date'		=> $this->now,
 						'pagu'						=> $request->getVar('pagu_kegiatan'),
@@ -1905,38 +1954,53 @@ class Jsondata extends \CodeIgniter\Controller
 						'target_output'						=> $request->getVar('target_output'),
 						'satuan'						=> $request->getVar('satuan'),
 				];
+			}
+				
+			if($role != '10'){
+				$databulan_k = [];
+				$databulan_f = [];
+				$databulan_kp = [];
+				for ($i=1; $i <= 12; $i++) {
+					$databulan_k['id_paket'] = $request->getVar('id_paket');
+					$databulan_k['created_by'] = $request->getVar($userid);
+					$databulan_k['created_date'] = $this->now;
+					
+					$databulan_f['id_paket'] = $request->getVar('id_paket');
+					$databulan_f['created_by'] = $request->getVar($userid);
+					$databulan_f['created_date'] = $this->now;
 
-		$databulan_k = [];
-		$databulan_f = [];
-		$databulan_kp = [];
-		for ($i=1; $i <= 12; $i++) {
-			$databulan_k['id_paket'] = $request->getVar('id_paket');
-			$databulan_f['id_paket'] = $request->getVar('id_paket');
+					$databulan_kp['id_paket'] = $request->getVar('id_paket');
+					$databulan_kp['created_by'] = $request->getVar($userid);
+					$databulan_kp['created_date'] = $this->now;
 
-			$databulan_k['type'] = 'keuangan';
-			$databulan_k['n'.$i] = $request->getVar('k'.$i);
-			$databulan_f['type'] = 'fisik';
-			$databulan_f['n'.$i] = $request->getVar('f'.$i);
-			$databulan_kp['type'] = 'persen';
-			$databulan_kp['n'.$i] = $request->getVar('kp'.$i);
+					$databulan_k['type'] = 'keuangan';
+					$databulan_k['n'.$i] = $request->getVar('k'.$i);
+					$databulan_f['type'] = 'fisik';
+					$databulan_f['n'.$i] = $request->getVar('f'.$i);
+					
+					$databulan_kp['type'] = 'persen';
+					$databulan_kp['n'.$i] = $request->getVar('kp'.$i);
+				}
+
+				$databulan_k['tot'] = $request->getVar('ktot');
+				$databulan_f['tot'] = $request->getVar('ftot');
+				// for ($i=1; $i <= 2; $i++) {
+					// if($=1){
+						$res_k = $model->saveParam('bulan_target', $databulan_k);
+
+					// }else if($=2){
+						$res_f = $model->saveParam('bulan_target', $databulan_f);
+					// }
+
+						$res_kp = $model->saveParam('bulan_target', $databulan_kp);
+					// code...
+				// }
+			}
+
+		if($role == '100' || $role == '10'){
+			$res = $model->saveParam($param, $data);
+			$id  = $model->insertID();
 		}
-
-		$databulan_k['tot'] = $request->getVar('ktot');
-		$databulan_f['tot'] = $request->getVar('ftot');
-		// for ($i=1; $i <= 2; $i++) {
-			// if($=1){
-				$res_k = $model->saveParam('bulan_target', $databulan_k);
-
-			// }else if($=2){
-				$res_f = $model->saveParam('bulan_target', $databulan_f);
-			// }
-
-				$res_kp = $model->saveParam('bulan_target', $databulan_kp);
-			// code...
-		// }
-
-		$res = $model->saveParam($param, $data);
-		$id  = $model->insertID();
 
 		$response = [
 				'status'   => 'sukses',
@@ -1954,9 +2018,11 @@ class Jsondata extends \CodeIgniter\Controller
 		$request  = $this->request;
 		$param 	  = $request->getVar('param');
 		$role 		= $this->data['role'];
+		$userid 	= $this->data['userid'];
 
 		$model 	  = new \App\Models\TargetModel();
 		
+		if($role == '30'){
 		$data = [
 					'updated_date'		=> $this->now,
 					'pagu'						=> $request->getVar('pagu_kegiatan'),
@@ -1965,9 +2031,20 @@ class Jsondata extends \CodeIgniter\Controller
 		$databulan_k = [];
 		$databulan_f = [];
 		$databulan_kp = [];
+		
 		for ($i=1; $i <= 12; $i++) {
+
 			$databulan_k['id_paket'] = $request->getVar('id_paket');
+			$databulan_k['created_by'] = $request->getVar($userid);
+			$databulan_k['created_date'] = $this->now;
+			
 			$databulan_f['id_paket'] = $request->getVar('id_paket');
+			$databulan_f['created_by'] = $request->getVar($userid);
+			$databulan_f['created_date'] = $this->now;
+			
+			$databulan_kp['id_paket'] = $request->getVar('id_paket');
+			$databulan_kp['created_by'] = $request->getVar($userid);
+			$databulan_kp['created_date'] = $this->now;
 
 			$databulan_k['type'] = 'keuangan';
 			$databulan_k['n'.$i] = $request->getVar('k'.$i);
@@ -1976,22 +2053,35 @@ class Jsondata extends \CodeIgniter\Controller
 			$databulan_kp['type'] = 'persen';
 			$databulan_kp['n'.$i] = $request->getVar('kp'.$i);
 		}
-
 		$databulan_k['tot'] = $request->getVar('ktot');
 		$databulan_f['tot'] = $request->getVar('ftot');
-		// for ($i=1; $i <= 2; $i++) {
-			// if($=1){
-				$res_k 	= $model->updateTarget('bulan_target',  ['id_paket' => $request->getVar('id_paket'), 'type' => $databulan_k['type'] ], $databulan_k);
+		
+		
+		$cekbulantarket = $model->cekbulantarget($request->getVar('id_paket'));
+		
+		if(empty($cekbulantarket)){
+			$res_k = $model->saveParam('bulan_target', $databulan_k);
+			$res_f = $model->saveParam('bulan_target', $databulan_f);
+			$res_kp = $model->saveParam('bulan_target', $databulan_kp);
+		}else{
+			$res_k 	= $model->updateTarget('bulan_target',  ['id_paket' => $request->getVar('id_paket'), 'type' => $databulan_k['type'] ], $databulan_k);
+			$res_f 	= $model->updateTarget('bulan_target',  ['id_paket' => $request->getVar('id_paket'), 'type' => $databulan_f['type'] ], $databulan_f);
+			$res_kp = $model->updateTarget('bulan_target', ['id_paket' => $request->getVar('id_paket'), 'type' => $databulan_kp['type'] ] ,  $databulan_kp);
+		}
 
-			// }else if($=2){
-				$res_f 	= $model->updateTarget('bulan_target',  ['id_paket' => $request->getVar('id_paket'), 'type' => $databulan_f['type'] ], $databulan_f);
-
-			// }
-				$res_kp = $model->updateTarget('bulan_target', ['id_paket' => $request->getVar('id_paket'), 'type' => $databulan_kp['type'] ] ,  $databulan_kp);
-			// code...
-		// }
-				
 		$res = $model->updateTarget($param , [ 'id' => $request->getVar('id_paket') ], $data);
+	}else{
+		$data = [
+			'updated_by' 		=> $userid,
+			'updated_date'		=> $this->now,
+			'pagu_perubahan'	=> $request->getVar('pagu_perubahan'),
+			'bulan_perubahan'				=> $request->getVar('bulan_perubahan'),
+		];
+
+		$res = $model->updateTarget($param , [ 'id' => $request->getVar('id') ], $data);
+	}
+	
+	
 
 		$response = [
 				'status'   => 'sukses',
@@ -2092,27 +2182,32 @@ class Jsondata extends \CodeIgniter\Controller
 						mkdir($folder, 0777, TRUE);
 					}
 					
-					$stat = $files[0]->move($folder, $files[0]->getName());
-					
-					$data_progres = [
-						'id_paket'			=> $request->getVar('id_paket'),
-						'progres'			=> $request->getVar('progres'),
-						'filename'			=> $files[0]->getName(),
-						'extention'			=> null,
-						'size'				=> $files[0]->getSize('kb'),
-						'path'				=> $tipe.'/'.$date.'/',
-						'type'				=> 'fisik',
-						'created_date'		=> $this->now,
-						'updated_date'		=> $this->now,
-						'create_by'			=> $userid,
-						'kode_bulan'		=> $request->getVar('kode_bulan'),
-					];
-					
-					$cekprogres = $model->cekParam('data_progres', $request->getVar('id_paket'), $request->getVar('kode_bulan'), 'fisik', $userid);
-					if(empty($cekprogres)){
-						$res_progres = $model->saveParam('data_progres', $data_progres);
+					foreach ($files as $i => $value) {
+						# code...						
+						$stat = $files[$i]->move($folder, $files[$i]->getName());
+						
+						$data_progres = [
+							'id_paket'			=> $request->getVar('id_paket'),
+							'progres'			=> $request->getVar('progres'),
+							'filename'			=> $files[$i]->getName(),
+							'extention'			=> null,
+							'size'				=> $files[$i]->getSize('kb'),
+							'path'				=> $tipe.'/'.$date.'/',
+							'type'				=> 'fisik',
+							'created_date'		=> $this->now,
+							'updated_date'		=> $this->now,
+							'create_by'			=> $userid,
+							'kode_bulan'		=> $request->getVar('kode_bulan'),
+						];
+						
+						// $cekprogres = $model->cekParam('data_progres', $request->getVar('id_paket'), $request->getVar('kode_bulan'), 'fisik', $userid);
+						// if(empty($cekprogres)){
+							$res_progres = $model->saveParam('data_progres', $data_progres);
+							
+						// }
 					}
 				}
+				
 			}
 
 		if($request->getVar('type') == 'keuangan'){

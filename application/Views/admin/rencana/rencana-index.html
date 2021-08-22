@@ -43,10 +43,12 @@
       <div class="widget-box">
         <div class="widget-header">
 					<div class="widget-toolbar no-border">
+            {% if role != '30' %}
 						<button class="btn btn-xs btn-primary bigger" onclick="window.location.href = 'rencana?param=insert'" >
 							<i class="ace-icon fa fa-plus"></i>
 							Add
 						</button>
+            {% endif %}
 					</div>
 				</div>
         <div class="widget-body">

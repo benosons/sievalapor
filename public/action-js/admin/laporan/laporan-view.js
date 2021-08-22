@@ -18,7 +18,7 @@ $(document).ready(function(){
   $('#iniprogres').hide();
    $('#iniupload').hide();
 
-  $('#id-input-file-2').ace_file_input({
+  $('#id-input-file-2-').ace_file_input({
     no_file:'No File ...',
     btn_choose:'Choose',
     btn_change:'Change',
@@ -29,6 +29,37 @@ $(document).ready(function(){
     //blacklist:'exe|php'
     //onchange:''
     //
+  });
+
+  $('#id-input-file-2').ace_file_input({
+    style:'well',
+    btn_choose:'Drop files here or click to choose',
+    btn_change:null,
+    no_icon:'ace-icon fa fa-cloud-upload',
+    droppable:true,
+    thumbnail:'small'//large | fit
+    //,icon_remove:null//set null, to hide remove/reset button
+    /**,before_change:function(files, dropped) {
+      //Check an example below
+      //or examples/file-upload.html
+      return true;
+    }*/
+    /**,before_remove : function() {
+      return true;
+    }*/
+    ,
+    preview_error : function(filename, error_code) {
+      //name of the file that failed
+      //error_code values
+      //1 = 'FILE_LOAD_FAILED',
+      //2 = 'IMAGE_LOAD_FAILED',
+      //3 = 'THUMBNAIL_FAILED'
+      //alert(error_code);
+    }
+
+  }).on('change', function(){
+    //console.log($(this).data('ace_input_files'));
+    //console.log($(this).data('ace_input_method'));
   });
 
 
@@ -353,7 +384,7 @@ function saveminggu(type,ke){
           },
           success: function(result){
               let data = result.data;
-            console.log(data);
+            
             if(!Array.isArray(data)){
               for (var i = 1; i <= 4; i++) {
                 if(type == 'keuangan'){
@@ -536,19 +567,27 @@ function saveminggu(type,ke){
                   // $('#kedit_3').attr('idnya',data[i].id);
                   // $('#kedit_4').attr('idnya',data[i].id);
                   if(data[i].progres){
+                   
                     $('#progres_input').val(data[i].progres);
 
                     // $('#img-file').attr('href',);
                     // $('#img-file > img').attr('src',);
-                      let imag = ''
-                          imag = `<div class="col-md-3">
-                                    <a href="`+$('#baseURL').val() +'/'+ data[i].file+`" data-rel="colorbox">
-                                      <img width="150" height="150" alt="150x150" src="`+$('#baseURL').val() +'/'+ data[i].file+`" />
-                                      <div class="text">
-                                        <div class="inner"></div>
-                                      </div>
-                                    </a>
-                                  </div>`;
+                    let imag = `
+                                  <div class="col-xs-12">
+                                    <div>
+                                      <ul class="ace-thumbnails clearfix">`;
+                    
+                    for (let index = 0; index < data[i]['file'].length; index++) {
+                      
+                      imag += `<li>
+											<a target="_blank" href="`+$('#baseURL').val() +'/'+ data[i]['file'][index]['path']+data[i]['file'][index]['filename']+`" title="Photo Title" data-rel="colorbox">
+												<img width="150" height="150" alt="150x150" src="`+$('#baseURL').val() +'/'+ data[i]['file'][index]['path']+data[i]['file'][index]['filename']+`" />
+											</a>
+										  </li>`
+                    }
+
+                    imag += '</ul></div></div>';
+                    
 
                     $('#img-file').html(imag);
 

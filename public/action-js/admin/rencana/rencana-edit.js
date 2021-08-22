@@ -68,6 +68,8 @@ $(document).ready(function(){
   var pagu_kegiatan = $('#pagu_kegiatan').val();
   var ktot = $('#ktot').val();
   var ftot = $('#ftot').val();
+  var pagu_perubahan = $('#pagu_perubahan').val();
+  var bulan_perubahan = $('#bulan_perubahan').val();
 
   var formData = new FormData();
   formData.append('id', ids);
@@ -76,13 +78,15 @@ $(document).ready(function(){
   formData.append('pagu_kegiatan', pagu_kegiatan);
   formData.append('ktot', ktot);
   formData.append('ftot', ftot);
+  formData.append('pagu_perubahan', pagu_perubahan);
+  formData.append('bulan_perubahan', bulan_perubahan);
 
   for (var i = 1; i <= 12; i++) {
     formData.append('k'+i, $('#k'+i).val());
     formData.append('kp'+i, $('#kp'+i).val());
     formData.append('f'+i, $('#f'+i).val());
   }
-  console.log(id_paket);
+  
   update(formData);
 });
 
@@ -105,6 +109,8 @@ function loadtarget(param){
       },
       success: function(result){
           let data = result.data;
+          $('#form-pagu-perubahan').show()
+          $('#form-bulan-perubahan').show()
           // $('#kode_program').html('<option value="'+data[0].kode_program+'">'+data[0].kode_program+'</option>').trigger("chosen:updated");
           $('#kode_program').val(data[0].kode_program);
           $('#nama_program').val(data[0].nama_program);
@@ -120,11 +126,18 @@ function loadtarget(param){
           $('#bidang').val(data[0].bidang);
           $('#seksi').val(data[0].seksi);
 
+          $('#target_output').val(data[0].target_output);
+          $('#satuan').val(data[0].satuan);
+
           // $('#paket').html('<option value="'+data[0].id_paket+'">'+data[0].nama_paket+'</option>').trigger("chosen:updated");
           $('#paket').val(data[0].nama_paket);
           $('#pagu_kegiatan').val(data[0].pagu);
 
           $('#id_paket').val(data[0].id_paket);
+
+          $('#pagu_perubahan').val(data[0].pagu_perubahan);
+          $('#bulan_perubahan').val(data[0].bulan_perubahan);
+          $('#bulan_perubahan').trigger("chosen:updated");
           
 
           for (var i = 0; i < data.length; i++) {
@@ -170,7 +183,25 @@ function loadtarget(param){
               $('#kp11').val(data[i].n11);
               $('#kp12').val(data[i].n12);
             }
+
+            
           }
+
+          let inibulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'sepetember', 'Oktober', 'November', 'Desember']
+            let bulan_perubahan = '<option></option>'
+            for (let index = 1; index < 12; index++) {
+            
+              if(data[0]['n'+ index ]){
+                let select = '';
+                if(data[0].bulan_perubahan == 'n'+ index){
+                  select = 'selected';
+                }
+                bulan_perubahan += '<option value="n'+index+'" '+select+' >'+inibulan[index-1]+'</option>'
+              }
+              
+            }
+            $('#bulan_perubahan').html(bulan_perubahan);
+            $('#bulan_perubahan').trigger("chosen:updated");
         }
       })
     }

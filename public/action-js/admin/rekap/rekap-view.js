@@ -15,6 +15,7 @@ $(document).ready(function(){
     loadbulan(this.value);
   });
 
+
 });
 
 function saveminggu(ke){
@@ -253,6 +254,26 @@ function saveminggu(ke){
             $('#f_masalah_11').html(data[i].progres.n11.permasalahan);
             $('#f_masalah_12').html(data[i].progres.n12.permasalahan);
 
+            $('#f_foto_1').attr('onclick', "lihatfoto('"+data[i]['user_id']+"', '"+data[i]['id_paket']+"' , 'n1')");
+            $('#f_foto_2').attr('onclick', "lihatfoto('"+data[i]['user_id']+"', '"+data[i]['id_paket']+"' , 'n2')");
+            $('#f_foto_3').attr('onclick', "lihatfoto('"+data[i]['user_id']+"', '"+data[i]['id_paket']+"' , 'n3')");
+            $('#f_foto_4').attr('onclick', "lihatfoto('"+data[i]['user_id']+"', '"+data[i]['id_paket']+"' , 'n4')");
+            $('#f_foto_5').attr('onclick', "lihatfoto('"+data[i]['user_id']+"', '"+data[i]['id_paket']+"' , 'n5')");
+            $('#f_foto_6').attr('onclick', "lihatfoto('"+data[i]['user_id']+"', '"+data[i]['id_paket']+"' , 'n6')");
+            $('#f_foto_7').attr('onclick', "lihatfoto('"+data[i]['user_id']+"', '"+data[i]['id_paket']+"' , 'n7')");
+            $('#f_foto_8').attr('onclick', "lihatfoto('"+data[i]['user_id']+"', '"+data[i]['id_paket']+"' , 'n8')");
+            $('#f_foto_9').attr('onclick', "lihatfoto('"+data[i]['user_id']+"', '"+data[i]['id_paket']+"' , 'n9')");
+            $('#f_foto_10').attr('onclick', "lihatfoto('"+data[i]['user_id']+"', '"+data[i]['id_paket']+"' , 'n10')");
+            $('#f_foto_11').attr('onclick', "lihatfoto('"+data[i]['user_id']+"', '"+data[i]['id_paket']+"' , 'n11')");
+            $('#f_foto_12').attr('onclick', "lihatfoto('"+data[i]['user_id']+"', '"+data[i]['id_paket']+"' , 'n12')");
+
+            for (let ind = 1; ind <= 12; ind++) {
+              if($.isEmptyObject(data[i].progres['n'+ ind])){
+                $('#f_foto_'+ind).hide();
+              }
+              
+            }
+
           }
         }
         }
@@ -458,4 +479,38 @@ function saveminggu(ke){
       }
     }
 
+  }
+
+  function lihatfoto(iduser,idpaket,bulan){
+    $('#modal_foto').modal('show');
+    $.ajax({
+      type: 'post',
+      dataType: 'json',
+      url: 'loadfile',
+      data : {
+              iduser      : iduser,
+              idpaket      : idpaket,
+              bulan      : bulan,
+      },
+      success: function(result){
+          let data = result.data;
+          let imag = `
+          
+              <ul class="ace-thumbnails clearfix">`;
+
+              for (let index = 0; index < data.length; index++) {
+
+              imag += `<li>
+              <a target="_blank" href="`+$('#baseURL').val() +'/'+ data[index]['filename']+`" title="Photo Title" data-rel="colorbox">
+              <img width="150" height="150" alt="150x150" src="`+$('#baseURL').val() +'/'+ data[index]['path']+data[index]['filename']+`" />
+              </a>
+              </li>`
+              }
+
+              imag += '</ul>';
+
+
+              $('#view-nya').html(imag);
+      }
+    })
   }

@@ -4,9 +4,101 @@ $(document).ready(function(){
   const ids = $('#ids').val();
   $('#nav-menu li').removeClass();
   $('#nav-menu li#menu-rencana').addClass('active');
+  $( '.uang, .uang-pagu' ).mask('000.000.000.000.000', {reverse: true});
+
 
   // loadkegiatan("program",0);
   loadtarget(ids);
+
+  var ktot = [];
+  var pertot = [];
+  $('.uang').keyup(function(){
+    ktot = [];
+    pertot = [];
+    for (var i = 1; i <= 12; i++) {
+      
+      let vlue = $('#k'+i).val();
+      let lue = vlue.replaceAll('.', '');
+      let vl = ($('#k'+i).val() == '') ? 0 : parseInt(lue);
+      if(vl == 0){
+        $('#k'+i).attr('placeholder', '0');
+      }
+      ktot.push(vl);
+      if($('#pagu_kegiatan').val()){
+        let pagu = $('#pagu_kegiatan').val().replaceAll('.', '');
+        let persen = (vl / pagu) * 100;
+        $('#kp'+i).val(persen.toFixed(2) + '%');
+        pertot.push(persen);
+        
+      }
+    }
+    
+    $('#ktot').val(rubah(ktot.reduce((a, b) => a + b, 0)));
+    $('#pertot').val(rubah(pertot.reduce((a, b) => a + b, 0)) + '%');
+
+    if(parseInt($('#ktot').val().replaceAll('.', '')) > parseInt($('#pagu_kegiatan').val().replaceAll('.', ''))){
+      Swal.fire({
+        type: 'warning',
+        title: 'Total sudah Melebihi Pagu',
+        showConfirmButton: true,
+        // showCancelButton: true,
+        confirmButtonText: `Ok`,
+      }).then((result) => {
+        $(document).ready(function(){
+            // loadprogram('');
+            // $('#kode_program').val('');
+            // $('#nama_program').val('');
+
+        });
+      })
+
+      $('#save_target').prop('disabled', true)
+    }else{
+      $('#save_target').prop('disabled', false)
+    }
+  })
+
+  let ftot = [];
+  $('.fis').keyup(function(){
+    ftot = [];
+    for (var i = 1; i <= 12; i++) {
+      let vlue = $('#f'+i).val();
+      if(vlue){
+        ftot.push(vlue);
+      }
+    }
+    $('#ftot').val(ftot[ftot.length - 1]);
+  });
+
+  function rubah(angka){
+   var reverse = angka.toString().split('').reverse().join(''),
+   ribuan = reverse.match(/\d{1,3}/g);
+   ribuan = ribuan.join('.').split('').reverse().join('');
+   return ribuan;
+ }
+
+ $('#save_target').on('click', function(){
+  var id_paket = $('#id_paket').val();
+  var pagu_kegiatan = $('#pagu_kegiatan').val();
+  var ktot = $('#ktot').val();
+  var ftot = $('#ftot').val();
+
+  var formData = new FormData();
+  formData.append('id', ids);
+  formData.append('param', 'data_target');
+  formData.append('id_paket', id_paket);
+  formData.append('pagu_kegiatan', pagu_kegiatan);
+  formData.append('ktot', ktot);
+  formData.append('ftot', ftot);
+
+  for (var i = 1; i <= 12; i++) {
+    formData.append('k'+i, $('#k'+i).val());
+    formData.append('kp'+i, $('#kp'+i).val());
+    formData.append('f'+i, $('#f'+i).val());
+  }
+  
+  update(formData);
+});
 
 });
 
@@ -40,8 +132,30 @@ function loadtarget(param){
 
           // $('#paket').html('<option value="'+data[0].id_paket+'">'+data[0].nama_paket+'</option>').trigger("chosen:updated");
           $('#paket').val(data[0].nama_paket);
+          $('#id_paket').val(data[0].id_paket_dt);
           $('#pagu_kegiatan').val(data[0].pagu);
 
+
+          if(data[0].pagu_perubahan){
+            $('#form-pagu-perubahan').show();
+            $('#pagu_perubahan').prop('disabled', true);
+            $('#pagu_perubahan').val(data[0].pagu_perubahan);
+          }
+
+          if(data[0].bulan_perubahan){
+            $('#form-bulan-perubahan-view').show();
+            $('#bulan_perubahan_view').prop('disabled', true);
+            let inibulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'sepetember', 'Oktober', 'November', 'Desember']
+            $('#bulan_perubahan_view').val(inibulan[data[0].bulan_perubahan.replace(/n/g, "") - 1]);
+          }
+
+
+        if($('#role').val() != 10){
+          $('#save_target').show();
+          for (var i = 1; i <= 12; i++) {
+            $('#k'+i).prop('disabled', false);
+            $('#f'+i).prop('disabled', false);
+          }
 
           for (var i = 0; i < data.length; i++) {
             if(data[i].type == 'keuangan'){
@@ -85,8 +199,10 @@ function loadtarget(param){
               $('#kp10').val(data[i].n10);
               $('#kp11').val(data[i].n11);
               $('#kp12').val(data[i].n12);
-            }
+            }            
           }
+        }
+
         }
       })
     }
@@ -138,3 +254,58 @@ function loadtarget(param){
             }
           })
         }
+
+        function save(formData){
+
+          $.ajax({
+              type: 'post',
+              processData: false,
+              contentType: false,
+              url: 'addTarget',
+              data : formData,
+              success: function(result){
+                Swal.fire({
+                  type: 'success',
+                  title: 'Berhasil Tambah Target !',
+                  showConfirmButton: true,
+                  // showCancelButton: true,
+                  confirmButtonText: `Ok`,
+                }).then((result) => {
+                  $(document).ready(function(){
+                      // loadprogram('');
+                      // $('#kode_program').val('');
+                      // $('#nama_program').val('');
+        
+                  });
+                })
+              }
+            });
+          };
+
+          function update(formData){
+
+            $.ajax({
+                type: 'post',
+                processData: false,
+                contentType: false,
+                url: 'updateTarget',
+                data : formData,
+                success: function(result){
+                  Swal.fire({
+                    type: 'success',
+                    title: 'Berhasil Update Target !',
+                    showConfirmButton: true,
+                    // showCancelButton: true,
+                    confirmButtonText: `Ok`,
+                  }).then((result) => {
+                    $(document).ready(function(){
+                        // loadprogram('');
+                        // $('#kode_program').val('');
+                        // $('#nama_program').val('');
+                        location.reload()
+          
+                    });
+                  })
+                }
+              });
+            };

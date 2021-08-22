@@ -140,9 +140,9 @@
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Target/ Output </label>
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Satuan </label>
                     					<div class="col-sm-9">
-                                <input type="text" id="target_output" placeholder="Target/ Output" class="col-xs-12 col-sm-12" disabled />
+                                <input type="text" id="satuan" placeholder="Target/ Output" class="col-xs-12 col-sm-12" disabled />
                     					</div>
                             </div>
 
@@ -152,15 +152,15 @@
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Satuan </label>
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Output </label>
                     					<div class="col-sm-9">
-                                <input type="text" id="satuan" placeholder="Nama Program" class="col-xs-12 col-sm-12" disabled />
+                                <input type="text" id="target_output" placeholder="Nama Program" class="col-xs-12 col-sm-12" disabled />
                     					</div>
                             </div>
 
                           </div>
                 				</div>
-
+                      
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
@@ -200,6 +200,46 @@
 
                         <div class="space-4"></div>
 
+                        <div hidden class="form-group" id="form-pagu-perubahan">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pagu Perubahan (Rp.) </label>
+                    					<div class="col-sm-9">
+                    						<input type="text" id="pagu_perubahan" placeholder="" class="col-xs-12 col-sm-12 uang-pagu"/>
+                    					</div>
+                            </div>
+                          </div>
+                				</div>
+
+                        <div class="space-4"></div>
+
+                        <div hidden class="form-group" id="form-bulan-perubahan">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Bulan Perubahan </label>
+                    					<div class="col-sm-4">
+                                <select class="chosen-select form-control" id="bulan_perubahan" data-placeholder="Pilih Bulan...">
+                						  		<option value="">  </option>
+                						  	</select>
+                    					</div>
+                            </div>
+
+                          </div>
+                				</div>
+
+                        <div hidden class="form-group" id="form-bulan-perubahan-view">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Bulan Perubahan </label>
+                    					<div class="col-sm-4">
+                                <input type="text" id="bulan_perubahan_view" placeholder="" class="col-xs-12 col-sm-12 uang-pagu"/>
+                    					</div>
+                            </div>
+
+                          </div>
+                				</div>
+                        <div class="space-4"></div>
+
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
@@ -220,6 +260,7 @@
                 </div>
               </div>
             </div>
+            {% if role == 100 or role == 30 %}
             <div class="row">
               <div class="col-xs-6 widget-container-col" >
                 <div class="widget-box">
@@ -474,6 +515,7 @@
                           <tr>
                             <th colspan=2><center>Total</center></th>
                             <th><input type="text" id="ktot" placeholder="" class="col-xs-12 col-sm-12" disabled/></th>
+                            <th><input type="text" id="pertot" placeholder="" class="col-xs-12 col-sm-12" disabled/></th>
                           </tr>
                         </tfoot>
                       </table>
@@ -708,7 +750,7 @@
                 </div>
               </div>
             </div>
-
+            {% endif %}
           </div>
           <div class="widget-toolbox padding-8 clearfix">
 						<button class="btn btn-xs btn-danger pull-left" onclick="window.location.href = 'rencana'">

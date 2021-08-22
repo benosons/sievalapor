@@ -3,7 +3,8 @@ console.log('You are running jQuery version: ' + $.fn.jquery);
 $(document).ready(function(){
   $('#nav-menu li').removeClass();
   $('#nav-menu li#menu-rencana').addClass('active');
-   $( '.uang, .uang-pagu' ).mask('000.000.000.000.000', {reverse: true});
+  $( '.uang, .uang-pagu' ).mask('000.000.000.000.000', {reverse: true});
+  
   loadkegiatan("program",0);
   loadppk();
 
@@ -36,10 +37,12 @@ $(document).ready(function(){
       formData.append('target_output', target_output);
       formData.append('satuan', satuan);
 
-      for (var i = 1; i <= 12; i++) {
-        formData.append('k'+i, $('#k'+i).val());
-        formData.append('kp'+i, $('#kp'+i).val());
-        formData.append('f'+i, $('#f'+i).val());
+      if($('#role').val() != 10 ){
+        for (var i = 1; i <= 12; i++) {
+          formData.append('k'+i, $('#k'+i).val());
+          formData.append('kp'+i, $('#kp'+i).val());
+          formData.append('f'+i, $('#f'+i).val());
+        }
       }
 
       save(formData);
@@ -120,20 +123,48 @@ $(document).ready(function(){
   var ktot = [];
   $('.uang').keyup(function(){
     ktot = [];
+    pertot = [];
     for (var i = 1; i <= 12; i++) {
+      
       let vlue = $('#k'+i).val();
       let lue = vlue.replaceAll('.', '');
       let vl = ($('#k'+i).val() == '') ? 0 : parseInt(lue);
+      if(vl == 0){
+        $('#k'+i).attr('placeholder', '0');
+      }
       ktot.push(vl);
       if($('#pagu_kegiatan').val()){
         let pagu = $('#pagu_kegiatan').val().replaceAll('.', '');
         let persen = (vl / pagu) * 100;
-        console.log(persen)
         $('#kp'+i).val(persen.toFixed(2) + '%');
+        pertot.push(persen);
+        
       }
     }
-    ;
+    
     $('#ktot').val(rubah(ktot.reduce((a, b) => a + b, 0)));
+    $('#pertot').val(rubah(pertot.reduce((a, b) => a + b, 0)) + '%');
+
+    if(parseInt($('#ktot').val().replaceAll('.', '')) > parseInt($('#pagu_kegiatan').val().replaceAll('.', ''))){
+      Swal.fire({
+        type: 'warning',
+        title: 'Total sudah Melebihi Pagu',
+        showConfirmButton: true,
+        // showCancelButton: true,
+        confirmButtonText: `Ok`,
+      }).then((result) => {
+        $(document).ready(function(){
+            // loadprogram('');
+            // $('#kode_program').val('');
+            // $('#nama_program').val('');
+
+        });
+      })
+
+      $('#save_target').prop('disabled', true)
+    }else{
+      $('#save_target').prop('disabled', false)
+    }
   })
 
   let ftot = [];

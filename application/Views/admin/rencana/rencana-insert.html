@@ -145,9 +145,9 @@
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Target/ Output </label>
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Satuan </label>
                     					<div class="col-sm-9">
-                                <select class="chosen-select form-control" id="target_output" data-placeholder="Pilih Target/ Ouput...">
+                                <select class="chosen-select form-control" id="satuan" data-placeholder="Pilih Target/ Ouput...">
                                   <option value="Dokumen">Dokumen </option>
                                   <option value="Laporan">Laporan</option>
                                   <option value="Kawasan">Kawasan</option>
@@ -165,9 +165,9 @@
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Satuan </label>
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Output </label>
                     					<div class="col-sm-9">
-                    						<input type="text" id="satuan" placeholder="" class="col-xs-12 col-sm-12 uang-pagu"/>
+                    						<input type="text" id="target_output" placeholder="" class="col-xs-12 col-sm-12 uang-pagu"/>
                     					</div>
                             </div>
                           </div>
@@ -243,7 +243,7 @@
                 </div>
               </div>
             </div>
-
+            {% if role == 100 %}
             <div class="row">
 
               <div class="col-xs-6 widget-container-col" >
@@ -499,6 +499,7 @@
                           <tr>
                             <th colspan=2><center>Total</center></th>
                             <th><input type="text" id="ktot" placeholder="" class="col-xs-12 col-sm-12" disabled/></th>
+                            <th><input type="text" id="pertot" placeholder="" class="col-xs-12 col-sm-12" disabled/></th>
                           </tr>
                         </tfoot>
                       </table>
@@ -733,7 +734,7 @@
                 </div>
               </div>
             </div>
-
+            {% endif %}
           </div>
           <div class="widget-toolbox padding-8 clearfix">
 						<button class="btn btn-xs btn-danger pull-left" onclick="window.location.href = 'rencana'">
