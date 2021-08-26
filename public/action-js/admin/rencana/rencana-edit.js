@@ -189,17 +189,22 @@ function loadtarget(param){
 
           let inibulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'sepetember', 'Oktober', 'November', 'Desember']
             let bulan_perubahan = '<option></option>'
-            for (let index = 1; index < 12; index++) {
+            // for (let index = 1; index < 12; index++) {
             
-              if(data[0]['n'+ index ]){
-                let select = '';
-                if(data[0].bulan_perubahan == 'n'+ index){
-                  select = 'selected';
-                }
-                bulan_perubahan += '<option value="n'+index+'" '+select+' >'+inibulan[index-1]+'</option>'
-              }
+            //   if(data[0]['n'+ index ]){
+            //     let select = '';
+            //     if(data[0].bulan_perubahan == 'n'+ index){
+            //       select = 'selected';
+            //     }
+            //     bulan_perubahan += '<option value="n'+index+'" '+select+' >'+inibulan[index-1]+'</option>'
+            //   }
               
-            }
+            // }
+            var d = new Date();
+            var n = d.getMonth();
+            bulan_perubahan += '<option value="n'+n+'" selected >'+inibulan[n]+'</option>'
+
+  
             $('#bulan_perubahan').html(bulan_perubahan);
             $('#bulan_perubahan').trigger("chosen:updated");
         }

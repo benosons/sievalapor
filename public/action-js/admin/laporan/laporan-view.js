@@ -17,6 +17,7 @@ $(document).ready(function(){
 
   $('#iniprogres').hide();
    $('#iniupload').hide();
+   $('#iniketerangan').hide();
 
   $('#id-input-file-2-').ace_file_input({
     no_file:'No File ...',
@@ -84,6 +85,7 @@ $(document).ready(function(){
 
       $('#iniprogres').show();
       $('#iniupload').show();
+      $('#iniketerangan').show();
     }else if($(this).prop("checked") == false){
       window.type = 'keuangan';
       $('#kpilih_bulan_chosen').show();
@@ -100,6 +102,7 @@ $(document).ready(function(){
 
       $('#iniprogres').hide();
       $('#iniupload').hide();
+      $('#iniketerangan').hide();
     }
 
 });
@@ -164,6 +167,7 @@ function saveminggu(type,ke){
 
   if(type == 'fisik'){
     formData.append('progres', $('#progres').val());
+    formData.append('keterangan', $('#keterangan').val());
     
     if (typeof $('#id-input-file-2')[0].files[0] != 'undefined') {
       for (let index = 0; index < $('#id-input-file-2')[0].files.length; index++) {
@@ -190,6 +194,7 @@ function saveminggu(type,ke){
               // loadprogram('');
               // $('#kode_program').val('');
               // $('#nama_program').val('');
+              location.reload();
 
           });
         })
@@ -569,6 +574,8 @@ function saveminggu(type,ke){
                   if(data[i].progres){
                    
                     $('#progres_input').val(data[i].progres);
+                    $('#keterangan').val(data[i].keterangan);
+                    $('#keterangan').prop('disabled', true);
 
                     // $('#img-file').attr('href',);
                     // $('#img-file > img').attr('src',);
@@ -600,6 +607,8 @@ function saveminggu(type,ke){
                     $('.ace-file-input').show();
                     $('#img-file').hide();
                     $('#progres_input').hide();
+                    $('#keterangan').val('');
+                    $('#keterangan').prop('disabled', false);
                   }
                   
                   

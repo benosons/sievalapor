@@ -22,8 +22,10 @@ $(document).ready(function(){
       let vl = ($('#k'+i).val() == '') ? 0 : parseInt(lue);
       if(vl == 0){
         $('#k'+i).attr('placeholder', '0');
+      }else{
+        ktot.push(vl);
       }
-      ktot.push(vl);
+      
       if($('#pagu_kegiatan').val()){
         let pagu = $('#pagu_kegiatan').val().replaceAll('.', '');
         let persen = (vl / pagu) * 100;
@@ -32,8 +34,10 @@ $(document).ready(function(){
         
       }
     }
-    
-    $('#ktot').val(rubah(ktot.reduce((a, b) => a + b, 0)));
+
+    // console.log(ktot[ktot.length - 1]);
+    // $('#ktot').val(rubah(ktot.reduce((a, b) => a + b, 0)));
+    $('#ktot').val(rubah(ktot[ktot.length - 1]));
     $('#pertot').val(rubah(pertot.reduce((a, b) => a + b, 0)) + '%');
 
     if(parseInt($('#ktot').val().replaceAll('.', '')) > parseInt($('#pagu_kegiatan').val().replaceAll('.', ''))){
@@ -275,6 +279,7 @@ function loadtarget(param){
                       // loadprogram('');
                       // $('#kode_program').val('');
                       // $('#nama_program').val('');
+                      location.reload();
         
                   });
                 })

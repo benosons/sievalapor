@@ -530,7 +530,7 @@ class Jsondata extends \CodeIgniter\Controller
 					$modelfiles = new \App\Models\FilesModel();
 
 					$fulldata = [];
-					$datapaket = $model->gettarget($code);
+					$datapaket = $model->gettarget($code, $role, $userid);
 					
 					if($datapaket){
 						$response = [
@@ -1004,6 +1004,7 @@ class Jsondata extends \CodeIgniter\Controller
 							if(!empty($cekprogres)){
 								$datapaket[0]->progres = $cekprogres[0]->progres;
 								$datapaket[0]->file = $cekprogres;
+								$datapaket[0]->keterangan =  $cekprogres[0]->keterangan;
 								
 							}
 							
@@ -1139,7 +1140,7 @@ class Jsondata extends \CodeIgniter\Controller
 					$modelfiles = new \App\Models\FilesModel();
 
 					$fulldata = [];
-					$datapaket = $model->gettarget($code);
+					$datapaket = $model->gettarget($code, $role, $userid);
 
 					if($datapaket){
 						$response = [
@@ -2198,6 +2199,7 @@ class Jsondata extends \CodeIgniter\Controller
 							'updated_date'		=> $this->now,
 							'create_by'			=> $userid,
 							'kode_bulan'		=> $request->getVar('kode_bulan'),
+							'keterangan'		=> $request->getVar('keterangan'),
 						];
 						
 						// $cekprogres = $model->cekParam('data_progres', $request->getVar('id_paket'), $request->getVar('kode_bulan'), 'fisik', $userid);

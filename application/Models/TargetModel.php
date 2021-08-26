@@ -9,7 +9,7 @@ class TargetModel extends Model{
     protected $createdField  = 'create_date';
     protected $updatedField  = 'update_date';
 
-    public function gettarget($code = null)
+    public function gettarget($code = null, $role = null, $userid = null)
     {
       
       if($code){
@@ -27,8 +27,13 @@ class TargetModel extends Model{
         return $row;
       }
 
+      
       $sql = "SELECT dt.*, dp.nama_paket as nama_paket FROM `data_target` dt
               inner join data_paket dp on dp.id = dt.id_paket";
+      
+      if($role == '30'){
+          $sql .= " where dt.ppk = '$userid'";
+      }
 
       $result = $this->db->query($sql);
       $row = $result->getResult();
