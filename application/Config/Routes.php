@@ -122,6 +122,7 @@ $routes->post('addTarget', 'Jsondata::addTarget');
 $routes->post('addRealisasi', 'Jsondata::addRealisasi');
 
 $routes->post('updateTarget', 'Jsondata::updateTarget');
+$routes->post('deleteData', 'Jsondata::deleteData');
 
 
 

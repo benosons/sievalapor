@@ -355,13 +355,14 @@ class Jsondata extends \CodeIgniter\Controller
 				$id		 	  = $request->getVar('id');
 				$role 		= $this->data['role'];
 				$userid		= $this->data['userid'];
-
+				$code		= $request->getVar('code');
+				// print_r($code);die;
 					$model = new \App\Models\ProgramModel();
 					$modelparam = new \App\Models\ParamModel();
 					$modelfiles = new \App\Models\FilesModel();
 
 						$fulldata = [];
-						$dataprogram = $model->getProgram($role);
+						$dataprogram = $model->getProgram($role, $code);
 
 
 					if($dataprogram){
@@ -398,13 +399,14 @@ class Jsondata extends \CodeIgniter\Controller
 				$role 		= $this->data['role'];
 				$userid		= $this->data['userid'];
 				$code 		= $request->getVar('code');
+				$code1 		= $request->getVar('code1');
 
 					$model = new \App\Models\KegiatanModel();
 					$modelparam = new \App\Models\ParamModel();
 					$modelfiles = new \App\Models\FilesModel();
 
 						$fulldata = [];
-						$datakegiatan = $model->getKegiatan($code);
+						$datakegiatan = $model->getKegiatan($code, $code1);
 
 					if($datakegiatan){
 						$response = [
@@ -1901,6 +1903,7 @@ class Jsondata extends \CodeIgniter\Controller
 							'kode_kegiatan' => $request->getVar('kode_kegiatan'),
 							'kode_subkegiatan' => $request->getVar('kode_subkegiatan'),
 							'nama_subkegiatan' => $request->getVar('nama_subkegiatan'),
+							'pagu_subkegiatan' => $request->getVar('pagu_subkegiatan'),
 							'created_by'		=> $role,
 							'created_date'	=> $this->now,
 							'updated_date'	=> $this->now,
@@ -3137,6 +3140,34 @@ class Jsondata extends \CodeIgniter\Controller
 		{
 			die($e->getMessage());
 		}
+	}
+
+	public function deleteData(){
+		
+		try {
+			$request  = $this->request;
+			$table 	  	= $request->getVar('table');
+			$id 	  	= $request->getVar('id');
+
+			$role 		= $this->data['role'];
+			$userid		= $this->data['userid'];
+
+			$model 	  = new \App\Models\ProgramModel();
+			
+			$res = $model->deleteGlob($table, $id);
+			
+			$response = [
+					'status'   => 'sukses',
+					'code'     => '0',
+					'data' 		 => 'terupdate'
+			];
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		}catch (\Exception $e){
+			die($e->getMessage());
+		}
+
 	}
 
 }

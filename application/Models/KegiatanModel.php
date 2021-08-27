@@ -9,11 +9,14 @@ class KegiatanModel extends Model{
     protected $createdField  = 'create_date';
     protected $updatedField  = 'update_date';
 
-    public function getKegiatan($code = null)
+    public function getKegiatan($code = null, $code1 = null)
     {
+          
           $builder = $this->db->table('data_kegiatan');
           if($code){
             $query   = $builder->getWhere(['kode_program' => $code]);
+          }else if($code1){
+            $query   = $builder->getWhere(['kode_kegiatan' => $code1]);
           }else{
             $query   = $builder->get();
           }

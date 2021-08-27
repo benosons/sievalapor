@@ -11,7 +11,7 @@ $(document).ready(function(){
   loadkegiatan('');
 
   $('#save_kegiatan').on('click', function(){
-      var kode_program = $('#kode_program').val();
+      var kode_program = $('#kodprog').val();
       var kode_kegiatan = $('#kode_kegiatan').val();
       var nama_kegiatan = $('#nama_kegiatan').val();
 
@@ -23,11 +23,12 @@ $(document).ready(function(){
       save(formData);
   });
 
-  $('#kode_program').on('change', function(){
+  $('#nama_program').on('change', function(){
     
     let toy = $('option:selected', this).attr('text');
     
-    $('#namprog').val(toy);
+    $('#kodprog').val(toy);
+    $('#kode_kegiatan').val(toy+'.');
 
   })
 
@@ -69,10 +70,8 @@ function loadkegiatan(param){
               {
                   mRender: function ( data, type, row ) {
 
-                    var el = `<button class="btn btn-xs btn-success" onclick="action(\'delete\','+row.user_id+',\'\')">
-																<i class="ace-icon fa fa-edit bigger-120"></i>
-															</button>
-                              <button class="btn btn-xs btn-danger" onclick="action(\'delete\','+row.user_id+',\'\')">
+                    var el = `
+                              <button class="btn btn-xs btn-danger" onclick="action('data_kegiatan',`+row.id+`)">
           																<i class="ace-icon fa fa-trash-o bigger-120"></i>
           															</button>`;
 
@@ -120,10 +119,10 @@ function loadprogram(param){
           let data = result.data;
           let el   = '<option value="">  </option>';
           for (var i = 0; i < data.length; i++) {
-            el += '<option value="'+data[i].kode_program+'" text="'+data[i].nama_program+'">'+data[i].kode_program+'</option>';
+            el += '<option value="'+data[i].kode_program+'" text="'+data[i].kode_program+'">'+data[i].nama_program+'</option>';
           }
-          $('#kode_program').append(el);
-          $('#kode_program').trigger("chosen:updated");
+          $('#nama_program').append(el);
+          $('#nama_program').trigger("chosen:updated");
 
         }
       })
@@ -156,3 +155,52 @@ function save(formData){
       }
     });
   };
+
+  function action(table, id){
+    bootbox.confirm({
+      message: "Anda Yakin <b>Hapus</b> Kegiatan ini?",
+      buttons: {
+      confirm: {
+          label: '<i class="fa fa-check"></i> Ya',
+          className: 'btn-success btn-xs',
+      },
+      cancel: {
+          label: '<i class="fa fa-times"></i> Tidak',
+          className: 'btn-danger btn-xs',
+      }
+    },
+    callback : function(result) {
+    if(result) {
+      var formData = new FormData();
+      formData.append('table', table);
+      formData.append('id', id);
+        $.ajax({
+          type: 'post',
+          processData: false,
+          contentType: false,
+          url: 'deleteData',
+          data : formData,
+          success: function(result){
+            Swal.fire({
+              type: 'warning',
+              title: 'Berhasil Hapus Sub Kegiatan !',
+              showConfirmButton: true,
+              // showCancelButton: true,
+              confirmButtonText: `Ok`,
+            }).then((result) => {
+              $(document).ready(function(){
+                loadkegiatan('');
+                  $('#kode_program').val(0).trigger("chosen:updated");
+                  $('#kode_kegiatan').val(0).trigger("chosen:updated");
+                  $('#kode_subkegiatan').val('');
+                  $('#nama_subkegiatan').val('');
+    
+              });
+            })
+          }
+        });
+      }
+    }
+});
+
+};

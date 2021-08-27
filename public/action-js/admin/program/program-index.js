@@ -58,10 +58,8 @@ function loadprogram(param){
               {
                   mRender: function ( data, type, row ) {
 
-                    var el = `<button class="btn btn-xs btn-success" onclick="action(\'delete\','+row.user_id+',\'\')">
-																<i class="ace-icon fa fa-edit bigger-120"></i>
-															</button>
-                              <button class="btn btn-xs btn-danger" onclick="action(\'delete\','+row.user_id+',\'\')">
+                    var el = `
+                              <button class="btn btn-xs btn-danger" onclick="action('data_program',`+row.id+`)">
           																<i class="ace-icon fa fa-trash-o bigger-120"></i>
           															</button>`;
 
@@ -122,3 +120,52 @@ function save(formData){
       }
     });
   };
+
+  function action(table, id){
+    bootbox.confirm({
+      message: "Anda Yakin <b>Hapus</b> Program ini?",
+      buttons: {
+      confirm: {
+          label: '<i class="fa fa-check"></i> Ya',
+          className: 'btn-success btn-xs',
+      },
+      cancel: {
+          label: '<i class="fa fa-times"></i> Tidak',
+          className: 'btn-danger btn-xs',
+      }
+    },
+    callback : function(result) {
+    if(result) {
+      var formData = new FormData();
+      formData.append('table', table);
+      formData.append('id', id);
+        $.ajax({
+          type: 'post',
+          processData: false,
+          contentType: false,
+          url: 'deleteData',
+          data : formData,
+          success: function(result){
+            Swal.fire({
+              type: 'warning',
+              title: 'Berhasil Hapus Program !',
+              showConfirmButton: true,
+              // showCancelButton: true,
+              confirmButtonText: `Ok`,
+            }).then((result) => {
+              $(document).ready(function(){
+                loadprogram('');
+                  $('#kode_program').val(0).trigger("chosen:updated");
+                  $('#kode_kegiatan').val(0).trigger("chosen:updated");
+                  $('#kode_subkegiatan').val('');
+                  $('#nama_subkegiatan').val('');
+    
+              });
+            })
+          }
+        });
+      }
+    }
+});
+
+};

@@ -31,7 +31,7 @@
   <input hidden id="role" value="{{role}}">
   <div class="page-header">
     <h1>
-      LIST SUb Kegiatan
+      LIST SUB KEGIATAN
       <small>
         <i class="ace-icon fa fa-angle-double-right"></i>
         overview &amp; stats
@@ -61,6 +61,7 @@
                         <th>Kode Kegiatan</th>
                         <th>Kode Sub Kegiatan</th>
                         <th>Nama Sub Kegiatan</th>
+                        <th>Pagu Sub Kegiatan</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -86,7 +87,7 @@
         <form class="form-horizontal" role="form">
 					<!-- #section:elements.form -->
 
-          <div class="form-group">
+          <div hidden class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Kode Program  </label>
                 <div class="col-sm-9">
                   <select class="chosen-select form-control" id="kode_program" data-placeholder="Select Program...">
@@ -101,7 +102,7 @@
 
           </div>
 
-          <div class="form-group">
+          <div hidden class="form-group">
 						<label class="col-sm-3 control-label no-padding-right" for="namprog"> Nama Program </label>
 
 						<div class="col-sm-9">
@@ -111,9 +112,9 @@
 
 
           <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Kode Kegiatan  </label>
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Nama Kegiatan  </label>
                 <div class="col-sm-9">
-                  <select class="chosen-select form-control" id="kode_kegiatan" data-placeholder="Select Program...">
+                  <select class="chosen-select form-control" id="nama_kegiatan" data-placeholder="Select Kegiatan...">
                     <!-- <option value="">  </option>
                     <option value="10">admin</option>
                     <option value="20">operator</option>
@@ -126,14 +127,24 @@
           </div>
 
           <div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right" for="namkeg"> Nama Kegiatan </label>
+						<label class="col-sm-3 control-label no-padding-right" for="namkeg"> Kode Kegiatan </label>
 
 						<div class="col-sm-9">
-							<input type="text" id="namkeg" placeholder="Nama Sub Kegiatan" class="form-control">
+							<input type="text" id="kodkeg" placeholder="Kode Kegiatan" class="form-control">
 						</div>
 					</div>
 
+					
+
 					<div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="nama_program"> Nama Sub Kegiatan </label>
+
+						<div class="col-sm-9">
+							<input type="text" id="nama_subkegiatan" placeholder="Nama Sub Kegiatan" class="form-control">
+						</div>
+					</div>
+
+          <div class="form-group">
 						<label class="col-sm-3 control-label no-padding-right" for="kode_program"> Kode Sub Kegiatan </label>
 
 						<div class="col-sm-9">
@@ -141,11 +152,11 @@
 						</div>
 					</div>
 
-					<div class="form-group">
-						<label class="col-sm-3 control-label no-padding-right" for="nama_program"> Nama Sub Kegiatan </label>
+          <div class="form-group">
+						<label class="col-sm-3 control-label no-padding-right" for="kode_program"> Pagu Sub Kegiatan </label>
 
 						<div class="col-sm-9">
-							<input type="text" id="nama_subkegiatan" placeholder="Nama Sub Kegiatan" class="form-control">
+							<input type="text" id="pagu_subkegiatan" placeholder="Pagu Sub Kegiatan" class="form-control">
 						</div>
 					</div>
 

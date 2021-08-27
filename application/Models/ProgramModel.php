@@ -9,7 +9,7 @@ class ProgramModel extends Model{
     protected $createdField  = 'create_date';
     protected $updatedField  = 'update_date';
 
-    public function getProgram($role=null)
+    public function getProgram($role=null, $code=null)
     {
           if($role == '30'){ //ppk
             $builder = $this->db->table('data_program');
@@ -18,7 +18,11 @@ class ProgramModel extends Model{
           }
           
           $builder = $this->db->table('data_program');
-          $query   = $builder->get();
+          if($code){
+            $query   = $builder->getWhere(['kode_program' => $code]);
+          }else{
+            $query   = $builder->get();
+          }
           return  $query->getResult();
     }
 
@@ -26,5 +30,15 @@ class ProgramModel extends Model{
     {
         return  $this->db->table($table)->insert($data);
     }
+
+    public function deleteGlob($table = null, $id = null)
+    {
+      
+        $builder = $this->db->table($table);
+        $builder->where('id', $id);
+        $builder->delete();
+        return true;
+    }
+    
 
 }

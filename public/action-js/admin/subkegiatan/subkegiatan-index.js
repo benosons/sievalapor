@@ -4,17 +4,19 @@ $(document).ready(function(){
   $('#nav-menu li').removeClass();
   $('#nav-menu li#menu-data').addClass('open');
   $('#nav-menu li#menu-subkegiatan').addClass('active');
+  $( '#pagu_subkegiatan' ).mask('000.000.000.000.000', {reverse: true});
 
   $('#all-subkegiatan').DataTable();
 
-  loadkegiatan("program",0);
+  loadkegiatan("kegiatan",0);
   loadsubkegiatan('');
 
   $('#save_subkegiatan').on('click', function(){
       var kode_program = $('#kode_program').val();
-      var kode_kegiatan = $('#kode_kegiatan').val();
+      var kode_kegiatan = $('#kodkeg').val();
       var kode_subkegiatan = $('#kode_subkegiatan').val();
       var nama_subkegiatan = $('#nama_subkegiatan').val();
+      var pagu_subkegiatan = $('#pagu_subkegiatan').val();
 
       var formData = new FormData();
       formData.append('param', 'data_subkegiatan');
@@ -22,6 +24,7 @@ $(document).ready(function(){
       formData.append('kode_kegiatan', kode_kegiatan);
       formData.append('kode_subkegiatan', kode_subkegiatan);
       formData.append('nama_subkegiatan', nama_subkegiatan);
+      formData.append('pagu_subkegiatan', pagu_subkegiatan);
       save(formData);
   });
 
@@ -30,8 +33,10 @@ $("#kode_program").chosen().change(function(){
   $('#namprog').val($('option:selected', this).attr('text'));
 });
 
-$("#kode_kegiatan").chosen().change(function(){
-  $('#namkeg').val($('option:selected', this).attr('text'));
+$("#nama_kegiatan").chosen().change(function(){
+  $('#kodkeg').val($('option:selected', this).attr('text'));
+  $('#kode_subkegiatan').val($('option:selected', this).attr('text')+'.');
+  loadkegiatan("program",$('option:selected', this).attr('prog'));
 });
 
 });
@@ -64,6 +69,7 @@ function loadsubkegiatan(param){
                 { 'mDataProp': 'kode_kegiatan'},
                 { 'mDataProp': 'kode_subkegiatan'},
                 { 'mDataProp': 'nama_subkegiatan'},
+                { 'mDataProp': 'pagu_subkegiatan'},
                 { 'mDataProp': 'user_status'},
             ],
             order: [[0, 'ASC']],
@@ -73,16 +79,14 @@ function loadsubkegiatan(param){
               {
                   mRender: function ( data, type, row ) {
 
-                    var el = `<button class="btn btn-xs btn-success" onclick="action(\'delete\','+row.user_id+',\'\')">
-																<i class="ace-icon fa fa-edit bigger-120"></i>
-															</button>
-                              <button class="btn btn-xs btn-danger" onclick="action(\'delete\','+row.user_id+',\'\')">
+                    var el = `
+                              <button class="btn btn-xs btn-danger" onclick="action('data_subkegiatan', `+row.id+`)">
           																<i class="ace-icon fa fa-trash-o bigger-120"></i>
           															</button>`;
 
                       return el;
                   },
-                  aTargets: [5]
+                  aTargets: [6]
               },
             ],
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
@@ -128,8 +132,8 @@ function loadkegiatan(param, code){
         let el2   = '<option value=""></option>';
         if(typeof data == 'object'){
           for (var i = 0; i < data.length; i++) {
-            el1 += '<option value="'+data[i].kode_program+'" text="'+data[i].nama_program+'">'+data[i].kode_program+'</option>';
-            el2 += '<option value="'+data[i].kode_kegiatan+'" text="'+data[i].nama_kegiatan+'">'+data[i].kode_kegiatan+'</option>';
+            el1 += '<option value="'+data[i].kode_program+'" text="'+data[i].nama_program+'" selected>'+data[i].kode_program+'</option>';
+            el2 += '<option value="'+data[i].kode_kegiatan+'" text="'+data[i].kode_kegiatan+'" prog="'+data[i].kode_program+'">'+data[i].nama_kegiatan+'</option>';
           }
         }
 
@@ -137,8 +141,8 @@ function loadkegiatan(param, code){
           $('#kode_program').html(el1);
           $('#kode_program').trigger("chosen:updated");
         }else if(param == 'kegiatan'){
-          $('#kode_kegiatan').html(el2);
-          $('#kode_kegiatan').trigger("chosen:updated");
+          $('#nama_kegiatan').html(el2);
+          $('#nama_kegiatan').trigger("chosen:updated");
         }
         }
       })
@@ -162,7 +166,7 @@ function save(formData){
           confirmButtonText: `Ok`,
         }).then((result) => {
           $(document).ready(function(){
-              loadkegiatan('');
+            loadsubkegiatan('');
               $('#kode_program').val(0).trigger("chosen:updated");
               $('#kode_kegiatan').val(0).trigger("chosen:updated");
               $('#kode_subkegiatan').val('');
@@ -173,3 +177,52 @@ function save(formData){
       }
     });
   };
+
+  function action(table, id){
+          bootbox.confirm({
+            message: "Anda Yakin <b>Hapus</b> Sub Kegiatan ini?",
+            buttons: {
+            confirm: {
+                label: '<i class="fa fa-check"></i> Ya',
+                className: 'btn-success btn-xs',
+            },
+            cancel: {
+                label: '<i class="fa fa-times"></i> Tidak',
+                className: 'btn-danger btn-xs',
+            }
+          },
+          callback : function(result) {
+          if(result) {
+            var formData = new FormData();
+            formData.append('table', table);
+            formData.append('id', id);
+              $.ajax({
+                type: 'post',
+                processData: false,
+                contentType: false,
+                url: 'deleteData',
+                data : formData,
+                success: function(result){
+                  Swal.fire({
+                    type: 'warning',
+                    title: 'Berhasil Hapus Sub Kegiatan !',
+                    showConfirmButton: true,
+                    // showCancelButton: true,
+                    confirmButtonText: `Ok`,
+                  }).then((result) => {
+                    $(document).ready(function(){
+                      loadsubkegiatan('');
+                        $('#kode_program').val(0).trigger("chosen:updated");
+                        $('#kode_kegiatan').val(0).trigger("chosen:updated");
+                        $('#kode_subkegiatan').val('');
+                        $('#nama_subkegiatan').val('');
+          
+                    });
+                  })
+                }
+              });
+            }
+          }
+      });
+    
+    };

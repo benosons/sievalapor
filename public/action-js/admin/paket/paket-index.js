@@ -7,13 +7,13 @@ $(document).ready(function(){
 
   $('#all-paket').DataTable();
 
-  loadkegiatan("program",0);
+  loadkegiatan("subkegiatan",0);
   loadpaket('');
 
   $('#save_paket').on('click', function(){
       var kode_program = $('#kode_program').val();
       var kode_kegiatan = $('#kode_kegiatan').val();
-      var kode_subkegiatan = $('#kode_subkegiatan').val();
+      var kode_subkegiatan = $('#nama_subkegiatan').val();
       var nama_paket = $('#nama_paket').val();
 
       var formData = new FormData();
@@ -35,8 +35,10 @@ $("#kode_kegiatan").chosen().change(function(){
   $('#namkeg').val($('option:selected', this).attr('text'));
 });
 
-$("#kode_subkegiatan").chosen().change(function(){
-  $('#namsub').val($('option:selected', this).attr('text'));
+$("#nama_subkegiatan").chosen().change(function(){
+  $('#kodsub').val($('option:selected', this).attr('text'));
+  loadkegiatan("kegiatan",'',$('option:selected', this).attr('keg'));
+  loadkegiatan("program",$('option:selected', this).attr('prog'));
 });
 
 
@@ -79,10 +81,8 @@ function loadpaket(param){
               {
                   mRender: function ( data, type, row ) {
 
-                    var el = `<button class="btn btn-xs btn-success" onclick="action(\'delete\','+row.user_id+',\'\')">
-																<i class="ace-icon fa fa-edit bigger-120"></i>
-															</button>
-                              <button class="btn btn-xs btn-danger" onclick="action(\'delete\','+row.user_id+',\'\')">
+                    var el = `
+                              <button class="btn btn-xs btn-danger" onclick="action('data_paket',`+row.id+`)">
           																<i class="ace-icon fa fa-trash-o bigger-120"></i>
           															</button>`;
 
@@ -117,9 +117,10 @@ function loadpaket(param){
       })
     }
 
-function loadkegiatan(param, code){
+function loadkegiatan(param, code, code1){
     var formData = new FormData();
     formData.append('code', code);
+    formData.append('code1', code1);
 
   $.ajax({
       type: 'post',
@@ -136,9 +137,9 @@ function loadkegiatan(param, code){
 
         if(typeof data == 'object'){
           for (var i = 0; i < data.length; i++) {
-            el1 += '<option value="'+data[i].kode_program+'" text="'+data[i].nama_program+'">'+data[i].kode_program+'</option>';
-            el2 += '<option value="'+data[i].kode_kegiatan+'" text="'+data[i].nama_kegiatan+'">'+data[i].kode_kegiatan+'</option>';
-            el3 += '<option value="'+data[i].kode_subkegiatan+'" text="'+data[i].nama_subkegiatan+'">'+data[i].kode_subkegiatan+'</option>';
+            el1 += '<option value="'+data[i].kode_program+'" text="'+data[i].nama_program+'" selected>'+data[i].kode_program+'</option>';
+            el2 += '<option value="'+data[i].kode_kegiatan+'" text="'+data[i].nama_kegiatan+'" selected>'+data[i].kode_kegiatan+'</option>';
+            el3 += '<option value="'+data[i].kode_subkegiatan+'" text="'+data[i].kode_subkegiatan+'" keg="'+data[i].kode_kegiatan+'" prog="'+data[i].kode_program+'">'+data[i].nama_subkegiatan+'</option>';
           }
         }
 
@@ -149,8 +150,8 @@ function loadkegiatan(param, code){
             $('#kode_kegiatan').html(el2);
             $('#kode_kegiatan').trigger("chosen:updated");
           }else if(param == 'subkegiatan'){
-            $('#kode_subkegiatan').html(el3);
-            $('#kode_subkegiatan').trigger("chosen:updated");
+            $('#nama_subkegiatan').html(el3);
+            $('#nama_subkegiatan').trigger("chosen:updated");
           }
         }
       })
@@ -174,7 +175,7 @@ function save(formData){
           confirmButtonText: `Ok`,
         }).then((result) => {
           $(document).ready(function(){
-              loadkegiatan('');
+              loadpaket('');
               $('#kode_program').val(0).trigger("chosen:updated");
               $('#kode_kegiatan').val(0).trigger("chosen:updated");
               $('#kode_subkegiatan').val(0).trigger("chosen:updated");
@@ -185,3 +186,52 @@ function save(formData){
       }
     });
   };
+
+  function action(table, id){
+    bootbox.confirm({
+      message: "Anda Yakin <b>Hapus</b> Paket ini?",
+      buttons: {
+      confirm: {
+          label: '<i class="fa fa-check"></i> Ya',
+          className: 'btn-success btn-xs',
+      },
+      cancel: {
+          label: '<i class="fa fa-times"></i> Tidak',
+          className: 'btn-danger btn-xs',
+      }
+    },
+    callback : function(result) {
+    if(result) {
+      var formData = new FormData();
+      formData.append('table', table);
+      formData.append('id', id);
+        $.ajax({
+          type: 'post',
+          processData: false,
+          contentType: false,
+          url: 'deleteData',
+          data : formData,
+          success: function(result){
+            Swal.fire({
+              type: 'warning',
+              title: 'Berhasil Hapus Sub Kegiatan !',
+              showConfirmButton: true,
+              // showCancelButton: true,
+              confirmButtonText: `Ok`,
+            }).then((result) => {
+              $(document).ready(function(){
+                loadpaket('');
+                  $('#kode_program').val(0).trigger("chosen:updated");
+                  $('#kode_kegiatan').val(0).trigger("chosen:updated");
+                  $('#kode_subkegiatan').val('');
+                  $('#nama_subkegiatan').val('');
+    
+              });
+            })
+          }
+        });
+      }
+    }
+});
+
+};
