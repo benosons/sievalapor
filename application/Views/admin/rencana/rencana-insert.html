@@ -54,8 +54,8 @@
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Kode Program </label>
-                    					<div class="col-sm-4">
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Program </label>
+                    					<div class="col-sm-9">
                                 <select class="chosen-select form-control" id="kode_program" data-placeholder="Pilih Program...">
                 						  		<option value="">  </option>
                 						  	</select>
@@ -70,9 +70,9 @@
                 				<div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Program </label>
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Kode Program </label>
                     					<div class="col-sm-9">
-                    						<input type="text" id="nama_program" placeholder="Nama Program" class="col-xs-12 col-sm-12" disabled />
+                    						<input type="text" id="nama_program" placeholder="Kode Program" class="col-xs-12 col-sm-12" disabled />
                     					</div>
                             </div>
                           </div>
@@ -81,8 +81,8 @@
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Kode Kegiatan </label>
-                    					<div class="col-sm-4">
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Kegiatan </label>
+                    					<div class="col-sm-9">
                                 <select class="chosen-select form-control" id="kode_kegiatan" data-placeholder="Pilih Kegiatan...">
                 						  		<option value="">  </option>
                 						  	</select>
@@ -95,9 +95,9 @@
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Kegiatan </label>
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Kode Kegiatan </label>
                     					<div class="col-sm-9">
-                    						<input type="text" id="nama_kegiatan" placeholder="Nama Kegiatan" class="col-xs-12 col-sm-12" disabled />
+                    						<input type="text" id="nama_kegiatan" placeholder="Kode Kegiatan" class="col-xs-12 col-sm-12" disabled />
                     					</div>
                             </div>
                           </div>
@@ -106,8 +106,8 @@
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Kode sub Kegiatan </label>
-                    					<div class="col-sm-4">
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama sub Kegiatan </label>
+                    					<div class="col-sm-9">
                                 <select class="chosen-select form-control" id="kode_subkegiatan" data-placeholder="Pilih Sub Kegiatan...">
                 						  		<option value="">  </option>
                 						  	</select>
@@ -120,9 +120,9 @@
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Sub Kegiatan </label>
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Kode Sub Kegiatan </label>
                     					<div class="col-sm-9">
-                    						<input type="text" id="nama_subkegiatan" placeholder="Nama Sub Kegiatan" class="col-xs-12 col-sm-12" disabled />
+                    						<input type="text" id="nama_subkegiatan" placeholder="Kode Sub Kegiatan" class="col-xs-12 col-sm-12" disabled />
                     					</div>
                             </div>
                           </div>
@@ -131,7 +131,7 @@
                         <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Paket </label>
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama Paket </label>
                     					<div class="col-sm-9">
                                 <select class="chosen-select form-control" id="paket" data-placeholder="Pilih Paket...">
                 						  		<option value="">  </option>
@@ -139,6 +139,17 @@
                     					</div>
                             </div>
 
+                          </div>
+                				</div>
+
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Kode Paket </label>
+                    					<div class="col-sm-9">
+                    						<input type="text" id="kode_paket" placeholder="Kode Paket" class="col-xs-12 col-sm-12" disabled />
+                    					</div>
+                            </div>
                           </div>
                 				</div>
 
@@ -222,7 +233,7 @@
 
                         <div class="space-4"></div>
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                           <div class="row">
                             <div class="col-sm-12">
                               <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Nama PPK  </label>
@@ -233,7 +244,7 @@
                             </div>
 
                           </div>
-                				</div>
+                				</div> -->
 
 
 
@@ -243,7 +254,7 @@
                 </div>
               </div>
             </div>
-            {% if role == 100 %}
+            
             <div class="row">
 
               <div class="col-xs-6 widget-container-col" >
@@ -734,7 +745,7 @@
                 </div>
               </div>
             </div>
-            {% endif %}
+            
           </div>
           <div class="widget-toolbox padding-8 clearfix">
 						<button class="btn btn-xs btn-danger pull-left" onclick="window.location.href = 'rencana'">

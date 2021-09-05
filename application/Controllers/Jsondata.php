@@ -488,9 +488,9 @@ class Jsondata extends \CodeIgniter\Controller
 					$model = new \App\Models\KegiatanModel();
 					$modelparam = new \App\Models\ParamModel();
 					$modelfiles = new \App\Models\FilesModel();
-
+					
 						$fulldata = [];
-						$datapaket = $model->getpaket($code);
+						$datapaket = $model->getpaket($code, $userid);
 
 					if($datapaket){
 						$response = [
@@ -530,10 +530,10 @@ class Jsondata extends \CodeIgniter\Controller
 					$model = new \App\Models\TargetModel();
 					$modelparam = new \App\Models\ParamModel();
 					$modelfiles = new \App\Models\FilesModel();
-
+			
 					$fulldata = [];
-					$datapaket = $model->gettarget($code, $role, $userid);
 					
+					$datapaket = $model->gettarget($code, $role, $userid);
 					if($datapaket){
 						$response = [
 							'status'   => 'sukses',
@@ -1912,12 +1912,16 @@ class Jsondata extends \CodeIgniter\Controller
 			$data = [
 							'kode_program	' 	 => $request->getVar('kode_program'),
 							'kode_kegiatan' 	 => $request->getVar('kode_kegiatan'),
-							'kode_subkegiatan' => $request->getVar('kode_subkegiatan'),
+							'kode_subkegiatan'	=> $request->getVar('kode_subkegiatan'),
+							'kode_paket' 		=> $request->getVar('kode_paket'),
 							'nama_paket' 		=> $request->getVar('nama_paket'),
-							'created_by'		=> $role,
+							'pagu_paket' 		=> $request->getVar('pagu_paket'),
+							'created_by'		=> $this->data['userid'],
 							'created_date'	=> $this->now,
 							'updated_date'	=> $this->now,
 					];
+
+			$model->updatePaguSub($request->getVar('kode_program'), $request->getVar('kode_kegiatan'), $request->getVar('kode_subkegiatan'), $request->getVar('sisa_pagu'));
 		}
 
 		$res = $model->saveParam($param, $data);
@@ -1942,7 +1946,7 @@ class Jsondata extends \CodeIgniter\Controller
 		$userid 	= $this->data['userid'];
 
 		$model 	  = new \App\Models\TargetModel();
-		if($role == '100' || $role == '10'){
+		if($role == '100' || $role == '30'){
 			$data = [
 						'kode_program'		=> $request->getVar('kode_program'),
 						'kode_kegiatan'		=> $request->getVar('kode_kegiatan'),
@@ -1952,7 +1956,7 @@ class Jsondata extends \CodeIgniter\Controller
 						'created_date'		=> $this->now,
 						'updated_date'		=> $this->now,
 						'pagu'						=> $request->getVar('pagu_kegiatan'),
-						'ppk'							=> $request->getVar('ppk'),
+						// 'ppk'							=> $request->getVar('ppk'),
 						'bidang'					=> $request->getVar('bidang'),
 						'seksi'						=> $request->getVar('seksi'),
 						'target_output'						=> $request->getVar('target_output'),
@@ -1960,21 +1964,21 @@ class Jsondata extends \CodeIgniter\Controller
 				];
 			}
 				
-			if($role != '10'){
+			if($role == '30'){
 				$databulan_k = [];
 				$databulan_f = [];
 				$databulan_kp = [];
 				for ($i=1; $i <= 12; $i++) {
 					$databulan_k['id_paket'] = $request->getVar('id_paket');
-					$databulan_k['created_by'] = $request->getVar($userid);
+					$databulan_k['created_by'] = $userid;
 					$databulan_k['created_date'] = $this->now;
 					
 					$databulan_f['id_paket'] = $request->getVar('id_paket');
-					$databulan_f['created_by'] = $request->getVar($userid);
+					$databulan_f['created_by'] = $userid;
 					$databulan_f['created_date'] = $this->now;
 
 					$databulan_kp['id_paket'] = $request->getVar('id_paket');
-					$databulan_kp['created_by'] = $request->getVar($userid);
+					$databulan_kp['created_by'] = $userid;
 					$databulan_kp['created_date'] = $this->now;
 
 					$databulan_k['type'] = 'keuangan';
@@ -2001,7 +2005,7 @@ class Jsondata extends \CodeIgniter\Controller
 				// }
 			}
 
-		if($role == '100' || $role == '10'){
+		if($role == '100' || $role == '30'){
 			$res = $model->saveParam($param, $data);
 			$id  = $model->insertID();
 		}
@@ -3153,7 +3157,19 @@ class Jsondata extends \CodeIgniter\Controller
 			$userid		= $this->data['userid'];
 
 			$model 	  = new \App\Models\ProgramModel();
+			$modelpaket 	  = new \App\Models\KegiatanModel();
+			$datapaket = $modelpaket->getpaketbyid($id, $userid);
+			$kodeprog = $datapaket[0]->kode_program;
+			$kodekeg = $datapaket[0]->kode_kegiatan;
+			$kodesubkeg = $datapaket[0]->kode_subkegiatan;
+
+			$pagupaket = str_replace(".","",$datapaket[0]->pagu_paket);
 			
+			$datasub = $modelpaket->getsubaja($kodeprog, $kodekeg, $kodesubkeg);
+			$sisapagusub = $datasub[0]->sisa_pagu_subkegiatan;
+			$sisapagu = $sisapagusub + $pagupaket;
+
+			$modelpaket->updatePaguSub($kodeprog, $kodekeg, $kodesubkeg, $sisapagu);
 			$res = $model->deleteGlob($table, $id);
 			
 			$response = [

@@ -20,7 +20,7 @@ class TargetModel extends Model{
 								inner join data_kegiatan dk on dk.kode_kegiatan = dt.kode_kegiatan
 								inner join data_program dpo on dpo.kode_program = dt.kode_program
                 left join bulan_target bt on bt.id_paket = dt.id_paket
-                inner join users u on u.user_id = dt.ppk where dt.id = '$code'";
+                inner join users u on u.user_id = dt.created_by where dt.id = '$code'";
         
         $result = $this->db->query($sql);
         $row = $result->getResult();
@@ -32,9 +32,9 @@ class TargetModel extends Model{
               inner join data_paket dp on dp.id = dt.id_paket";
       
       if($role == '30'){
-          $sql .= " where dt.ppk = '$userid'";
+          $sql .= " where dt.created_by = '$userid'";
       }
-
+      
       $result = $this->db->query($sql);
       $row = $result->getResult();
       return $row;
@@ -50,7 +50,7 @@ class TargetModel extends Model{
 								inner join data_kegiatan dk on dk.kode_kegiatan = dt.kode_kegiatan
 								inner join data_program dpo on dpo.kode_program = dt.kode_program
                 inner join bulan_target bt on bt.id_paket = dt.id_paket
-                inner join users u on u.user_id = dt.ppk where dt.id = '$code'";
+                inner join users u on u.user_id = dt.created_by where dt.id = '$code'";
 
         $result = $this->db->query($sql);
         $row = $result->getResult();
@@ -182,7 +182,7 @@ class TargetModel extends Model{
 
       $sql = "SELECT dt.*, dp.nama_paket as nama_paket, u.* FROM `data_target` dt
               inner join data_paket dp on dp.id = dt.id_paket
-              inner join users u on u.user_id = dt.ppk";
+              inner join users u on u.user_id = dt.created_by";
 
       $result = $this->db->query($sql);
       $row = $result->getResult();

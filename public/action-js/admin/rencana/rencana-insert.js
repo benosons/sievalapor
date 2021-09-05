@@ -16,7 +16,7 @@ $(document).ready(function(){
       var pagu_kegiatan = $('#pagu_kegiatan').val();
       var ktot = $('#ktot').val();
       var ftot = $('#ftot').val();
-      var ppk = $('#pilih_ppk').val();
+      // var ppk = $('#pilih_ppk').val();
       var bidang = $('#pilih_bidang').val();
       var seksi = $('#pilih_seksi').val();
       var target_output = $('#target_output').val();
@@ -31,25 +31,23 @@ $(document).ready(function(){
       formData.append('pagu_kegiatan', pagu_kegiatan);
       formData.append('ktot', ktot);
       formData.append('ftot', ftot);
-      formData.append('ppk', ppk);
+      // formData.append('ppk', ppk);
       formData.append('bidang', bidang);
       formData.append('seksi', seksi);
       formData.append('target_output', target_output);
       formData.append('satuan', satuan);
 
-      if($('#role').val() != 10 ){
         for (var i = 1; i <= 12; i++) {
           formData.append('k'+i, $('#k'+i).val());
           formData.append('kp'+i, $('#kp'+i).val());
           formData.append('f'+i, $('#f'+i).val());
         }
-      }
 
       save(formData);
   });
 
   $("#kode_program").chosen().change(function(){
-    let nama = $('option:selected', this).attr('nama');
+    let nama = $('option:selected', this).attr('value');
     $('#nama_program').val('');
     $('#nama_kegiatan').val('');
     $('#nama_subkegiatan').val('');
@@ -64,7 +62,7 @@ $(document).ready(function(){
   });
 
   $("#kode_kegiatan").chosen().change(function(){
-    let nama = $('option:selected', this).attr('nama');
+    let nama = $('option:selected', this).attr('value');
     $('#nama_kegiatan').val('');
     $('#nama_subkegiatan').val('');
 
@@ -75,10 +73,16 @@ $(document).ready(function(){
   });
 
   $("#kode_subkegiatan").chosen().change(function(){
-    let nama = $('option:selected', this).attr('nama');
+    let nama = $('option:selected', this).attr('value');
     $('#nama_subkegiatan').val('');
     $('#nama_subkegiatan').val(nama);
     loadkegiatan("paket",this.value);
+  });
+
+  $("#paket").chosen().change(function(){
+    let nama = $('option:selected', this).attr('kode');
+    $('#kode_paket').val('');
+    $('#kode_paket').val(nama);
   });
 
   $('#pilih_bidang').on('change', function(){
@@ -132,18 +136,25 @@ $(document).ready(function(){
       if(vl == 0){
         $('#k'+i).attr('placeholder', '0');
       }
-      ktot.push(vl);
+
+      if(vl != 0){
+        ktot.push(vl);
+      }
       if($('#pagu_kegiatan').val()){
         let pagu = $('#pagu_kegiatan').val().replaceAll('.', '');
         let persen = (vl / pagu) * 100;
         $('#kp'+i).val(persen.toFixed(2) + '%');
-        pertot.push(persen);
+        if(persen != 0){
+          pertot.push(persen);
+        }
         
       }
     }
     
-    $('#ktot').val(rubah(ktot.reduce((a, b) => a + b, 0)));
-    $('#pertot').val(rubah(pertot.reduce((a, b) => a + b, 0)) + '%');
+    $('#ktot').val(rubah(ktot[ktot.length - 1]));
+    // $('#ktot').val(rubah(ktot.reduce((a, b) => a + b, 0)));
+    $('#pertot').val(pertot[pertot.length - 1] + '%');
+    // $('#pertot').val(rubah(pertot.reduce((a, b) => a + b, 0)) + '%');
 
     if(parseInt($('#ktot').val().replaceAll('.', '')) > parseInt($('#pagu_kegiatan').val().replaceAll('.', ''))){
       Swal.fire({
@@ -209,6 +220,7 @@ function save(formData){
               // loadprogram('');
               // $('#kode_program').val('');
               // $('#nama_program').val('');
+              location.reload()
 
           });
         })
@@ -236,10 +248,10 @@ function save(formData){
 
           if(typeof data == 'object'){
             for (var i = 0; i < data.length; i++) {
-              el1 += '<option nama="'+data[i].nama_program+'" value="'+data[i].kode_program+'">'+data[i].kode_program+'</option>';
-              el2 += '<option nama="'+data[i].nama_kegiatan+'" value="'+data[i].kode_kegiatan+'">'+data[i].kode_kegiatan+'</option>';
-              el3 += '<option nama="'+data[i].nama_subkegiatan+'" value="'+data[i].kode_subkegiatan+'">'+data[i].kode_subkegiatan+'</option>';
-              el4 += '<option value="'+data[i].id+'">'+data[i].nama_paket+'</option>';
+              el1 += '<option nama="'+data[i].nama_program+'" value="'+data[i].kode_program+'" text="'+data[i].nama_program+'">'+data[i].nama_program+'</option>';
+              el2 += '<option nama="'+data[i].nama_kegiatan+'" value="'+data[i].kode_kegiatan+'" text="'+data[i].nama_kegiatan+'">'+data[i].nama_kegiatan+'</option>';
+              el3 += '<option nama="'+data[i].nama_subkegiatan+'" value="'+data[i].kode_subkegiatan+'" text="'+data[i].nama_subkegiatan+'">'+data[i].nama_subkegiatan+'</option>';
+              el4 += '<option value="'+data[i].id+'" kode="'+data[i].kode_paket+'">'+data[i].nama_paket+'</option>';
             }
           }
 

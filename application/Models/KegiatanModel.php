@@ -34,18 +34,19 @@ class KegiatanModel extends Model{
           return  $query->getResult();
     }
 
-    public function getpaket($code = null)
+    public function getpaket($code = null, $userid = null)
     {
           if($code){
             $sql = "SELECT * FROM `data_paket` WHERE `kode_subkegiatan` = '$code' and
-                    id not in (select id_paket from data_realisasi where id_paket = data_paket.id )";
+                    id not in (select id_paket from data_realisasi where id_paket = data_paket.id ) and created_by = '$userid'";
 
             $result = $this->db->query($sql);
             $row = $result->getResult();
             return $row;
           }else{
             $builder = $this->db->table('data_paket');
-            $query   = $builder->get();
+            $query   = $builder->getWhere(['created_by' => $userid]);
+            // $query   = $builder->get();
           }
           // echo $this->db->getLastQuery();die;
           return  $query->getResult();
@@ -54,6 +55,38 @@ class KegiatanModel extends Model{
     public function saveParam($table = null, $data = null)
     {
         return  $this->db->table($table)->insert($data);
+    }
+
+    public function updatePaguSub($kodeprog = null, $kodekeg = null, $kodesubkeg = null, $pagunya = null)
+    {   
+        $builder = $this->db->table('data_subkegiatan');
+        $builder->set('sisa_pagu_subkegiatan', $pagunya );
+        $builder->where('kode_program', $kodeprog);
+        $builder->where('kode_kegiatan', $kodekeg);
+        $builder->where('kode_subkegiatan', $kodesubkeg);
+        $builder->update();
+        // echo $this->db->getLastQuery();die;
+        return  true;
+    }
+
+    public function getpaketbyid($id = null, $userid = null)
+    {
+         
+            $builder = $this->db->table('data_paket');
+            $query   = $builder->getWhere(['created_by' => $userid, 'id' => $id]);
+            // $query   = $builder->get();
+          // echo $this->db->getLastQuery();die;
+          return  $query->getResult();
+    }
+
+    public function getsubaja($kodeprog = null, $kodekeg = null, $kodesubkeg = null)
+    {
+         
+            $builder = $this->db->table('data_subkegiatan');
+            $query   = $builder->getWhere(['kode_program' => $kodeprog, 'kode_kegiatan' => $kodekeg, 'kode_subkegiatan' => $kodesubkeg]);
+            // $query   = $builder->get();
+          // echo $this->db->getLastQuery();die;
+          return  $query->getResult();
     }
 
 }

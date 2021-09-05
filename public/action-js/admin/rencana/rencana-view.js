@@ -30,7 +30,9 @@ $(document).ready(function(){
         let pagu = $('#pagu_kegiatan').val().replaceAll('.', '');
         let persen = (vl / pagu) * 100;
         $('#kp'+i).val(persen.toFixed(2) + '%');
-        pertot.push(persen);
+        if(persen != 0){
+          pertot.push(persen);
+        }
         
       }
     }
@@ -38,7 +40,8 @@ $(document).ready(function(){
     // console.log(ktot[ktot.length - 1]);
     // $('#ktot').val(rubah(ktot.reduce((a, b) => a + b, 0)));
     $('#ktot').val(rubah(ktot[ktot.length - 1]));
-    $('#pertot').val(rubah(pertot.reduce((a, b) => a + b, 0)) + '%');
+    // $('#pertot').val(rubah(pertot.reduce((a, b) => a + b, 0)) + '%');
+    $('#pertot').val(pertot[pertot.length - 1] + '%');
 
     if(parseInt($('#ktot').val().replaceAll('.', '')) > parseInt($('#pagu_kegiatan').val().replaceAll('.', ''))){
       Swal.fire({
@@ -203,6 +206,13 @@ function loadtarget(param){
               $('#kp10').val(data[i].n10);
               $('#kp11').val(data[i].n11);
               $('#kp12').val(data[i].n12);
+              let totah = [];
+              for (let ind = 1; ind < 12; ind++) {
+                if(data[i]['n'+ind] != '0.00%'){
+                  totah.push(data[i]['n'+ind]);
+                }
+              }
+              $('#pertot').val(totah[totah.length - 1]);
             }            
           }
         }

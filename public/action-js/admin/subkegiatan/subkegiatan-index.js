@@ -14,7 +14,7 @@ $(document).ready(function(){
   $('#save_subkegiatan').on('click', function(){
       var kode_program = $('#kode_program').val();
       var kode_kegiatan = $('#kodkeg').val();
-      var kode_subkegiatan = $('#kode_subkegiatan').val();
+      var kode_subkegiatan = $('#kode_subkegiatan_1').val()+$('#kode_subkegiatan_2').val();
       var nama_subkegiatan = $('#nama_subkegiatan').val();
       var pagu_subkegiatan = $('#pagu_subkegiatan').val();
 
@@ -35,7 +35,7 @@ $("#kode_program").chosen().change(function(){
 
 $("#nama_kegiatan").chosen().change(function(){
   $('#kodkeg').val($('option:selected', this).attr('text'));
-  $('#kode_subkegiatan').val($('option:selected', this).attr('text')+'.');
+  $('#kode_subkegiatan_1').val($('option:selected', this).attr('text')+'.');
   loadkegiatan("program",$('option:selected', this).attr('prog'));
 });
 
@@ -166,11 +166,12 @@ function save(formData){
           confirmButtonText: `Ok`,
         }).then((result) => {
           $(document).ready(function(){
-            loadsubkegiatan('');
-              $('#kode_program').val(0).trigger("chosen:updated");
-              $('#kode_kegiatan').val(0).trigger("chosen:updated");
-              $('#kode_subkegiatan').val('');
-              $('#nama_subkegiatan').val('');
+            // loadsubkegiatan('');
+            //   $('#kode_program').val(0).trigger("chosen:updated");
+            //   $('#kode_kegiatan').val(0).trigger("chosen:updated");
+            //   $('#kode_subkegiatan').val('');
+            //   $('#nama_subkegiatan').val('');
+            location.reload()
 
           });
         })

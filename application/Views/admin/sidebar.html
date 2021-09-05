@@ -45,7 +45,7 @@
 
 						<b class="arrow"></b>
 					</li>
-					{% if role == '100' or role == '10' %}
+					
 					<li id="menu-data" class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-folder-open"></i>
@@ -57,7 +57,7 @@
 						<b class="arrow"></b>
 
 						<ul class="submenu">
-
+							{% if role == '100' or role == '10' %}
 							<li id="menu-program" class="">
 								<a href="program">
 									<i class="menu-icon fa fa-caret-right"></i>
@@ -84,7 +84,8 @@
 
 								<b class="arrow"></b>
 							</li>
-
+							{% endif %}
+							{% if role == '30' %}
 							<li id="menu-paket" class="">
 								<a href="paket">
 									<i class="menu-icon fa fa-caret-right"></i>
@@ -93,19 +94,19 @@
 
 								<b class="arrow"></b>
 							</li>
-
+							{% endif %}
 						</ul>
 					</li>
-
-          <li id="menu-rencana" class="">
+					{% if role == '100' or role == '10' %}
+          			<!-- <li id="menu-rencana" class="">
 						<a href="rencana">
 							<i class="menu-icon fa fa-external-link"></i>
 							<span class="menu-text"> Rencana (Target) </span>
 						</a>
 
 						<b class="arrow"></b>
-					</li>
-          <li id="menu-rekap" class="">
+					</li> -->
+          			<li id="menu-rekap" class="">
 						<a href="rekap">
 							<i class="menu-icon fa fa-desktop"></i>
 							<span class="menu-text"> Rekap (Realisasi) </span>
@@ -113,7 +114,7 @@
 
 						<b class="arrow"></b>
 					</li>
-          <li id="menu-report" class="">
+          			<li id="menu-report" class="">
 						<a href="report">
 							<i class="menu-icon fa fa-paste"></i>
 							<span class="menu-text"> Laporan </span>
@@ -131,7 +132,7 @@
 
 						<b class="arrow"></b>
 					</li>
-          <li id="menu-laporan" class="">
+          			<li id="menu-laporan" class="">
 						<a href="laporan">
 							<i class="menu-icon fa fa-print"></i>
 							<span class="menu-text"> Laporan (Realisasi) </span>

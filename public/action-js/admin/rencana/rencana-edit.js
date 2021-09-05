@@ -12,22 +12,31 @@ $(document).ready(function(){
   loadtarget(ids);
 
   var ktot = [];
+  var pertot = [];
   $('.uang').keyup(function(){
     ktot = [];
+    pertot = [];
     for (var i = 1; i <= 12; i++) {
       let vlue = $('#k'+i).val();
       let lue = vlue.replaceAll('.', '');
       let vl = ($('#k'+i).val() == '') ? 0 : parseInt(lue);
-      ktot.push(vl);
+      if(vl != 0){
+        ktot.push(vl);
+      }
       
       if($('#pagu_kegiatan').val().replaceAll('.', '')){
         let pagu = $('#pagu_kegiatan').val().replaceAll('.', '');
         let persen = (vl / pagu) * 100;
         $('#kp'+i).val(persen.toFixed(2) + '%');
+        if(persen != 0){
+          pertot.push(persen);
+        }
       }
     };
 
-    $('#ktot').val(rubah(ktot.reduce((a, b) => a + b, 0)));
+    $('#ktot').val(rubah(ktot[ktot.length - 1]));
+    // $('#ktot').val(rubah(ktot.reduce((a, b) => a + b, 0)));
+    $('#pertot').val(pertot[pertot.length - 1] + '%');
   })
 
   let ftot = [];
@@ -139,8 +148,8 @@ function loadtarget(param){
           $('#bulan_perubahan').val(data[0].bulan_perubahan);
           $('#bulan_perubahan').trigger("chosen:updated");
           
-
           for (var i = 0; i < data.length; i++) {
+            
             if(data[i].type == 'keuangan'){
               $('#k1').val(data[i].n1);
               $('#k2').val(data[i].n2);
@@ -182,12 +191,19 @@ function loadtarget(param){
               $('#kp10').val(data[i].n10);
               $('#kp11').val(data[i].n11);
               $('#kp12').val(data[i].n12);
+              let totah = [];
+              for (let ind = 1; ind < 12; ind++) {
+                if(data[i]['n'+ind] != '0.00%'){
+                  totah.push(data[i]['n'+ind]);
+                }
+              }
+              $('#pertot').val(totah[totah.length - 1]);
             }
 
             
           }
 
-          let inibulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'sepetember', 'Oktober', 'November', 'Desember']
+          let inibulan = ['dummy','Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'sepetember', 'Oktober', 'November', 'Desember']
             let bulan_perubahan = '<option></option>'
             // for (let index = 1; index < 12; index++) {
             
@@ -202,7 +218,11 @@ function loadtarget(param){
             // }
             var d = new Date();
             var n = d.getMonth();
-            bulan_perubahan += '<option value="n'+n+'" selected >'+inibulan[n]+'</option>'
+            // bulan_perubahan += '<option value="n'+n+'" sel ected >'+inibulan[n]+'</option>'
+            for (let index = 1; index < 12; index++) {
+              bulan_perubahan += '<option value="n'+index+'" sel ected >'+inibulan[index]+'</option>'
+              
+            }
 
   
             $('#bulan_perubahan').html(bulan_perubahan);

@@ -12,7 +12,7 @@ $(document).ready(function(){
 
   $('#save_kegiatan').on('click', function(){
       var kode_program = $('#kodprog').val();
-      var kode_kegiatan = $('#kode_kegiatan').val();
+      var kode_kegiatan = $('#kode_kegiatan_1').val()+$('#kode_kegiatan_2').val();
       var nama_kegiatan = $('#nama_kegiatan').val();
 
       var formData = new FormData();
@@ -28,7 +28,7 @@ $(document).ready(function(){
     let toy = $('option:selected', this).attr('text');
     
     $('#kodprog').val(toy);
-    $('#kode_kegiatan').val(toy+'.');
+    $('#kode_kegiatan_1').val(toy+'.');
 
   })
 
