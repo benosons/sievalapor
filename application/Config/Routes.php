@@ -123,6 +123,10 @@ $routes->post('addRealisasi', 'Jsondata::addRealisasi');
 
 $routes->post('updateTarget', 'Jsondata::updateTarget');
 $routes->post('deleteData', 'Jsondata::deleteData');
+$routes->post('updateProgram', 'Jsondata::updateProgram');
+$routes->post('updateKegiatan', 'Jsondata::updateKegiatan');
+$routes->post('updatesubKegiatan', 'Jsondata::updatesubKegiatan');
+$routes->post('updatepaket', 'Jsondata::updatepaket');
 
 
 

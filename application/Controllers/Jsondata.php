@@ -1880,6 +1880,130 @@ class Jsondata extends \CodeIgniter\Controller
 
 	}
 
+	public function updateProgram(){
+
+		$request  = $this->request;
+		$param 	  = $request->getVar('param');
+		$id 	  = $request->getVar('id_program');
+		$role 		= $this->data['role'];
+
+		$model 	  = new \App\Models\ProgramModel();
+
+		$data = [
+						'kode_program' => $request->getVar('kode_program'),
+						'nama_program' => $request->getVar('nama_program'),
+						'created_by'	 => $role,
+						'updated_date' => $this->now,
+        ];
+		
+		$res = $model->updateParam($param, $id, $data);
+
+		$response = [
+				'status'   => 'sukses',
+				'code'     => '0',
+				'data' 		 => 'terupdate'
+		];
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+
+	}
+
+	public function updateKegiatan(){
+
+		$request  = $this->request;
+		$param 	  = $request->getVar('param');
+		$id 	  = $request->getVar('id_kegiatan');
+		$role 		= $this->data['role'];
+
+		$model 	  = new \App\Models\KegiatanModel();
+
+		$data = [
+						'kode_kegiatan' => $request->getVar('kode_kegiatan'),
+						'nama_kegiatan' => $request->getVar('nama_kegiatan'),
+						'created_by'	 => $role,
+						'updated_date' => $this->now,
+        ];
+		
+		$res = $model->updateParam($param, $id, $data);
+
+		$response = [
+				'status'   => 'sukses',
+				'code'     => '0',
+				'data' 		 => 'terupdate'
+		];
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+
+	}
+
+	public function updatesubKegiatan(){
+
+		$request  = $this->request;
+		$param 	  = $request->getVar('param');
+		$id 	  = $request->getVar('id_subkegiatan');
+		$role 		= $this->data['role'];
+
+		$model 	  = new \App\Models\KegiatanModel();
+		$sisa = 0;
+		if($request->getVar('sisa_pagu_subkegiatan')){
+			
+			$pg = (int)str_replace(".","", $request->getVar('pagu_subkegiatan')) - (int)str_replace(".","", $request->getVar('pagu_awal'));
+			$sisa = (int)str_replace(".","", $request->getVar('sisa_pagu_subkegiatan')) + $pg;
+		}
+
+		$data = [
+			'kode_subkegiatan' => $request->getVar('kode_subkegiatan'),
+			'nama_subkegiatan' => $request->getVar('nama_subkegiatan'),
+			'pagu_subkegiatan' => $request->getVar('pagu_subkegiatan'),
+			'sisa_pagu_subkegiatan' => $sisa,
+			'updated_date'	=> $this->now,
+        ];
+		
+		$res = $model->updateParam($param, $id, $data);
+
+		$response = [
+				'status'   => 'sukses',
+				'code'     => '0',
+				'data' 		 => 'terupdate'
+		];
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+
+	}
+
+	public function updatepaket(){
+
+		$request  = $this->request;
+		$param 	  = $request->getVar('param');
+		$id 	  = $request->getVar('id_paket');
+		$role 		= $this->data['role'];
+
+		$model 	  = new \App\Models\KegiatanModel();
+
+		$data = [
+			'kode_paket' => $request->getVar('kode_paket'),
+			'nama_paket' => $request->getVar('nama_paket'),
+			'pagu_paket' => $request->getVar('pagu_paket'),
+			'updated_by'	=> $this->data['userid'],
+			'updated_date'	=> $this->now,
+        ];
+		$model->updatePaguSub($request->getVar('kode_program'), $request->getVar('kode_kegiatan'), $request->getVar('kode_subkegiatan'), $request->getVar('sisa_pagu'));
+		$res = $model->updateParam($param, $id, $data);
+
+		$response = [
+				'status'   => 'sukses',
+				'code'     => '0',
+				'data' 		 => 'terupdate'
+		];
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+
+	}
+
 	public function addKegiatan(){
 
 		$request  = $this->request;
@@ -3158,18 +3282,50 @@ class Jsondata extends \CodeIgniter\Controller
 
 			$model 	  = new \App\Models\ProgramModel();
 			$modelpaket 	  = new \App\Models\KegiatanModel();
-			$datapaket = $modelpaket->getpaketbyid($id, $userid);
-			$kodeprog = $datapaket[0]->kode_program;
-			$kodekeg = $datapaket[0]->kode_kegiatan;
-			$kodesubkeg = $datapaket[0]->kode_subkegiatan;
-
-			$pagupaket = str_replace(".","",$datapaket[0]->pagu_paket);
 			
-			$datasub = $modelpaket->getsubaja($kodeprog, $kodekeg, $kodesubkeg);
-			$sisapagusub = $datasub[0]->sisa_pagu_subkegiatan;
-			$sisapagu = $sisapagusub + $pagupaket;
+			if($table == 'data_paket'){
+				$datapaket = $modelpaket->getpaketbyid($id, $userid);
+				if(!empty($datapaket)){
+					$kodeprog = $datapaket[0]->kode_program;
+					$kodekeg = $datapaket[0]->kode_kegiatan;
+					$kodesubkeg = $datapaket[0]->kode_subkegiatan;
 
-			$modelpaket->updatePaguSub($kodeprog, $kodekeg, $kodesubkeg, $sisapagu);
+					$pagupaket = str_replace(".","",$datapaket[0]->pagu_paket);
+					
+					$datasub = $modelpaket->getsubaja($kodeprog, $kodekeg, $kodesubkeg);
+					$sisapagusub = $datasub[0]->sisa_pagu_subkegiatan;
+					$sisapagu = $sisapagusub + $pagupaket;
+
+					$modelpaket->updatePaguSub($kodeprog, $kodekeg, $kodesubkeg, $sisapagu);
+				}
+			}else if($table == 'data_subkegiatan'){
+				$datapaket = $modelpaket->getsubkegbyid($id, $userid);
+				if(!empty($datapaket)){
+					$kodeprog = $datapaket[0]->kode_program;
+					$kodekeg = $datapaket[0]->kode_kegiatan;
+					$kodesubkeg = $datapaket[0]->kode_subkegiatan;
+
+					$modelpaket->deletePaket($kodeprog ,$kodekeg ,$kodesubkeg );
+				}
+				
+			}else if($table == 'data_kegiatan'){
+				$datakeg = $modelpaket->getkegbyid($id, $userid);
+				if(!empty($datakeg)){
+					$kodeprog = $datakeg[0]->kode_program;
+					$kodekeg = $datakeg[0]->kode_kegiatan;
+
+					$modelpaket->deletesubkeg($kodeprog ,$kodekeg);
+					$modelpaket->deletePaketByprogkeg($kodeprog ,$kodekeg);
+				}
+								
+			}else if($table == 'data_program'){
+				$dataprog = $modelpaket->getprogbyid($id, $userid);
+				$kodeprog = $dataprog[0]->kode_program;
+				$modelpaket->deletekegbyprog($kodeprog);
+				$modelpaket->deletesubkegbyprog($kodeprog);
+				$modelpaket->deletePaketByprog($kodeprog);
+			}
+
 			$res = $model->deleteGlob($table, $id);
 			
 			$response = [

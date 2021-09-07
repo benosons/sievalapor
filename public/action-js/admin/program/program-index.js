@@ -12,14 +12,26 @@ $(document).ready(function(){
   $('#save_program').on('click', function(){
       var kode_program = $('#kode_program').val();
       var nama_program = $('#nama_program').val();
+      var id_program = $('#id_program').val()
 
       var formData = new FormData();
       formData.append('param', 'data_program');
+      formData.append('id_program', id_program);
       formData.append('kode_program', kode_program);
       formData.append('nama_program', nama_program);
-      save(formData);
+      if(id_program){
+        update(formData);
+      }else{
+        save(formData);
+      }
   });
 
+  $('#modal_program').on('hidden.bs.modal', function (e) {
+    $('#kode_program').val('');
+    $('#kode_program').prop('disabled', false);
+    $('#nama_program').val('');
+    $('#id_program').val('')
+  })
 
 });
 
@@ -58,7 +70,9 @@ function loadprogram(param){
               {
                   mRender: function ( data, type, row ) {
 
-                    var el = `
+                    var el = `<button class="btn btn-xs btn-info" onclick="edit('data_program',`+row.id+`, '`+row.kode_program+`', '`+row.nama_program+`')">
+                                <i class="ace-icon fa fa-edit bigger-120"></i>
+                              </button>
                               <button class="btn btn-xs btn-danger" onclick="action('data_program',`+row.id+`)">
           																<i class="ace-icon fa fa-trash-o bigger-120"></i>
           															</button>`;
@@ -121,6 +135,33 @@ function save(formData){
     });
   };
 
+  function update(formData){
+
+    $.ajax({
+        type: 'post',
+        processData: false,
+        contentType: false,
+        url: 'updateProgram',
+        data : formData,
+        success: function(result){
+          Swal.fire({
+            type: 'success',
+            title: 'Berhasil Update Program !',
+            showConfirmButton: true,
+            // showCancelButton: true,
+            confirmButtonText: `Ok`,
+          }).then((result) => {
+            $(document).ready(function(){
+                loadprogram('');
+                $('#kode_program').val('');
+                $('#nama_program').val('');
+  
+            });
+          })
+        }
+      });
+    };
+
   function action(table, id){
     bootbox.confirm({
       message: "Anda Yakin <b>Hapus</b> Program ini?",
@@ -169,3 +210,15 @@ function save(formData){
 });
 
 };
+
+function edit(table,id, code, name){
+  $('#modal_program').modal('show');
+  $('#kode_program').val(code);
+  $('#kode_program').prop('disabled', true);
+  $('#nama_program').val(name);
+  $('#id_program').val(id);
+  
+
+}
+
+

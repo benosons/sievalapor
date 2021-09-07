@@ -79,6 +79,36 @@ class KegiatanModel extends Model{
           return  $query->getResult();
     }
 
+    public function getsubkegbyid($id = null, $userid = null)
+    {
+         
+            $builder = $this->db->table('data_subkegiatan');
+            $query   = $builder->getWhere(['id' => $id]);
+            // $query   = $builder->get();
+          // echo $this->db->getLastQuery();die;
+          return  $query->getResult();
+    }
+
+    public function getkegbyid($id = null, $userid = null)
+    {
+         
+            $builder = $this->db->table('data_kegiatan');
+            $query   = $builder->getWhere(['id' => $id]);
+            // $query   = $builder->get();
+          // echo $this->db->getLastQuery();die;
+          return  $query->getResult();
+    }
+
+    public function getprogbyid($id = null, $userid = null)
+    {
+         
+            $builder = $this->db->table('data_program');
+            $query   = $builder->getWhere(['id' => $id]);
+            // $query   = $builder->get();
+          // echo $this->db->getLastQuery();die;
+          return  $query->getResult();
+    }
+
     public function getsubaja($kodeprog = null, $kodekeg = null, $kodesubkeg = null)
     {
          
@@ -88,5 +118,66 @@ class KegiatanModel extends Model{
           // echo $this->db->getLastQuery();die;
           return  $query->getResult();
     }
+
+    public function deletePaket($kodeprog = null,$kodekeg = null,$kodesubkeg = null)
+    {
+      
+        $builder = $this->db->table('data_paket');
+        $builder->where(['kode_program' => $kodeprog, 'kode_kegiatan' => $kodekeg, 'kode_subkegiatan' => $kodesubkeg]);
+        $builder->delete();
+        return true;
+    }
+
+    public function deletePaketByprogkeg($kodeprog = null,$kodekeg = null)
+    {
+      
+        $builder = $this->db->table('data_paket');
+        $builder->where(['kode_program' => $kodeprog, 'kode_kegiatan' => $kodekeg]);
+        $builder->delete();
+        return true;
+    }
+
+    public function deletesubkeg($kodeprog = null,$kodekeg = null)
+    {
+        $builder = $this->db->table('data_subkegiatan');
+        $builder->where(['kode_program' => $kodeprog, 'kode_kegiatan' => $kodekeg]);
+        $builder->delete();
+        return true;
+    }
+
+    public function deletekegbyprog($kodeprog = null)
+    {
+        $builder = $this->db->table('data_kegiatan');
+        $builder->where(['kode_program' => $kodeprog]);
+        $builder->delete();
+        return true;
+    }
+
+    public function deletesubkegbyprog($kodeprog = null)
+    {
+        $builder = $this->db->table('data_subkegiatan');
+        $builder->where(['kode_program' => $kodeprog]);
+        $builder->delete();
+        return true;
+    }
+
+    public function deletePaketByprog($kodeprog = null)
+    {
+        $builder = $this->db->table('data_paket');
+        $builder->where(['kode_program' => $kodeprog]);
+        $builder->delete();
+        return true;
+    }
+
+    public function updateParam($table = null, $id = null, $data = null)
+    {   
+      $builder = $this->db->table($table);
+      $query   = $builder->where('id', $id);
+      $query->update($data);
+      echo $this->db->getLastQuery();die;
+      return true;
+    }
+
+    
 
 }

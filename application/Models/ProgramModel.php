@@ -39,6 +39,15 @@ class ProgramModel extends Model{
         $builder->delete();
         return true;
     }
+
+    public function updateParam($table = null, $id = null, $data = null)
+    {   
+      $builder = $this->db->table($table);
+      $query   = $builder->where('id', $id);
+      $query->update($data);
+      // echo $this->db->getLastQuery();die;
+      return true;
+    }
     
 
 }

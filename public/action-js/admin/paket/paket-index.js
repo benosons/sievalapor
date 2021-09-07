@@ -19,17 +19,26 @@ $(document).ready(function(){
       var kode_paket = $('#kodpak_1').val()+$('#kodpak_2').val();
       var pagu_paket = $('#pagu_paket').val();
       var sisa_pagu = $('#pagu_subkegiatan').val().replaceAll('.', '') - $('#pagu_paket').val().replaceAll('.', '');
+      var id_paket = $('#id_paket').val();
 
       var formData = new FormData();
       formData.append('param', 'data_paket');
       formData.append('kode_program', kode_program);
+      formData.append('id_paket', id_paket);
       formData.append('kode_kegiatan', kode_kegiatan);
       formData.append('kode_subkegiatan', kode_subkegiatan);
       formData.append('nama_paket', nama_paket);
       formData.append('kode_paket', kode_paket);
       formData.append('pagu_paket', pagu_paket);
       formData.append('sisa_pagu', sisa_pagu);
-      save(formData);
+
+      if(id_paket){
+        update(formData);
+      }else{
+        save(formData);
+      }
+      
+  
   });
 
 $("#kode_program").chosen().change(function(){
@@ -62,6 +71,20 @@ $('#pagu_paket').on('keyup', function(){
     $('#pagu_paket').parent().parent().removeClass('has-error');
     $('#pagu_habis').hide();
   }
+})
+
+$('#modal_paket').on('hidden.bs.modal', function (e) {
+  $('#nama_subkegiatan').val('');
+  $('#nama_subkegiatan').chosen().change();
+  $(".chosen-select").prop('disabled', false);
+  $('#nama_subkegiatan').trigger("chosen:updated");
+  $('#kodpak_1').val('');
+  $('#kodpak_2').val('');
+  $('#kodpak_2').prop('disabled', false);
+
+  $('#nama_paket').val('');
+  $('#id_paket').val('');
+  $('#pagu_paket').val('');
 })
 
 
@@ -108,7 +131,9 @@ function loadpaket(param){
                 {
                     mRender: function ( data, type, row ) {
 
-                      var el = `
+                      var el = `<button class="btn btn-xs btn-info" onclick="edit('data_paket',`+row.id+`, '`+row.kode_paket+`', '`+row.nama_paket+`', '`+row.pagu_paket+`', '`+row.kode_subkegiatan+`')">
+                      <i class="ace-icon fa fa-edit bigger-120"></i>
+                    </button>
                                 <button class="btn btn-xs btn-danger" onclick="action('data_paket',`+row.id+`)">
                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                           </button>`;
@@ -177,7 +202,7 @@ function loadkegiatan(param, code, code1){
             if(typeof(data[i].sisa_pagu_subkegiatan) !== "undefined"){
               
               if(data[i].sisa_pagu_subkegiatan != null ){
-                sisapagudong = data[i].sisa_pagu_subkegiatan;
+                sisapagudong = rubah(data[i].sisa_pagu_subkegiatan);
           
               }else if(data[i].sisa_pagu_subkegiatan == '0'){
                 sisapagudong = '0'
@@ -234,6 +259,37 @@ function save(formData){
     });
   };
 
+  function update(formData){
+
+    $.ajax({
+        type: 'post',
+        processData: false,
+        contentType: false,
+        url: 'updatepaket',
+        data : formData,
+        success: function(result){
+          Swal.fire({
+            type: 'success',
+            title: 'Berhasil Update Paket !',
+            showConfirmButton: true,
+            // showCancelButton: true,
+            confirmButtonText: `Ok`,
+          }).then((result) => {
+            $(document).ready(function(){
+                // loadpaket('');
+                // $('#kode_program').val(0).trigger("chosen:updated");
+                // $('#kode_kegiatan').val(0).trigger("chosen:updated");
+                // $('#kode_subkegiatan').val(0).trigger("chosen:updated");
+                // $('#nama_paket').val('');
+                location.reload()
+  
+            });
+          })
+        }
+      });
+    };
+  
+
   function action(table, id){
     bootbox.confirm({
       message: "Anda Yakin <b>Hapus</b> Paket ini?",
@@ -289,4 +345,23 @@ function rubah(angka){
   ribuan = reverse.match(/\d{1,3}/g);
   ribuan = ribuan.join('.').split('').reverse().join('');
   return ribuan;
+}
+
+function edit(table,id, code, name, pagu, code_sub){
+  $('#modal_paket').modal('show');
+  let mycode = code.split(".");
+  
+  $('#nama_subkegiatan').val(code_sub);
+  $('#nama_subkegiatan').chosen().change();
+  $(".chosen-select").prop('disabled', true);
+  $('#nama_subkegiatan').trigger("chosen:updated");
+  $('#kodpak_1').val(code.slice(0, -mycode[mycode.length - 1].length));
+  $('#kodpak_2').val(mycode[mycode.length - 1]);
+  $('#kodpak_2').prop('disabled', true);
+
+  $('#nama_paket').val(name);
+  $('#id_paket').val(id);
+  $('#pagu_paket').val(pagu);
+  
+
 }

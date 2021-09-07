@@ -17,15 +17,26 @@ $(document).ready(function(){
       var kode_subkegiatan = $('#kode_subkegiatan_1').val()+$('#kode_subkegiatan_2').val();
       var nama_subkegiatan = $('#nama_subkegiatan').val();
       var pagu_subkegiatan = $('#pagu_subkegiatan').val();
+      var id_subkegiatan = $('#id_subkegiatan').val();
+      var sisa_pagu_subkegiatan = $('#sisa_pagu_subkegiatan').val();
+      var pagu_awal = $('#pagu_awal').val();
+      
 
       var formData = new FormData();
       formData.append('param', 'data_subkegiatan');
+      formData.append('id_subkegiatan', id_subkegiatan);
       formData.append('kode_program', kode_program);
       formData.append('kode_kegiatan', kode_kegiatan);
       formData.append('kode_subkegiatan', kode_subkegiatan);
       formData.append('nama_subkegiatan', nama_subkegiatan);
       formData.append('pagu_subkegiatan', pagu_subkegiatan);
-      save(formData);
+      if(id_subkegiatan){
+        formData.append('sisa_pagu_subkegiatan', sisa_pagu_subkegiatan);
+        formData.append('pagu_awal', pagu_awal);
+        update(formData);
+      }else{
+        save(formData);
+      }
   });
 
 $("#kode_program").chosen().change(function(){
@@ -38,6 +49,19 @@ $("#nama_kegiatan").chosen().change(function(){
   $('#kode_subkegiatan_1').val($('option:selected', this).attr('text')+'.');
   loadkegiatan("program",$('option:selected', this).attr('prog'));
 });
+
+$('#modal_subkegiatan').on('hidden.bs.modal', function (e) {
+  $('#kode_subkegiatan_1').val('');
+  $('#kode_subkegiatan_2').val('');
+  $('#kode_subkegiatan_2').prop('disabled', false);
+  $('#kodkeg').parent().parent().show();
+  $('#nama_kegiatan_chosen').parent().parent().show();
+  $('#nama_subkegiatan').val('');
+  $('#id_subkegiatan').val('');
+  $('#pagu_subkegiatan').val('');
+  $('#sisa_pagu_subkegiatan').val('');
+  $('#pagu_awal').val('');
+})
 
 });
 
@@ -79,7 +103,9 @@ function loadsubkegiatan(param){
               {
                   mRender: function ( data, type, row ) {
 
-                    var el = `
+                    var el = `<button class="btn btn-xs btn-info" onclick="edit('data_subkegiatan',`+row.id+`, '`+row.kode_subkegiatan+`', '`+row.nama_subkegiatan+`', '`+row.pagu_subkegiatan+`', '`+row.sisa_pagu_subkegiatan+`')">
+                    <i class="ace-icon fa fa-edit bigger-120"></i>
+                  </button>
                               <button class="btn btn-xs btn-danger" onclick="action('data_subkegiatan', `+row.id+`)">
           																<i class="ace-icon fa fa-trash-o bigger-120"></i>
           															</button>`;
@@ -179,6 +205,31 @@ function save(formData){
     });
   };
 
+  function update(formData){
+
+    $.ajax({
+        type: 'post',
+        processData: false,
+        contentType: false,
+        url: 'updatesubKegiatan',
+        data : formData,
+        success: function(result){
+          Swal.fire({
+            type: 'success',
+            title: 'Berhasil Update Kegiatan !',
+            showConfirmButton: true,
+            // showCancelButton: true,
+            confirmButtonText: `Ok`,
+          }).then((result) => {
+            $(document).ready(function(){
+              location.reload()
+  
+            });
+          })
+        }
+      });
+    };
+
   function action(table, id){
           bootbox.confirm({
             message: "Anda Yakin <b>Hapus</b> Sub Kegiatan ini?",
@@ -227,3 +278,21 @@ function save(formData){
       });
     
     };
+
+    function edit(table,id, code, name, pagu, sisa){
+      $('#modal_subkegiatan').modal('show');
+      let mycode = code.split(".");
+      
+      $('#kode_subkegiatan_1').val(code.slice(0, -mycode[mycode.length - 1].length));
+      $('#kode_subkegiatan_2').val(mycode[mycode.length - 1]);
+      $('#kode_subkegiatan_2').prop('disabled', true);
+      $('#kodkeg').parent().parent().hide();
+      $('#nama_kegiatan_chosen').parent().parent().hide();
+      $('#nama_subkegiatan').val(name);
+      $('#id_subkegiatan').val(id);
+      $('#pagu_subkegiatan').val(pagu);
+      $('#sisa_pagu_subkegiatan').val(sisa);
+      $('#pagu_awal').val(pagu);
+      
+    
+    }
