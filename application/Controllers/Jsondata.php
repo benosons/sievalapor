@@ -2551,6 +2551,31 @@ class Jsondata extends \CodeIgniter\Controller
 
 	}
 
+	public function updateUser(){
+
+		$request  = $this->request;
+		$param 	  = $request->getVar('param');
+		$model 	  = new \App\Models\UserModel();
+
+		$data = [
+			'user_name' 		=> $request->getVar('user_name'),
+			'user_email' 		=> $request->getVar('user_email'),
+			'user_fullname' 	=> $request->getVar('user_fullname'),
+			'nip'				=> $request->getVar('nip'),
+		];
+		$model->update($request->getVar('id'), $data);
+
+		$response = [
+				'status'   => 'sukses',
+				'code'     => '0',
+				'data' 		 => 'terupdate'
+		];
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+
+	}
+
 	public function actionBerita(){
 
 		$request  = $this->request;

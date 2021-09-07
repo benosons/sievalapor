@@ -8,15 +8,17 @@ $(document).ready(function(){
   $('.user-tambah').hide();
 
   loadusers('');
-
   $('#save-user').on('click', function(){
+
       let user_name = $('#user_name').val();
       let user_password = 12345;
       let user_role = $('#user_role').val();
       let user_fullname = $('#user_fullname').val();
       let user_nip = $('#user_nip').val();
+      let id_user = $('#id_user').val();
 
       var formData = new FormData();
+      formData.append('id', id_user);
       formData.append('user_name', user_name);
       formData.append('user_password', user_password);
       formData.append('user_role', user_role);
@@ -47,7 +49,12 @@ $(document).ready(function(){
                   confirmButtonText: `Ok`,
                 });
               }else{
-                save(formData);
+                if(id_user){
+                  update(formData);
+                }else{
+
+                  save(formData);
+                }
               }
 
           }
@@ -65,6 +72,15 @@ $(document).ready(function(){
       $('#user_satuan').prop('disabled', false);
     }
   });
+
+  $('#modal_user').on('hidden.bs.modal', function (e) {
+    $('#id_user').val('');
+    $('#user_name').val('');
+    $('#user_fullname').val('');
+    $('#user_nip').val('');
+    $('#user_role').val('');
+    $('#user_role').prop('disabled', false).trigger('chosen:updated');
+  })
 
 });
 
@@ -144,7 +160,10 @@ function loadusers(param){
               {
                   mRender: function ( data, type, row ) {
 
-                    var el = `<button class="btn btn-xs btn-danger" onclick="action('delete','`+row.user_id+`','')">
+                    var el = `<button class="btn btn-xs btn-info" onclick="action('update','`+row.user_id+`','', '`+row.user_name+`','`+row.user_fullname+`','`+row.nip+`', '`+row.user_role+`')">
+                                <i class="ace-icon fa fa-edit bigger-120"></i>
+                              </button>
+                              <button class="btn btn-xs btn-danger" onclick="action('delete','`+row.user_id+`','')">
 																<i class="ace-icon fa fa-trash-o bigger-120"></i>
 															</button>`;
 
@@ -191,20 +210,20 @@ function onusers(type){
     $('.page-list > li').removeClass('active');
     if(type == 'input'){
       $('.user-tambah').show();
-      $('.user-list').hide();
       $('#save-user').show();
+      $('.user-list').hide();
       $('#tambah-user').hide();
     }else if(type == 'list'){
       loadusers('');
       $('#list-user').addClass('active');
       $('.user-tambah').hide();
-      $('.user-list').show();
       $('#save-user').hide();
+      $('.user-list').show();
       $('#tambah-user').show();
     }
 };
-
 function save(formData){
+
 
   $.ajax({
       type: 'post',
@@ -229,7 +248,33 @@ function save(formData){
     });
   };
 
-  function action(mode, id, status){
+  function update(formData){
+
+
+    $.ajax({
+        type: 'post',
+        processData: false,
+        contentType: false,
+        url: 'updateUser',
+        data : formData,
+        success: function(result){
+          Swal.fire({
+            type: 'success',
+            title: 'Success add User !',
+            showConfirmButton: true,
+            // showCancelButton: true,
+            confirmButtonText: `Ok`,
+          }).then((result) => {
+                loadusers('');
+                $('#user_name').val('');
+                $('#user_fullname').val('');
+                $('#user_role').val(0).trigger("chosen:updated");
+          })
+        }
+      });
+    };
+
+  function action(mode, id, status, user_name, user_fullname, nip, role){
     if(mode == 'delete'){
       bootbox.confirm({
         message: "Are you sure to <b>Delete</b> ?",
@@ -249,6 +294,14 @@ function save(formData){
     			}
     		}
     });
+  }else if(mode == 'update'){
+    $('#modal_user').modal('show');
+    $('#id_user').val(id);
+    $('#user_name').val(user_name);
+    $('#user_fullname').val(user_fullname);
+    $('#user_nip').val(nip);
+    $('#user_role').val(role);
+    $('#user_role').prop('disabled', true).trigger('chosen:updated');
   }else{
     isAction(mode, id, status);
   }

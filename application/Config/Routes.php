@@ -127,6 +127,7 @@ $routes->post('updateProgram', 'Jsondata::updateProgram');
 $routes->post('updateKegiatan', 'Jsondata::updateKegiatan');
 $routes->post('updatesubKegiatan', 'Jsondata::updatesubKegiatan');
 $routes->post('updatepaket', 'Jsondata::updatepaket');
+$routes->post('updateUser', 'Jsondata::updateUser');
 
 
 
