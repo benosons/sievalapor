@@ -57,6 +57,7 @@ $("#nama_subkegiatan").chosen().change(function(){
   $('#pagu_subkegiatan').val($('option:selected', this).attr('pagu_sub'));
   loadkegiatan("kegiatan",'',$('option:selected', this).attr('keg'));
   loadkegiatan("program",$('option:selected', this).attr('prog'));
+  loadkegiatan("paket",this.value);
 });
 
 $('#pagu_paket').on('keyup', function(){
@@ -80,7 +81,7 @@ $('#modal_paket').on('hidden.bs.modal', function (e) {
   $('#nama_subkegiatan').trigger("chosen:updated");
   $('#kodpak_1').val('');
   $('#kodpak_2').val('');
-  $('#kodpak_2').prop('disabled', false);
+  $('#kodpak_2').prop('disabled', true);
 
   $('#nama_paket').val('');
   $('#id_paket').val('');
@@ -188,6 +189,7 @@ function loadkegiatan(param, code, code1){
       success: function(result){
 
         let data = result.data;
+        let code = result.code;
         let el1   = '<option value=""></option>';
         let el2   = '<option value=""></option>';
         let el3   = '<option value=""></option>';
@@ -223,6 +225,13 @@ function loadkegiatan(param, code, code1){
           }else if(param == 'subkegiatan'){
             $('#nama_subkegiatan').html(el3);
             $('#nama_subkegiatan').trigger("chosen:updated");
+          }else if(param == 'paket'){
+            if(code == 1){
+              $('#kodpak_2').val(parseInt(data.length) + 1);
+            }else{
+              $('#kodpak_2').val(1);
+            }
+            
           }
         }
       })
