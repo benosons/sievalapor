@@ -336,7 +336,7 @@ class TargetModel extends Model{
       }else{
         $query = $builder->get();
       }
-      // if($table == 'data_kegiatan'){
+      // if($table == 'param_latar_belakang'){
       //   echo $this->db->getLastQuery();die;
       // }
 
