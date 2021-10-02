@@ -35,6 +35,9 @@ function loadall(param){
                     <td>`+data[i].target_persen_keu_program+`</td>
                     <td>`+rubah(data[i].real_keu_program)+`</td>
                     <td>`+data[i].real_persen_keu_program+`</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td>`+data[i].target_fis_program+`</td>
                     <td>`+data[i].real_fis_program+`</td>
                     <td></td>
@@ -58,6 +61,9 @@ function loadall(param){
                               <td>`+kegiatan[i].target_persen_keu_kegiatan+`</td>
                               <td>`+rubah(kegiatan[i].real_keu_kegiatan)+`</td>
                               <td>`+kegiatan[i].real_persen_keu_kegiatan+`</td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
                               <td>`+kegiatan[i].target_fis_kegiatan+`</td>
                               <td>`+kegiatan[i].real_fis_kegiatan+`</td>
                               <td></td>
@@ -81,9 +87,11 @@ function loadall(param){
                                 <td>`+subkegiatan[i].target_persen_keu_subkegiatan+`</td>
                                 <td>`+rubah(subkegiatan[i].real_keu_subkegiatan)+`</td>
                                 <td>`+subkegiatan[i].real_persen_keu_subkegiatan+`</td>
+                                <td>`+subkegiatan[i].dev_keu_subkegiatan+`</td>
+                                <td>---</td>
+                                <td>---</td>
                                 <td>`+subkegiatan[i].target_fis_subkegiatan+`</td>
                                 <td>`+subkegiatan[i].real_fis_subkegiatan+`</td>
-                                <td>`+subkegiatan[i].dev_keu_subkegiatan+`</td>
                                 <td>`+subkegiatan[i].dev_fis_subkegiatan+`</td>
                                 <td></td>
                                 <td></td>
@@ -129,9 +137,11 @@ function loadall(param){
                                   <td>`+target_persen_keu+`</td>
                                   <td>`+rubah(real_keu)+`</td>
                                   <td>`+real_persen_keu+`</td>
+                                  <td>`+dev_keu+`</td>
+                                  <td></td>
+                                  <td></td>
                                   <td>`+target_fis+`</td>
                                   <td>`+real_fisik+`</td>
-                                  <td>`+dev_keu+`</td>
                                   <td>`+dev_fis+`</td>
                                   <td>`+koordinat+`</td>
                                   <td>`+latar_belakang+`</td>
