@@ -1957,6 +1957,7 @@ class Jsondata extends \CodeIgniter\Controller
 			'kode_subkegiatan' => $request->getVar('kode_subkegiatan'),
 			'nama_subkegiatan' => $request->getVar('nama_subkegiatan'),
 			'pagu_subkegiatan' => $request->getVar('pagu_subkegiatan'),
+			'pagu_perubahan'	=> $request->getVar('pagu_perubahan'),
 			'sisa_pagu_subkegiatan' => $sisa,
 			'updated_date'	=> $this->now,
         ];
@@ -1984,11 +1985,12 @@ class Jsondata extends \CodeIgniter\Controller
 		$model 	  = new \App\Models\KegiatanModel();
 
 		$data = [
-			'kode_paket' => $request->getVar('kode_paket'),
-			'nama_paket' => $request->getVar('nama_paket'),
-			'pagu_paket' => $request->getVar('pagu_paket'),
-			'updated_by'	=> $this->data['userid'],
-			'updated_date'	=> $this->now,
+			'kode_paket' 		=> $request->getVar('kode_paket'),
+			'nama_paket' 		=> $request->getVar('nama_paket'),
+			'pagu_paket' 		=> $request->getVar('pagu_paket'),
+			'pagu_perubahan'	=> $request->getVar('pagu_perubahan'),
+			'updated_by'		=> $this->data['userid'],
+			'updated_date'		=> $this->now,
         ];
 		$model->updatePaguSub($request->getVar('kode_program'), $request->getVar('kode_kegiatan'), $request->getVar('kode_subkegiatan'), $request->getVar('sisa_pagu'));
 		$res = $model->updateParam($param, $id, $data);

@@ -16,17 +16,26 @@ $(document).ready(function(){
       var nama_kegiatan = $('#nama_kegiatan').val();
       var id_kegiatan = $('#id_kegiatan').val()
 
-
-      var formData = new FormData();
-      formData.append('param', 'data_kegiatan');
-      formData.append('id_kegiatan', id_kegiatan);
-      formData.append('kode_program', kode_program);
-      formData.append('kode_kegiatan', kode_kegiatan);
-      formData.append('nama_kegiatan', nama_kegiatan);
-      if(id_kegiatan){
-        update(formData);
+      if(kode_program && kode_kegiatan && nama_kegiatan){
+        var formData = new FormData();
+        formData.append('param', 'data_kegiatan');
+        formData.append('id_kegiatan', id_kegiatan);
+        formData.append('kode_program', kode_program);
+        formData.append('kode_kegiatan', kode_kegiatan);
+        formData.append('nama_kegiatan', nama_kegiatan);
+        if(id_kegiatan){
+          update(formData);
+        }else{
+          save(formData);
+        }
       }else{
-        save(formData);
+        Swal.fire({
+          type: 'warning',
+          title: 'Harap isi Data Input !',
+          showConfirmButton: true,
+          // showCancelButton: true,
+          confirmButtonText: `Ok`,
+        })
       }
 
       

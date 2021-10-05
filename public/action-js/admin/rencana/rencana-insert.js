@@ -81,8 +81,12 @@ $(document).ready(function(){
 
   $("#paket").chosen().change(function(){
     let nama = $('option:selected', this).attr('kode');
+    let pagu = $('option:selected', this).attr('pagunya');
+    
     $('#kode_paket').val('');
     $('#kode_paket').val(nama);
+    $('#pagu_kegiatan').val(pagu);
+    $('#pagu_kegiatan').prop('disabled', true);
   });
 
   $('#pilih_bidang').on('change', function(){
@@ -251,7 +255,11 @@ function save(formData){
               el1 += '<option nama="'+data[i].nama_program+'" value="'+data[i].kode_program+'" text="'+data[i].nama_program+'">'+data[i].nama_program+'</option>';
               el2 += '<option nama="'+data[i].nama_kegiatan+'" value="'+data[i].kode_kegiatan+'" text="'+data[i].nama_kegiatan+'">'+data[i].nama_kegiatan+'</option>';
               el3 += '<option nama="'+data[i].nama_subkegiatan+'" value="'+data[i].kode_subkegiatan+'" text="'+data[i].nama_subkegiatan+'">'+data[i].nama_subkegiatan+'</option>';
-              el4 += '<option value="'+data[i].id+'" kode="'+data[i].kode_paket+'">'+data[i].nama_paket+'</option>';
+              var pagu_paket = '';
+              if(param == 'paket'){
+                pagu_paket += data[i].pagu_perubahan != '' ? data[i].pagu_perubahan : data[i].pagu_paket+'">'+data[i].nama_paket;
+              }
+              el4 += '<option value="'+data[i].id+'" kode="'+data[i].kode_paket+'" pagunya="'+pagu_paket+'">'+data[i].nama_paket+'</option>';
             }
           }
 

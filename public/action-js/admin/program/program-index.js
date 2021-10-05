@@ -10,19 +10,29 @@ $(document).ready(function(){
   loadprogram('');
 
   $('#save_program').on('click', function(){
+
       var kode_program = $('#kode_program').val();
       var nama_program = $('#nama_program').val();
       var id_program = $('#id_program').val()
-
-      var formData = new FormData();
-      formData.append('param', 'data_program');
-      formData.append('id_program', id_program);
-      formData.append('kode_program', kode_program);
-      formData.append('nama_program', nama_program);
-      if(id_program){
-        update(formData);
+      if(kode_program && nama_program){
+        var formData = new FormData();
+        formData.append('param', 'data_program');
+        formData.append('id_program', id_program);
+        formData.append('kode_program', kode_program);
+        formData.append('nama_program', nama_program);
+        if(id_program){
+          update(formData);
+        }else{
+          save(formData);
+        }
       }else{
-        save(formData);
+        Swal.fire({
+          type: 'warning',
+          title: 'Harap isi Data Input !',
+          showConfirmButton: true,
+          // showCancelButton: true,
+          confirmButtonText: `Ok`,
+        })
       }
   });
 

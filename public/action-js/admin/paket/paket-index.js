@@ -5,6 +5,8 @@ $(document).ready(function(){
   $('#nav-menu li#menu-data').addClass('open');
   $('#nav-menu li#menu-paket').addClass('active');
   $( '#pagu_paket' ).mask('000.000.000.000.000', {reverse: true});
+  $( '#pagu_perubahan' ).mask('000.000.000.000.000', {reverse: true});
+  $('#pagu_perubahan').parent().parent().hide();
 
   $('#all-paket').DataTable();
 
@@ -21,22 +23,34 @@ $(document).ready(function(){
       var sisa_pagu = $('#pagu_subkegiatan').val().replaceAll('.', '') - $('#pagu_paket').val().replaceAll('.', '');
       var id_paket = $('#id_paket').val();
 
-      var formData = new FormData();
-      formData.append('param', 'data_paket');
-      formData.append('kode_program', kode_program);
-      formData.append('id_paket', id_paket);
-      formData.append('kode_kegiatan', kode_kegiatan);
-      formData.append('kode_subkegiatan', kode_subkegiatan);
-      formData.append('nama_paket', nama_paket);
-      formData.append('kode_paket', kode_paket);
-      formData.append('pagu_paket', pagu_paket);
-      formData.append('sisa_pagu', sisa_pagu);
+      if(kode_program && kode_kegiatan && kode_subkegiatan && nama_paket && kode_paket && pagu_paket){
+        var formData = new FormData();
+        formData.append('param', 'data_paket');
+        formData.append('kode_program', kode_program);
+        formData.append('id_paket', id_paket);
+        formData.append('kode_kegiatan', kode_kegiatan);
+        formData.append('kode_subkegiatan', kode_subkegiatan);
+        formData.append('nama_paket', nama_paket);
+        formData.append('kode_paket', kode_paket);
+        formData.append('pagu_paket', pagu_paket);
+        formData.append('sisa_pagu', sisa_pagu);
 
-      if(id_paket){
-        update(formData);
+        if(id_paket){
+          var pagu_perubahan = $('#pagu_perubahan').val();
+          formData.append('pagu_perubahan', pagu_perubahan);
+          update(formData);
+        }else{
+          save(formData);
+        }
       }else{
-        save(formData);
-      }
+          Swal.fire({
+            type: 'warning',
+            title: 'Harap isi Data Input !',
+            showConfirmButton: true,
+            // showCancelButton: true,
+            confirmButtonText: `Ok`,
+          })
+        }
       
   
   });
@@ -60,33 +74,39 @@ $("#nama_subkegiatan").chosen().change(function(){
   loadkegiatan("paket",this.value);
 });
 
-$('#pagu_paket').on('keyup', function(){
-  let pagusub = $('#pagu_subkegiatan').val().replaceAll('.', '');
-  let pagupak = this.value.replaceAll('.', '');
-  if(parseInt(pagupak) > parseInt(pagusub)){
-    $('#save_paket').prop('disabled', true);
-    $('#pagu_paket').parent().parent().addClass('has-error');
-    $('#pagu_habis').show();
-  }else{
-    $('#save_paket').prop('disabled', false);
-    $('#pagu_paket').parent().parent().removeClass('has-error');
-    $('#pagu_habis').hide();
-  }
-})
+  $('#pagu_paket').on('keyup', function(){
+    let pagusub = $('#pagu_subkegiatan').val().replaceAll('.', '');
+    let pagupak = this.value.replaceAll('.', '');
+    if(parseInt(pagupak) > parseInt(pagusub)){
+      $('#save_paket').prop('disabled', true);
+      $('#pagu_paket').parent().parent().addClass('has-error');
+      $('#pagu_habis').show();
+    }else{
+      $('#save_paket').prop('disabled', false);
+      $('#pagu_paket').parent().parent().removeClass('has-error');
+      $('#pagu_habis').hide();
+    }
+  })
 
-$('#modal_paket').on('hidden.bs.modal', function (e) {
-  $('#nama_subkegiatan').val('');
-  $('#nama_subkegiatan').chosen().change();
-  $(".chosen-select").prop('disabled', false);
-  $('#nama_subkegiatan').trigger("chosen:updated");
-  $('#kodpak_1').val('');
-  $('#kodpak_2').val('');
-  $('#kodpak_2').prop('disabled', true);
+  $('#modal_paket').on('hidden.bs.modal', function (e) {
+    $('#nama_subkegiatan').val('');
+    $('#nama_subkegiatan').chosen().change();
+    $(".chosen-select").prop('disabled', false);
+    $('#nama_subkegiatan').trigger("chosen:updated");
+    $('#kodpak_1').val('');
+    $('#kodpak_2').val('');
+    $('#kodpak_2').prop('disabled', true);
 
-  $('#nama_paket').val('');
-  $('#id_paket').val('');
-  $('#pagu_paket').val('');
-})
+    $('#nama_paket').val('');
+    $('#id_paket').val('');
+    $('#pagu_paket').val('');
+  })
+
+  $('#modal_paket').on('hidden.bs.modal', function (e) {
+    $('#pagu_paket').prop('disabled', false);
+    $('#pagu_perubahan').parent().parent().hide();
+    $('#pagu_perubahan').val('');
+  })
 
 
 });
@@ -132,7 +152,7 @@ function loadpaket(param){
                 {
                     mRender: function ( data, type, row ) {
 
-                      var el = `<button class="btn btn-xs btn-info" onclick="edit('data_paket',`+row.id+`, '`+row.kode_paket+`', '`+row.nama_paket+`', '`+row.pagu_paket+`', '`+row.kode_subkegiatan+`')">
+                      var el = `<button class="btn btn-xs btn-info" onclick="edit('data_paket',`+row.id+`, '`+row.kode_paket+`', '`+row.nama_paket+`', '`+row.pagu_paket+`', '`+row.kode_subkegiatan+`', '`+row.pagu_perubahan+`')">
                       <i class="ace-icon fa fa-edit bigger-120"></i>
                     </button>
                                 <button class="btn btn-xs btn-danger" onclick="action('data_paket',`+row.id+`)">
@@ -356,10 +376,9 @@ function rubah(angka){
   return ribuan;
 }
 
-function edit(table,id, code, name, pagu, code_sub){
+function edit(table,id, code, name, pagu, code_sub, pagu_perubahan){
   $('#modal_paket').modal('show');
   let mycode = code.split(".");
-  
   $('#nama_subkegiatan').val(code_sub);
   $('#nama_subkegiatan').chosen().change();
   $(".chosen-select").prop('disabled', true);
@@ -371,6 +390,10 @@ function edit(table,id, code, name, pagu, code_sub){
   $('#nama_paket').val(name);
   $('#id_paket').val(id);
   $('#pagu_paket').val(pagu);
+  $('#pagu_paket').prop('disabled', true);
+
+  $('#pagu_perubahan').val(pagu_perubahan == 'null' ? '': pagu_perubahan);
+  $('#pagu_perubahan').parent().parent().show();
   
 
 }

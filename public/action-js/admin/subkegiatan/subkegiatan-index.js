@@ -5,6 +5,7 @@ $(document).ready(function(){
   $('#nav-menu li#menu-data').addClass('open');
   $('#nav-menu li#menu-subkegiatan').addClass('active');
   $( '#pagu_subkegiatan' ).mask('000.000.000.000.000', {reverse: true});
+  $( '#pagu_perubahan' ).mask('000.000.000.000.000', {reverse: true});
 
   $('#all-subkegiatan').DataTable();
 
@@ -20,22 +21,33 @@ $(document).ready(function(){
       var id_subkegiatan = $('#id_subkegiatan').val();
       var sisa_pagu_subkegiatan = $('#sisa_pagu_subkegiatan').val();
       var pagu_awal = $('#pagu_awal').val();
+      var pagu_perubahan = $('#pagu_perubahan').val();
       
-
-      var formData = new FormData();
-      formData.append('param', 'data_subkegiatan');
-      formData.append('id_subkegiatan', id_subkegiatan);
-      formData.append('kode_program', kode_program);
-      formData.append('kode_kegiatan', kode_kegiatan);
-      formData.append('kode_subkegiatan', kode_subkegiatan);
-      formData.append('nama_subkegiatan', nama_subkegiatan);
-      formData.append('pagu_subkegiatan', pagu_subkegiatan);
-      if(id_subkegiatan){
-        formData.append('sisa_pagu_subkegiatan', sisa_pagu_subkegiatan);
-        formData.append('pagu_awal', pagu_awal);
-        update(formData);
+      if(nama_subkegiatan && pagu_subkegiatan){
+        var formData = new FormData();
+        formData.append('param', 'data_subkegiatan');
+        formData.append('id_subkegiatan', id_subkegiatan);
+        formData.append('kode_program', kode_program);
+        formData.append('kode_kegiatan', kode_kegiatan);
+        formData.append('kode_subkegiatan', kode_subkegiatan);
+        formData.append('nama_subkegiatan', nama_subkegiatan);
+        formData.append('pagu_subkegiatan', pagu_subkegiatan);
+        if(id_subkegiatan){
+          formData.append('sisa_pagu_subkegiatan', sisa_pagu_subkegiatan);
+          formData.append('pagu_awal', pagu_awal);
+          formData.append('pagu_perubahan', pagu_perubahan);
+          update(formData);
+        }else{
+          save(formData);
+        }
       }else{
-        save(formData);
+        Swal.fire({
+          type: 'warning',
+          title: 'Harap isi Data Input !',
+          showConfirmButton: true,
+          // showCancelButton: true,
+          confirmButtonText: `Ok`,
+        })
       }
   });
 
@@ -61,7 +73,13 @@ $('#modal_subkegiatan').on('hidden.bs.modal', function (e) {
   $('#pagu_subkegiatan').val('');
   $('#sisa_pagu_subkegiatan').val('');
   $('#pagu_awal').val('');
+
+  $('#pagu_subkegiatan').prop('disabled', false);
+
+  $('#pagu_perubahan').parent().parent().hide();
+  $('#pagu_perubahan').val('');
 })
+
 
 });
 
@@ -103,7 +121,7 @@ function loadsubkegiatan(param){
               {
                   mRender: function ( data, type, row ) {
 
-                    var el = `<button class="btn btn-xs btn-info" onclick="edit('data_subkegiatan',`+row.id+`, '`+row.kode_subkegiatan+`', '`+row.nama_subkegiatan+`', '`+row.pagu_subkegiatan+`', '`+row.sisa_pagu_subkegiatan+`')">
+                    var el = `<button class="btn btn-xs btn-info" onclick="edit('data_subkegiatan',`+row.id+`, '`+row.kode_subkegiatan+`', '`+row.nama_subkegiatan+`', '`+row.pagu_subkegiatan+`', '`+row.sisa_pagu_subkegiatan+`', '`+row.pagu_perubahan+`')">
                     <i class="ace-icon fa fa-edit bigger-120"></i>
                   </button>
                               <button class="btn btn-xs btn-danger" onclick="action('data_subkegiatan', `+row.id+`)">
@@ -279,7 +297,7 @@ function save(formData){
     
     };
 
-    function edit(table,id, code, name, pagu, sisa){
+    function edit(table,id, code, name, pagu, sisa, pagu_perubahan){
       $('#modal_subkegiatan').modal('show');
       let mycode = code.split(".");
       
@@ -293,6 +311,9 @@ function save(formData){
       $('#pagu_subkegiatan').val(pagu);
       $('#sisa_pagu_subkegiatan').val(sisa);
       $('#pagu_awal').val(pagu);
+      $('#pagu_subkegiatan').prop('disabled', true);
       
+      $('#pagu_perubahan').val(pagu_perubahan == 'null' ? '': pagu_perubahan);
+      $('#pagu_perubahan').parent().parent().show();
     
     }

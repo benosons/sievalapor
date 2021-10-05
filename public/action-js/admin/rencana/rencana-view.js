@@ -178,7 +178,23 @@ function loadtarget(param){
               $('#k10').val(data[i].n10);
               $('#k11').val(data[i].n11);
               $('#k12').val(data[i].n12);
-              $('#ktot').val(data[i].tot)
+              $('#ktot').val(data[i].tot);
+
+              var indexterakhir = []; 
+
+              for (let indi = 1; indi < 12; indi++) {
+                var element = data[i]['n'+indi];
+                if(element.length != 0){
+                  indexterakhir.push(element);
+                }
+              }
+
+              var lasting = indexterakhir[indexterakhir.length - 1];
+              for (let inde = indexterakhir.length + 1; inde < 13; inde++) {
+                $('#k'+inde).val(lasting);
+                
+              }
+              
             }else if(data[i].type == 'fisik'){
               $('#f1').val(data[i].n1);
               $('#f2').val(data[i].n2);
