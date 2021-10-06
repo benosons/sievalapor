@@ -257,7 +257,7 @@ function save(formData){
               el3 += '<option nama="'+data[i].nama_subkegiatan+'" value="'+data[i].kode_subkegiatan+'" text="'+data[i].nama_subkegiatan+'">'+data[i].nama_subkegiatan+'</option>';
               var pagu_paket = '';
               if(param == 'paket'){
-                pagu_paket += data[i].pagu_perubahan != '' ? data[i].pagu_perubahan : data[i].pagu_paket+'">'+data[i].nama_paket;
+                pagu_paket = (data[i].pagu_perubahan == '' || data[i].pagu_perubahan == null) ? data[i].pagu_paket : data[i].pagu_perubahan;
               }
               el4 += '<option value="'+data[i].id+'" kode="'+data[i].kode_paket+'" pagunya="'+pagu_paket+'">'+data[i].nama_paket+'</option>';
             }

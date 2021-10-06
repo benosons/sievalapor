@@ -3147,13 +3147,23 @@ class Jsondata extends \CodeIgniter\Controller
 										$datarealisasi = json_decode(json_encode($datarealisasi), true);
 
 										$data_latarbelakang = $model->getall('param_latar_belakang', '*', ['id_paket' => $value3['id'], 'kode_bulan' => $code ]);
-										$data_latarbelakang = json_decode(json_encode($data_latarbelakang), true)[0]['desc'];
+										$data_latarbelakang = json_decode(json_encode($data_latarbelakang), true);
+										
+										if(!empty($data_latarbelakang)){
+											$data_latarbelakang = $data_latarbelakang[0]['desc'];
+										}
 
 										$data_uraian = $model->getall('param_uraian', '*', ['id_paket' => $value3['id'], 'kode_bulan' => $code ]);
-										$data_uraian = json_decode(json_encode($data_uraian), true)[0]['desc'];
+										$data_uraian = json_decode(json_encode($data_uraian), true);
+										if(!empty($data_uraian)){
+											$data_uraian = $data_uraian[0]['desc'];
+										}
 
 										$data_masalah = $model->getall('param_masalah', '*', ['id_paket' => $value3['id'], 'kode_bulan' => $code ]);
-										$data_masalah = json_decode(json_encode($data_masalah), true)[0]['desc'];
+										$data_masalah = json_decode(json_encode($data_masalah), true);
+										if(!empty($data_masalah)){
+											$data_masalah = $data_masalah[0]['desc'];
+										}
 										
 										foreach ($datarealisasi as $key5 => $value5) {
 											$dataprogres_k = $model->getall('bulan_realisasi', "* , replace(m1, '.','') + replace(m2, '.','') + replace(m3, '.','') + replace(m4, '.','') as new_total", ['id_paket' => $value5['id_paket'], 'type' => 'keuangan', 'kode_bulan' => $value5['kode_bulan']]);
@@ -3173,13 +3183,12 @@ class Jsondata extends \CodeIgniter\Controller
 
 										$datapaket[$key3]['target'] = $datatarget;
 										$datapaket[$key3]['realisasi'] = $datarealisasi;
-										
-										
 										foreach ($datapaket[$key3]['target'] as $keytar => $valuetar) {
 											$datapaket[$key3]['pagu_paket'] = $valuetar['keuangan'];
 										}
-
+										
 									}
+
 									$datasubkegiatan[$key2]['paket'] = $datapaket;
 									$pagu_sub = [];
 									$target_keu_sub = [];
@@ -3200,15 +3209,15 @@ class Jsondata extends \CodeIgniter\Controller
 									$datasubkegiatan[$key2]['pagu_subkegiatan'] = array_sum($pagu_sub);
 									
 									$datasubkegiatan[$key2]['target_keu_subkegiatan']= array_sum($target_keu_sub);
-									$datasubkegiatan[$key2]['target_persen_keu_subkegiatan']= array_sum($target_keu_sub) / array_sum($pagu_sub);
+									$datasubkegiatan[$key2]['target_persen_keu_subkegiatan']= array_sum($target_keu_sub) == 0 ? 1 : array_sum($target_keu_sub)  / array_sum($pagu_sub);
 									
 									$datasubkegiatan[$key2]['real_keu_subkegiatan']= array_sum($real_keu_sub);
-									$datasubkegiatan[$key2]['real_persen_keu_subkegiatan']= array_sum($real_keu_sub) / array_sum($pagu_sub);
+									$datasubkegiatan[$key2]['real_persen_keu_subkegiatan']= array_sum($real_keu_sub) == 0 ? 1 : array_sum($real_keu_sub) / array_sum($pagu_sub);
 									
 									$datasubkegiatan[$key2]['target_fis_subkegiatan']= array_sum($target_fis_sub);
 									$datasubkegiatan[$key2]['real_fis_subkegiatan']= array_sum($real_fis_sub);
 
-									$datasubkegiatan[$key2]['dev_keu_subkegiatan']= (array_sum($real_keu_sub) / array_sum($pagu_sub))-(array_sum($target_keu_sub) / array_sum($pagu_sub)) ;
+									$datasubkegiatan[$key2]['dev_keu_subkegiatan']= (array_sum($real_keu_sub) == 0 ? 1 : array_sum($real_keu_sub) / array_sum($pagu_sub))-(array_sum($target_keu_sub) == 0 ? 1 : array_sum($target_keu_sub) / array_sum($pagu_sub)) ;
 									$datasubkegiatan[$key2]['dev_fis_subkegiatan']= array_sum($real_fis_sub)-array_sum($target_fis_sub) ;
 									
 									
@@ -3289,7 +3298,9 @@ class Jsondata extends \CodeIgniter\Controller
 			}
 		catch (\Exception $e)
 		{
-			die($e->getMessage());
+			echo '<pre>';
+			print_r($e->getTraceAsString());
+			die;
 		}
 	}
 

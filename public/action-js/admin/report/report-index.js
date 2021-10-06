@@ -103,8 +103,9 @@ function loadall(param){
                         var paket = subkegiatan[i].paket;
                         for (var i = 0; i < paket.length; i++) {
                           var target = paket[i].target;
-
-                          var target_keu = target[0].keuangan;
+                          
+                          var target_keu = typeof target[0].keuangan != "undefined" ? '0.0' : target[0].keuangan;
+                          console.log(typeof target[0].keuangan);
                           var target_persen_keu = parseInt(target_keu.replaceAll('.', '')) / parseInt(paket[i].pagu_paket.replaceAll('.', ''));
                           var target_fis = target[0].fisik;
                           
@@ -231,6 +232,7 @@ function loadall(param){
     }
 
     function rubah(angka){
+      angka = angka == null ? 0 : angka;
       var reverse = angka.toString().split('').reverse().join(''),
       ribuan = reverse.match(/\d{1,3}/g);
       ribuan = ribuan.join('.').split('').reverse().join('');
