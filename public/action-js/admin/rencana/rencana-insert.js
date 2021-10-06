@@ -224,7 +224,9 @@ function save(formData){
               // loadprogram('');
               // $('#kode_program').val('');
               // $('#nama_program').val('');
-              location.reload()
+              // location.reload()
+
+              window.location.href = $('#baseURL').val().replace('public', 'rencana');
 
           });
         })

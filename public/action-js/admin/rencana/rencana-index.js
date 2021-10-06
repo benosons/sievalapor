@@ -66,9 +66,7 @@ function loadtarget(param){
                                 <button class="btn btn-xs btn-success" onclick="window.location.href = 'rencana?param=edit&ids=`+row.id+`'">
                                   <i class="ace-icon fa fa-edit bigger-120"></i>
                                 </button>
-                                <button class="btn btn-xs btn-danger" onclick="action(\'delete\','+row.id+',\'\')">
-                                  <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                </button>`;
+                                `;
 
                         return el;
                     },

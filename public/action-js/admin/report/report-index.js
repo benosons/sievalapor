@@ -111,10 +111,20 @@ function loadall(param){
                           var target_fis = target[0].fisik;
                           
                           var realisasi = paket[i].realisasi;
+                             if(typeof realisasi[0] == 'undefined'){
+                              var ppk = '-';
+                             }else{
+                               var ppk = realisasi[0].ppk[0].user_fullname;
 
-                          var ppk = realisasi[0].ppk[0].user_fullname;
-                         
-                          var real_keu = realisasi[0].keuangan.new_total;
+                             }
+
+                             if(typeof realisasi[0] == 'undefined'){
+                               var real_keu = '0'
+                            }else{
+                               var real_keu = realisasi[0].keuangan.new_total;
+
+                             }
+
                           if(real_keu){
                             var real_persen_keu = parseInt(real_keu.replaceAll('.', '')) / parseInt(paket[i].pagu_paket.replaceAll('.', ''));
                           }else{
