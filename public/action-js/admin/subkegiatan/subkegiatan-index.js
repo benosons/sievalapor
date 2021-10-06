@@ -112,6 +112,7 @@ function loadsubkegiatan(param){
                 { 'mDataProp': 'kode_subkegiatan'},
                 { 'mDataProp': 'nama_subkegiatan'},
                 { 'mDataProp': 'pagu_subkegiatan'},
+                { 'mDataProp': 'pagu_perubahan'},
                 { 'mDataProp': 'user_status'},
             ],
             order: [[0, 'ASC']],
@@ -130,7 +131,7 @@ function loadsubkegiatan(param){
 
                       return el;
                   },
-                  aTargets: [6]
+                  aTargets: [7]
               },
             ],
             fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
