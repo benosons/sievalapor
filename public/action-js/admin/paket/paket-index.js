@@ -238,6 +238,7 @@ function loadkegiatan(param, code, code1){
 
           if(param == 'program'){
             $('#kode_program').html(el1);
+            console.log(el1);
             $('#kode_program').trigger("chosen:updated");
           }else if(param == 'kegiatan'){
             $('#kode_kegiatan').html(el2);

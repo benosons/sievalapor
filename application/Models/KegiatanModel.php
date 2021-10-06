@@ -31,6 +31,7 @@ class KegiatanModel extends Model{
           }else{
             $query   = $builder->get();
           }
+          
           return  $query->getResult();
     }
 

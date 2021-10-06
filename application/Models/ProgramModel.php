@@ -13,7 +13,11 @@ class ProgramModel extends Model{
     {
           if($role == '30'){ //ppk
             $builder = $this->db->table('data_program');
-            $query   = $builder->get();
+            if($code){
+              $query   = $builder->getWhere(['kode_program' => $code]);
+            }else{
+              $query   = $builder->get();
+            }
             return  $query->getResult();
           }
           
@@ -23,6 +27,7 @@ class ProgramModel extends Model{
           }else{
             $query   = $builder->get();
           }
+          // echo $this->db->getLastQuery();die;
           return  $query->getResult();
     }
 

@@ -449,7 +449,7 @@ class Jsondata extends \CodeIgniter\Controller
 
 						$fulldata = [];
 						$datakegiatan = $model->getsubKegiatan($code);
-
+				
 					if($datakegiatan){
 						$response = [
 							'status'   => 'sukses',
