@@ -101,7 +101,7 @@ class TargetModel extends Model{
       $toto = '';
       $now = '';
       if($type == 'keuangan'){
-        $toto = "(select replace(m1, '.','') + replace(m2, '.','') + replace(m3, '.','') + replace(m4, '.','') from bulan_realisasi where type = '$type' and kode_bulan = 'n$last')";
+        $toto = "(select replace(m1, '.','') + replace(m2, '.','') + replace(m3, '.','') + replace(m4, '.','') from bulan_realisasi where type = '$type' and kode_bulan = 'n$last' and id_paket = $idpaket)";
         $now  = ", replace(IFNULL(m1, 0), '.','') + replace(IFNULL(m2, 0), '.','') + replace(IFNULL(m3,0), '.','') + replace(IFNULL(m4,0), '.','') as totalnya";
       }else if($type == 'fisik'){
         $toto = "(select total from bulan_realisasi where type = '$type' and kode_bulan = 'n$last' ORDER BY id DESC LIMIT 1)";

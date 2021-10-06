@@ -6,7 +6,7 @@ $(document).ready(function(){
   $('#nav-menu li#menu-subkegiatan').addClass('active');
   $( '#pagu_subkegiatan' ).mask('000.000.000.000.000', {reverse: true});
   $( '#pagu_perubahan' ).mask('000.000.000.000.000', {reverse: true});
-
+  $('#pagu_perubahan').parent().parent().hide();
   $('#all-subkegiatan').DataTable();
 
   loadkegiatan("kegiatan",0);

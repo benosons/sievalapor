@@ -102,10 +102,11 @@ function loadall(param){
 
                         var paket = subkegiatan[i].paket;
                         for (var i = 0; i < paket.length; i++) {
+                          if(typeof paket[i].target != 'undefined'){
                           var target = paket[i].target;
                           
-                          var target_keu = typeof target[0].keuangan != "undefined" ? '0.0' : target[0].keuangan;
-                          console.log(typeof target[0].keuangan);
+                          var target_keu = target[0].keuangan;
+                          
                           var target_persen_keu = parseInt(target_keu.replaceAll('.', '')) / parseInt(paket[i].pagu_paket.replaceAll('.', ''));
                           var target_fis = target[0].fisik;
                           
@@ -150,7 +151,7 @@ function loadall(param){
                                   <td>`+permasalahan+`</td>
                                   <td>`+ppk+`</td>
                                 </tr>`;
-
+                        }
                         }
 
                         

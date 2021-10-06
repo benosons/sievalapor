@@ -593,84 +593,84 @@ class Jsondata extends \CodeIgniter\Controller
 								$uraian = $cekuraian[0]->desc;
 							}
 
-							$datareal['n1'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n1');
+							$datareal['n1'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n1');
 							$cekmasalah1 = $model->cekParam('param_masalah', $value->id_paket, 'n1', $value->type);
 							if(!empty($cekmasalah1)){
 								$masalah1 = $cekmasalah1[0]->desc;
 								$datareal['n1']->permasalahan = $masalah1;
 							}
 
-							$datareal['n2'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n2');
+							$datareal['n2'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n2');
 							$cekmasalah2 = $model->cekParam('param_masalah', $value->id_paket, 'n2', $value->type);
 							if(!empty($cekmasalah2)){
 								$masalah2 = $cekmasalah2[0]->desc;
 								$datareal['n2']->permasalahan = $masalah2;
 							}
 
-							$datareal['n3'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n3');
+							$datareal['n3'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n3');
 							$cekmasalah3 = $model->cekParam('param_masalah', $value->id_paket, 'n3', $value->type);
 							if(!empty($cekmasalah3)){
 								$masalah3 = $cekmasalah3[0]->desc;
 								$datareal['n3']->permasalahan = $masalah3;
 							}
 
-							$datareal['n4'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n4');
+							$datareal['n4'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n4');
 							$cekmasalah4 = $model->cekParam('param_masalah', $value->id_paket, 'n4', $value->type);
 							if(!empty($cekmasalah4)){
 								$masalah4 = $cekmasalah4[0]->desc;
 								$datareal['n4']->permasalahan = $masalah4;
 							}
 
-							$datareal['n5'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n5');
+							$datareal['n5'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n5');
 							$cekmasalah5 = $model->cekParam('param_masalah', $value->id_paket, 'n5', $value->type);
 							if(!empty($cekmasalah5)){
 								$masalah5 = $cekmasalah5[0]->desc;
 								$datareal['n5']->permasalahan = $masalah5;
 							}
 
-							$datareal['n6'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n6');
+							$datareal['n6'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n6');
 							$cekmasalah6 = $model->cekParam('param_masalah', $value->id_paket, 'n6', $value->type);
 							if(!empty($cekmasalah6)){
 								$masalah6 = $cekmasalah6[0]->desc;
 								$datareal['n6']->permasalahan = $masalah6;
 							}
 
-							$datareal['n7'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n7');
+							$datareal['n7'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n7');
 							$cekmasalah7 = $model->cekParam('param_masalah', $value->id_paket, 'n7', $value->type);
 							if(!empty($cekmasalah7)){
 								$masalah7 = $cekmasalah6[0]->desc;
 								$datareal['n7']->permasalahan = $masalah7;
 							}
 
-							$datareal['n8'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n8');
+							$datareal['n8'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n8');
 							$cekmasalah8 = $model->cekParam('param_masalah', $value->id_paket, 'n8', $value->type);
 							if(!empty($cekmasalah8)){
 								$masalah8 = $cekmasalah8[0]->desc;
 								$datareal['n8']->permasalahan = $masalah8;
 							}
 
-							$datareal['n9'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n9');
+							$datareal['n9'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n9');
 							$cekmasalah9 = $model->cekParam('param_masalah', $value->id_paket, 'n9', $value->type);
 							if(!empty($cekmasalah9)){
 								$masalah9 = $cekmasalah9[0]->desc;
 								$datareal['n9']->permasalahan = $masalah9;
 							}
 
-							$datareal['n10'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n10');
+							$datareal['n10'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n10');
 							$cekmasalah10 = $model->cekParam('param_masalah', $value->id_paket, 'n10', $value->type);
 							if(!empty($cekmasalah10)){
 								$masalah10 = $cekmasalah10[0]->desc;
 								$datareal['n10']->permasalahan = $masalah10;
 							}
 
-							$datareal['n11'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n11');
+							$datareal['n11'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n11');
 							$cekmasalah11 = $model->cekParam('param_masalah', $value->id_paket, 'n11', $value->type);
 							if(!empty($cekmasalah11)){
 								$masalah11 = $cekmasalah11[0]->desc;
 								$datareal['n11']->permasalahan = $masalah11;
 							}
 
-							$datareal['n12'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n12');
+							$datareal['n12'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n12');
 							$cekmasalah12 = $model->cekParam('param_masalah', $value->id_paket, 'n12', $value->type);
 							if(!empty($cekmasalah12)){
 								$masalah12 = $cekmasalah12[0]->desc;
@@ -682,7 +682,7 @@ class Jsondata extends \CodeIgniter\Controller
 
 						}else if($value->type == 'fisik'){
 							
-							$datareal['n1'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n1');
+							$datareal['n1'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n1');
 							$cekuraian1 = $model->cekParam('param_uraian', $value->id_paket, 'n1', $value->type);
 							if(!empty($cekuraian1)){
 								$uraian1 = $cekuraian1[0]->desc;
@@ -695,7 +695,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$datareal['n1']->permasalahan = $masalah1;
 							}
 							
-							$datareal['n2'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n2');
+							$datareal['n2'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n2');
 							$cekuraian2 = $model->cekParam('param_uraian', $value->id_paket, 'n2', $value->type);
 							if(!empty($cekuraian2)){
 								$uraian2 = $cekuraian2[0]->desc;
@@ -708,7 +708,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$datareal['n2']->permasalahan = $masalah2;
 							}
 
-							$datareal['n3'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n3');
+							$datareal['n3'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n3');
 							$cekuraian3 = $model->cekParam('param_uraian', $value->id_paket, 'n3', $value->type);
 							if(!empty($cekuraian3)){
 								$uraian3 = $cekuraian3[0]->desc;
@@ -721,7 +721,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$datareal['n3']->permasalahan = $masalah3;
 							}
 
-							$datareal['n4'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n4');
+							$datareal['n4'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n4');
 							$cekuraian4 = $model->cekParam('param_uraian', $value->id_paket, 'n4', $value->type);
 							if(!empty($cekuraian4)){
 								$uraian4 = $cekuraian4[0]->desc;
@@ -734,7 +734,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$datareal['n4']->permasalahan = $masalah4;
 							}
 
-							$datareal['n5'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n5');
+							$datareal['n5'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n5');
 							$cekuraian5 = $model->cekParam('param_uraian', $value->id_paket, 'n5', $value->type);
 							if(!empty($cekuraian5)){
 								$uraian5 = $cekuraian5[0]->desc;
@@ -747,7 +747,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$datareal['n5']->permasalahan = $masalah5;
 							}
 
-							$datareal['n6'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n6');
+							$datareal['n6'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n6');
 							$cekuraian6 = $model->cekParam('param_uraian', $value->id_paket, 'n6', $value->type);
 							if(!empty($cekuraian6)){
 								$uraian6 = $cekuraian6[0]->desc;
@@ -759,7 +759,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$datareal['n6']->permasalahan = $masalah6;
 							}
 
-							$datareal['n7'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n7');
+							$datareal['n7'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n7');
 							$cekuraian7 = $model->cekParam('param_uraian', $value->id_paket, 'n7', $value->type);
 							if(!empty($cekuraian7)){
 								$uraian7 = $cekuraian7[0]->desc;
@@ -771,7 +771,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$datareal['n7']->permasalahan = $masalah7;
 							}
 
-							$datareal['n8'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n8');
+							$datareal['n8'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n8');
 							$cekuraian8 = $model->cekParam('param_uraian', $value->id_paket, 'n8', $value->type);
 							
 							if(!empty($cekuraian8)){
@@ -784,7 +784,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$datareal['n8']->permasalahan = $masalah8;
 							}
 							
-							$datareal['n9'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n9');
+							$datareal['n9'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n9');
 							$cekuraian9 = $model->cekParam('param_uraian', $value->id_paket, 'n9', $value->type);
 							if(!empty($cekuraian9)){
 								$uraian6 = $cekuraian9[0]->desc;
@@ -796,7 +796,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$datareal['n9']->permasalahan = $masalah9;
 							}
 							
-							$datareal['n10'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n10');
+							$datareal['n10'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n10');
 							$cekuraian10 = $model->cekParam('param_uraian', $value->id_paket, 'n10', $value->type);
 							if(!empty($cekuraian10)){
 								$uraian10 = $cekuraian10[0]->desc;
@@ -808,7 +808,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$datareal['n10']->permasalahan = $masalah10;
 							}
 
-							$datareal['n11'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n11');
+							$datareal['n11'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n11');
 							$cekuraian11 = $model->cekParam('param_uraian', $value->id_paket, 'n11', $value->type);
 							if(!empty($cekuraian11)){
 								$uraian11 = $cekuraian11[0]->desc;
@@ -821,7 +821,7 @@ class Jsondata extends \CodeIgniter\Controller
 								$datareal['n11']->permasalahan = $masalah11;
 							}
 
-							$datareal['n12'] = $model->getrealisasi($value->id_paket, $value->ppk, $value->type, 'n12');
+							$datareal['n12'] = $model->getrealisasi($value->id_paket, $value->created_by, $value->type, 'n12');
 							$cekuraian12 = $model->cekParam('param_uraian', $value->id_paket, 'n12', $value->type);
 							if(!empty($cekuraian12)){
 								$uraian12 = $cekuraian12[0]->desc;
@@ -895,7 +895,6 @@ class Jsondata extends \CodeIgniter\Controller
 							$cekrealisasi[0]->type = $type;
 							
 							if($type == 'keuangan'){
-
 								$cekuraian = $model->cekParam('param_uraian', $idpaket, null, $type);
 								$cekrealisasi[0]->uraian = $cekuraian[0]->desc;
 
@@ -1035,7 +1034,7 @@ class Jsondata extends \CodeIgniter\Controller
 			}
 		catch (\Exception $e)
 		{
-			die($e->getMessage());
+			die($e->getTraceAsString());
 		}
 	}
 
@@ -3180,11 +3179,12 @@ class Jsondata extends \CodeIgniter\Controller
 										
 										// $datatarget = empty($datatarget) ? 0 : $datatarget[0];
 										// $datarealisasi = empty($datarealisasi) ? 0 : $datarealisasi[0];
-
-										$datapaket[$key3]['target'] = $datatarget;
-										$datapaket[$key3]['realisasi'] = $datarealisasi;
-										foreach ($datapaket[$key3]['target'] as $keytar => $valuetar) {
-											$datapaket[$key3]['pagu_paket'] = $valuetar['keuangan'];
+										if(!empty($datatarget)){
+											$datapaket[$key3]['target'] = $datatarget;
+											$datapaket[$key3]['realisasi'] = $datarealisasi;
+											foreach ($datapaket[$key3]['target'] as $keytar => $valuetar) {
+												$datapaket[$key3]['pagu_paket'] = $valuetar['keuangan'];
+											}
 										}
 										
 									}
