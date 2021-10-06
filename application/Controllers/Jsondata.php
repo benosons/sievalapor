@@ -3451,7 +3451,7 @@ class Jsondata extends \CodeIgniter\Controller
 			echo json_encode($response);
 			exit;
 		}catch (\Exception $e){
-			die($e->getMessage());
+			die($e->getTraceAsString());
 		}
 
 	}
