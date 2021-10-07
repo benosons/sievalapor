@@ -102,66 +102,56 @@ function loadall(param){
 
                         var paket = subkegiatan[i].paket;
                         for (var i = 0; i < paket.length; i++) {
-                          if(typeof paket[i].target != 'undefined'){
-                          var target = paket[i].target;
-                          
-                          var target_keu = target[0].keuangan;
-                          
-                          var target_persen_keu = parseInt(target_keu.replaceAll('.', '')) / parseInt(paket[i].pagu_paket.replaceAll('.', ''));
-                          var target_fis = target[0].fisik;
-                          
-                          var realisasi = paket[i].realisasi;
-                             if(typeof realisasi[0] == 'undefined'){
-                              var ppk = '-';
-                             }else{
-                               var ppk = realisasi[0].ppk[0].user_fullname;
+                          if(paket[i].hasOwnProperty("target")){
+                              var target = paket[i].target;
 
-                             }
+                              var target_keu = target[0].keuangan;
+                              var target_persen_keu = parseInt(target_keu.replaceAll('.', '')) / parseInt(paket[i].pagu_paket.replaceAll('.', ''));
+                              var target_fis = target[0].fisik;
+                              
+                              var realisasi = paket[i].realisasi;
 
-                             if(typeof realisasi[0] == 'undefined'){
-                               var real_keu = '0'
-                            }else{
-                               var real_keu = realisasi[0].keuangan.new_total;
+                              var ppk = realisasi[0].ppk[0].user_fullname;
+                            
+                              var real_keu = realisasi[0].keuangan.new_total;
+                              if(real_keu){
+                                var real_persen_keu = parseInt(real_keu.replaceAll('.', '')) / parseInt(paket[i].pagu_paket.replaceAll('.', ''));
+                              }else{
+                                var real_persen_keu = 0;
+                              }
 
-                             }
+                              var real_fisik = realisasi[0].fisik.total;
 
-                          if(real_keu){
-                            var real_persen_keu = parseInt(real_keu.replaceAll('.', '')) / parseInt(paket[i].pagu_paket.replaceAll('.', ''));
-                          }else{
-                            var real_persen_keu = 0;
-                          }
+                              var dev_keu = parseInt(real_persen_keu)-parseInt(target_persen_keu);
+                              var dev_fis = parseInt(real_fisik)-parseInt(target_fis);
+                              var koordinat = realisasi[0].koordinat;
+                              var latar_belakang = realisasi[0].latar_belakang;
+                              var uraian = realisasi[0].uraian;
+                              var permasalahan = realisasi[0].permasalahan;
+                              
+                              prog += `<tr>
+                                      <td></td>
+                                      <td></td>
+                                      <td>`+paket[i].nama_paket+`</td>
+                                      <td>`+paket[i].pagu_paket+`</td>
+                                      <td>`+target_keu+`</td>
+                                      <td>`+target_persen_keu+`</td>
+                                      <td>`+rubah(real_keu)+`</td>
+                                      <td>`+real_persen_keu+`</td>
+                                      <td>`+dev_keu+`</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td>`+target_fis+`</td>
+                                      <td>`+real_fisik+`</td>
+                                      <td>`+dev_fis+`</td>
+                                      <td>`+koordinat+`</td>
+                                      <td>`+latar_belakang+`</td>
+                                      <td>`+uraian+`</td>
+                                      <td>`+permasalahan+`</td>
+                                      <td>`+ppk+`</td>
+                                    </tr>`;
+                            }
 
-                          var real_fisik = realisasi[0].fisik.total;
-
-                          var dev_keu = parseInt(real_persen_keu)-parseInt(target_persen_keu);
-                          var dev_fis = parseInt(real_fisik)-parseInt(target_fis);
-                          var koordinat = realisasi[0].koordinat;
-                          var latar_belakang = realisasi[0].latar_belakang;
-                          var uraian = realisasi[0].uraian;
-                          var permasalahan = realisasi[0].permasalahan;
-                          
-                          prog += `<tr>
-                                  <td></td>
-                                  <td></td>
-                                  <td>`+paket[i].nama_paket+`</td>
-                                  <td>`+paket[i].pagu_paket+`</td>
-                                  <td>`+target_keu+`</td>
-                                  <td>`+target_persen_keu+`</td>
-                                  <td>`+rubah(real_keu)+`</td>
-                                  <td>`+real_persen_keu+`</td>
-                                  <td>`+dev_keu+`</td>
-                                  <td></td>
-                                  <td></td>
-                                  <td>`+target_fis+`</td>
-                                  <td>`+real_fisik+`</td>
-                                  <td>`+dev_fis+`</td>
-                                  <td>`+koordinat+`</td>
-                                  <td>`+latar_belakang+`</td>
-                                  <td>`+uraian+`</td>
-                                  <td>`+permasalahan+`</td>
-                                  <td>`+ppk+`</td>
-                                </tr>`;
-                        }
                         }
 
                         
@@ -243,7 +233,6 @@ function loadall(param){
     }
 
     function rubah(angka){
-      angka = angka == null ? 0 : angka;
       var reverse = angka.toString().split('').reverse().join(''),
       ribuan = reverse.match(/\d{1,3}/g);
       ribuan = ribuan.join('.').split('').reverse().join('');

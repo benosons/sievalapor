@@ -3197,13 +3197,12 @@ class Jsondata extends \CodeIgniter\Controller
 									$real_fis_sub = [];
 
 									foreach ($datasubkegiatan[$key2]['paket'] as $keypak => $valuepak) {
-										
 										if(array_key_exists("pagu_paket",$valuepak)){
 											array_push($pagu_sub, str_replace(".","",$valuepak['pagu_paket']));
 											array_push($target_keu_sub, str_replace(".", "",$valuepak['target'][0]['keuangan']));
-											array_push($real_keu_sub, str_replace(".", "", isset($valuepak['realisasi'][0]['keuangan']['new_total']) ? $valuepak['realisasi'][0]['keuangan']['new_total'] : 0 ));
+											array_push($real_keu_sub, str_replace(".", "",$valuepak['realisasi'][0]['keuangan']['new_total']));
 											array_push($target_fis_sub, str_replace(".", "",$valuepak['target'][0]['fisik']));
-											array_push($real_fis_sub, str_replace(".", "",isset($valuepak['realisasi'][0]['fisik']['total']) ? $valuepak['realisasi'][0]['fisik']['total'] : 0 ));
+											array_push($real_fis_sub, str_replace(".", "",$valuepak['realisasi'][0]['fisik']['total']));
 										}
 									}
 									
@@ -3245,6 +3244,7 @@ class Jsondata extends \CodeIgniter\Controller
 								
 								$datakegiatan[$key1]['pagu_kegiatan']= array_sum($pagu_keg);
 								$datakegiatan[$key1]['target_keu_kegiatan']= array_sum($target_keu_keg);
+								
 								$datakegiatan[$key1]['target_persen_keu_kegiatan']= array_sum($target_keu_keg) / array_sum($pagu_keg);
 
 								$datakegiatan[$key1]['real_keu_kegiatan']= array_sum($real_keu_keg);
