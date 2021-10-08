@@ -149,15 +149,69 @@ function loadpaket(param){
               fixedColumns: true,
               aoColumnDefs:[
                 { width: 50, targets: 0 },
+                // {
+                //   mRender: function ( data, type, row ) {
+
+                //     var el = `<a href="rencana?param=insert&ids=`+row.id+`">`+data+`</a>`;
+
+                //       return el;
+                //   },
+                //   aTargets: [4]
+                // },
                 {
                     mRender: function ( data, type, row ) {
 
-                      var el = `<button class="btn btn-xs btn-info" onclick="edit('data_paket',`+row.id+`, '`+row.kode_paket+`', '`+row.nama_paket+`', '`+row.pagu_paket+`', '`+row.kode_subkegiatan+`', '`+row.pagu_perubahan+`')">
-                      <i class="ace-icon fa fa-edit bigger-120"></i>
-                    </button>
-                                <button class="btn btn-xs btn-danger" onclick="action('data_paket',`+row.id+`)">
-                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                                          </button>`;
+                    //   var el = `<button class="btn btn-xs btn-info" onclick="edit('data_paket',`+row.id+`, '`+row.kode_paket+`', '`+row.nama_paket+`', '`+row.pagu_paket+`', '`+row.kode_subkegiatan+`', '`+row.pagu_perubahan+`')">
+                    //   <i class="ace-icon fa fa-edit bigger-120"></i>
+                    // </button>`
+                    //       el += `<button class="btn btn-xs btn-danger" onclick="action('data_paket',`+row.id+`)">
+                    //                         <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                    //                       </button>`;
+                    //     if(row.target == 0){
+                    //       el += `<a class="btn btn-xs btn-success" href="rencana?param=insert&ids=`+row.id+`">
+                    //                 <i class="ace-icon fa fa-check-square-o bigger-120"></i>
+                    //               </a>`
+                    //     }else{
+                    //       el += `<a class="btn btn-xs btn-success" href="rencana?param=view&ids=`+row.idtarget+`">
+                    //                 <i class="ace-icon fa fa-check-square-o bigger-120"></i>
+                    //               </a>`
+                    //     }
+
+                        var el = `<div class="btn-group">
+                            <button data-toggle="dropdown" class="btn btn-primary btn-block btn-xs dropdown-toggle" aria-expanded="false">
+                              Action
+                              <i class="ace-icon fa fa-angle-down icon-on-right"></i>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                              <li>
+                                <a onclick="edit('data_paket',`+row.id+`, '`+row.kode_paket+`', '`+row.nama_paket+`', '`+row.pagu_paket+`', '`+row.kode_subkegiatan+`', '`+row.pagu_perubahan+`')">Edit Paket</a>
+                              </li>
+
+                              <li>
+                                <a onclick="action('data_paket',`+row.id+`)">Hapus Paket</a>
+                              </li>
+
+                              <li class="divider"></li>
+                              `;
+
+                              if(row.target == 1){
+                                el += `<li>
+                                    <a href="rencana?param=edit&ids=`+row.idtarget+`">Edit Rencana</a>
+                                  </li>
+                                  <li>
+                                    <a href="rencana?param=view&ids=`+row.idtarget+`">Lihat Rencana</a>
+                                  </li>`;
+
+                              }else{
+                                el += `<li>
+                                    <a href="rencana?param=insert&ids=`+row.id+`">Tambah Rencana</a>
+                                  </li>`;
+                              }
+
+                          
+                        el += `</ul>
+											</div>`
 
                         return el;
                     },
@@ -238,7 +292,6 @@ function loadkegiatan(param, code, code1){
 
           if(param == 'program'){
             $('#kode_program').html(el1);
-            console.log(el1);
             $('#kode_program').trigger("chosen:updated");
           }else if(param == 'kegiatan'){
             $('#kode_kegiatan').html(el2);
@@ -247,6 +300,7 @@ function loadkegiatan(param, code, code1){
             $('#nama_subkegiatan').html(el3);
             $('#nama_subkegiatan').trigger("chosen:updated");
           }else if(param == 'paket'){
+            console.log(data);
             if(code == 1){
               $('#kodpak_2').val(parseInt(data.length) + 1);
             }else{

@@ -2,11 +2,14 @@
 console.log('You are running jQuery version: ' + $.fn.jquery);
 $(document).ready(function(){
   const ids = $('#ids').val();
-  
   $('#nav-menu li').removeClass();
-  $('#nav-menu li#menu-rencana').addClass('active');
+  // $('#nav-menu li#menu-rencana').addClass('active');
 
+  $('#nav-menu li#menu-data').addClass('open');
+  $('#nav-menu li#menu-paket').addClass('active');
+  
   $( '.uang, .uang-pagu' ).mask('000.000.000.000.000', {reverse: true});
+  $('#save_target').removeClass('hide');
 
   // loadkegiatan("program",0);
   loadtarget(ids);

@@ -1,12 +1,17 @@
 "use strict";
 console.log('You are running jQuery version: ' + $.fn.jquery);
 $(document).ready(function(){
+  const ids = $('#ids').val();
   $('#nav-menu li').removeClass();
-  $('#nav-menu li#menu-rencana').addClass('active');
+  // $('#nav-menu li#menu-rencana').addClass('active');
+  $('#nav-menu li#menu-data').addClass('open');
+  $('#nav-menu li#menu-paket').addClass('active');
   $( '.uang, .uang-pagu' ).mask('000.000.000.000.000', {reverse: true});
   
-  loadkegiatan("program",0);
-  loadppk();
+  // loadkegiatan("program",0);
+  // loadppk();
+
+  loadpaketnya("paket",ids);
 
   $('#save_target').on('click', function(){
       var kode_program = $('#kode_program').val();
@@ -303,6 +308,43 @@ function save(formData){
             }
 
           $('#pilih_ppk').html(elppk).trigger('chosen:updated');
+          }
+        })
+      }
+
+      function loadpaketnya(param, ids){
+        var formData = new FormData();
+      formData.append('ids', ids);
+
+      $.ajax({
+        type: 'post',
+        processData: false,
+        contentType: false,
+        url: 'loadpaketnya',
+        data : formData,
+        success: function(result){
+
+          let data = result.data;
+          // data[0]['kode_program']
+          // data[0]['kode_kegiatan']
+          // data[0]['kode_subkegiatan']
+          // data[0]['nama_paket']
+          $('#kode_program').html('<option>'+data[0]['kode_program']+'</option>').trigger("chosen:updated");
+          $('#kode_kegiatan').html('<option>'+data[0]['kode_kegiatan']+'</option>').trigger("chosen:updated");
+          $('#kode_subkegiatan').html('<option>'+data[0]['kode_subkegiatan']+'</option>').trigger("chosen:updated");
+          $('#paket').html('<option value="'+data[0]['kode_paket']+'">'+data[0]['nama_paket']+'</option>').prop('disabled', true).trigger("chosen:updated");
+          $('#kode_paket').val(data[0]['kode_paket']);
+          $('#pagu_kegiatan').val(data[0]['pagu_paket']);
+          $('#pagu_kegiatan').prop('disabled', true);
+          // data[0]['kode_paket']
+          // data[0]['pagu_paket']
+
+          // var kode_program = $('#kode_program').val();
+          // var kode_kegiatan = $('#kode_kegiatan').val();
+          // var kode_subkegiatan = $('#kode_subkegiatan').val();
+          // var id_paket = $('#paket').val();
+          // var pagu_kegiatan = $('#pagu_kegiatan').val();
+
           }
         })
       }

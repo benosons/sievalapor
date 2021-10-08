@@ -491,6 +491,53 @@ class Jsondata extends \CodeIgniter\Controller
 					
 						$fulldata = [];
 						$datapaket = $model->getpaket($code, $userid);
+						foreach ($datapaket as $key => $value) {
+							$datatarget = $model->cektarget($value->id);
+							$value->target = !empty($datatarget) ? '1' : '0';
+							$value->idtarget = !empty($datatarget) ? $datatarget[0]->id : '0';
+							$fulldata[$key] = $value;
+						}
+					if($fulldata){
+						$response = [
+							'status'   => 'sukses',
+							'code'     => '1',
+							'data' 		 => $fulldata
+						];
+					}else{
+						$response = [
+								'status'   => 'gagal',
+								'code'     => '0',
+								'data'     => 'tidak ada data',
+						];
+					}
+
+				header('Content-Type: application/json');
+				echo json_encode($response);
+				exit;
+			}
+		catch (\Exception $e)
+		{
+			die($e->getMessage());
+		}
+	}
+
+	public function loadpaketnya()
+	{
+		try
+		{
+				$request  = $this->request;
+				$param 	  = $request->getVar('param');
+				$id		 	  = $request->getVar('ids');
+				$role 		= $this->data['role'];
+				$userid		= $this->data['userid'];
+				$code 		= $request->getVar('code');
+
+					$model = new \App\Models\KegiatanModel();
+					$modelparam = new \App\Models\ParamModel();
+					$modelfiles = new \App\Models\FilesModel();
+					
+						$fulldata = [];
+						$datapaket = $model->getpaketnya($id, $userid);
 
 					if($datapaket){
 						$response = [
@@ -3127,6 +3174,7 @@ class Jsondata extends \CodeIgniter\Controller
 									$datapaket = json_decode(json_encode($datapaket), true);
 									
 									foreach ($datapaket as $key3 => $value3) {
+										
 										$datatarget = $model->getall('data_target', 'id_paket, pagu, bidang, seksi', ['id_paket' => $value3['id'] ]);
 										$datatarget = json_decode(json_encode($datatarget), true);
 										foreach ($datatarget as $key4 => $value4) {
@@ -3245,10 +3293,10 @@ class Jsondata extends \CodeIgniter\Controller
 								$datakegiatan[$key1]['pagu_kegiatan']= array_sum($pagu_keg);
 								$datakegiatan[$key1]['target_keu_kegiatan']= array_sum($target_keu_keg);
 								
-								$datakegiatan[$key1]['target_persen_keu_kegiatan']= array_sum($target_keu_keg) / array_sum($pagu_keg);
+								$datakegiatan[$key1]['target_persen_keu_kegiatan']= array_sum($target_keu_keg) == 0 ? 1 : array_sum($target_keu_keg) / array_sum($pagu_keg);
 
 								$datakegiatan[$key1]['real_keu_kegiatan']= array_sum($real_keu_keg);
-								$datakegiatan[$key1]['real_persen_keu_kegiatan']= array_sum($real_keu_keg) / array_sum($pagu_keg);
+								$datakegiatan[$key1]['real_persen_keu_kegiatan']= array_sum($real_keu_keg) == 0 ? 1 : array_sum($real_keu_keg) / array_sum($pagu_keg);
 
 								$datakegiatan[$key1]['target_fis_kegiatan']= array_sum($target_fis_keg);
 								$datakegiatan[$key1]['real_fis_kegiatan']= array_sum($real_fis_keg);
@@ -3271,9 +3319,9 @@ class Jsondata extends \CodeIgniter\Controller
 
 							$dataprogram[$key]['pagu_program']	   = array_sum($pagu_prog);
 							$dataprogram[$key]['target_keu_program']= array_sum($target_keu_prog);
-							$dataprogram[$key]['target_persen_keu_program']= array_sum($target_keu_prog) / array_sum($pagu_prog);
+							$dataprogram[$key]['target_persen_keu_program']= array_sum($target_keu_prog) == 0 ? 1 : array_sum($target_keu_prog) / array_sum($pagu_prog);
 							$dataprogram[$key]['real_keu_program']= array_sum($real_keu_prog);
-							$dataprogram[$key]['real_persen_keu_program']= array_sum($real_keu_prog) / array_sum($pagu_prog);
+							$dataprogram[$key]['real_persen_keu_program']= array_sum($real_keu_prog) == 0 ? 1 : array_sum($real_keu_prog) / array_sum($pagu_prog);
 							$dataprogram[$key]['target_fis_program']= array_sum($target_fis_prog);
 							$dataprogram[$key]['real_fis_program']= array_sum($real_fis_prog);
 							

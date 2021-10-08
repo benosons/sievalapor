@@ -19,6 +19,21 @@ $(document).ready(function(){
    $('#iniupload').hide();
    $('#iniketerangan').hide();
 
+   $('#ktotal_progres').val('');
+   $('#kprogres_bulan_lalu').val('');
+   $('#koordinat').val('');
+   $('#latar_belakang').val('');
+   $('#uraian').val('');
+   $('#permasalahan').val('');
+   $('#ktot_prog').val('');
+
+   $('input:checkbox').removeAttr('checked');
+
+   for (let i = 1; i <= 4; i++) {
+     $('#kprogres_mingu_'+i).val('');
+     
+   }
+
   $('#id-input-file-2-').ace_file_input({
     no_file:'No File ...',
     btn_choose:'Choose',

@@ -39,7 +39,28 @@ class KegiatanModel extends Model{
     {
           if($code){
             $sql = "SELECT * FROM `data_paket` WHERE `kode_subkegiatan` = '$code' and
-                    id not in (select id_paket from data_realisasi where id_paket = data_paket.id ) and created_by = '$userid'";
+
+                    #id not in (select id_paket from data_realisasi where id_paket = data_paket.id ) 
+
+                    created_by = '$userid'";
+
+            $result = $this->db->query($sql);
+            $row = $result->getResult();
+            // echo $this->db->getLastQuery();die;
+            return $row;
+          }else{
+            $builder = $this->db->table('data_paket');
+            $query   = $builder->getWhere(['created_by' => $userid]);
+            // $query   = $builder->get();
+          }
+          // echo $this->db->getLastQuery();die;
+          return  $query->getResult();
+    }
+
+    public function getpaketnya($code = null, $userid = null)
+    {
+          if($code){
+            $sql = "SELECT * FROM `data_paket` WHERE `id` = '$code' and created_by = '$userid'";
 
             $result = $this->db->query($sql);
             $row = $result->getResult();
@@ -177,6 +198,15 @@ class KegiatanModel extends Model{
       $query->update($data);
       echo $this->db->getLastQuery();die;
       return true;
+    }
+
+    public function cektarget($id = null)
+    {
+         
+            $builder = $this->db->table('data_target');
+            $query   = $builder->getWhere(['id_paket' => $id]);
+          // echo $this->db->getLastQuery();die;
+          return  $query->getResult();
     }
 
     

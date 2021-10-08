@@ -128,6 +128,7 @@ $routes->post('updateKegiatan', 'Jsondata::updateKegiatan');
 $routes->post('updatesubKegiatan', 'Jsondata::updatesubKegiatan');
 $routes->post('updatepaket', 'Jsondata::updatepaket');
 $routes->post('updateUser', 'Jsondata::updateUser');
+$routes->post('loadpaketnya', 'Jsondata::loadpaketnya');
 
 
 
