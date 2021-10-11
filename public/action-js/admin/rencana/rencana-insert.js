@@ -17,7 +17,7 @@ $(document).ready(function(){
       var kode_program = $('#kode_program').val();
       var kode_kegiatan = $('#kode_kegiatan').val();
       var kode_subkegiatan = $('#kode_subkegiatan').val();
-      var id_paket = $('#paket').val();
+      var id_paket = ids;
       var pagu_kegiatan = $('#pagu_kegiatan').val();
       var ktot = $('#ktot').val();
       var ftot = $('#ftot').val();
@@ -231,7 +231,7 @@ function save(formData){
               // $('#nama_program').val('');
               // location.reload()
 
-              window.location.href = $('#baseURL').val().replace('public', 'rencana');
+              window.location.href = $('#baseURL').val().replace('public', 'paket');
 
           });
         })

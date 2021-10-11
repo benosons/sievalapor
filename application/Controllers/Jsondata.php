@@ -493,10 +493,12 @@ class Jsondata extends \CodeIgniter\Controller
 						$datapaket = $model->getpaket($code, $userid);
 						foreach ($datapaket as $key => $value) {
 							$datatarget = $model->cektarget($value->id);
+							// print_r($value);
 							$value->target = !empty($datatarget) ? '1' : '0';
 							$value->idtarget = !empty($datatarget) ? $datatarget[0]->id : '0';
 							$fulldata[$key] = $value;
 						}
+						// die;
 					if($fulldata){
 						$response = [
 							'status'   => 'sukses',
@@ -2176,7 +2178,7 @@ class Jsondata extends \CodeIgniter\Controller
 					// code...
 				// }
 			}
-
+		
 		if($role == '100' || $role == '30'){
 			$res = $model->saveParam($param, $data);
 			$id  = $model->insertID();
@@ -2185,7 +2187,7 @@ class Jsondata extends \CodeIgniter\Controller
 		$response = [
 				'status'   => 'sukses',
 				'code'     => '0',
-				'data' 		 => 'terkirim'
+				'data' 		 => $id
 		];
 		header('Content-Type: application/json');
 		echo json_encode($response);
