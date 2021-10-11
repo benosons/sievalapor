@@ -373,6 +373,7 @@ class TargetModel extends Model{
  
       $result = $this->db->query($sql);
       $row = $result->getResult();
+      // echo $this->db->getLastQuery();die;
       return $row;
     }
 

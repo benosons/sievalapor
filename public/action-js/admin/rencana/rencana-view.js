@@ -182,20 +182,21 @@ function loadtarget(param){
               $('#k12').val(data[i].n12);
               $('#ktot').val(data[i].tot);
 
-              var indexterakhir = []; 
+              // var indexterakhir = []; 
 
-              for (let indi = 1; indi < 12; indi++) {
+              for (let indi = 1; indi <= 12; indi++) {
                 var element = data[i]['n'+indi];
-                if(element.length != 0){
-                  indexterakhir.push(element);
+                if(element.length == 0){
+                  $('#k'+indi).val(0);
+                  // indexterakhir.push(element);
                 }
               }
 
-              var lasting = indexterakhir[indexterakhir.length - 1];
-              for (let inde = indexterakhir.length + 1; inde < 13; inde++) {
-                $('#k'+inde).val(lasting);
+              // var lasting = indexterakhir[indexterakhir.length - 1];
+              // for (let inde = indexterakhir.length + 1; inde < 13; inde++) {
+              //   $('#k'+inde).val(lasting);
                 
-              }
+              // }
               
             }else if(data[i].type == 'fisik'){
               $('#f1').val(data[i].n1);

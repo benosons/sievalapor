@@ -1028,13 +1028,20 @@ class Jsondata extends \CodeIgniter\Controller
 						
 						if($type == 'keuangan'){
 							$cekuraian = $model->cekParam('param_uraian', $idpaket, null, $type, $userid);
-							$datapaket[0]->uraian = $cekuraian[0]->desc;
+							
+							if(!empty($cekuraian)){
+								$datapaket[0]->uraian = $cekuraian[0]->desc;
+							}
 
 							$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, $type, $userid);
-							$datapaket[0]->latar_belakang = $ceklatar[0]->desc;
+							if(!empty($ceklatar)){
+								$datapaket[0]->latar_belakang = $ceklatar[0]->desc;
+							}
 
 							$cekmasalah = $model->cekParam('param_masalah', $idpaket, $code, $type, $userid);
-							$datapaket[0]->permasalahan = $cekmasalah[0]->desc;
+							if(!empty($ceklatar)){
+								$datapaket[0]->permasalahan = $cekmasalah[0]->desc;
+							}
 						}else if($type == 'fisik'){
 							
 							$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, null, $userid);
@@ -2326,7 +2333,7 @@ class Jsondata extends \CodeIgniter\Controller
 					'koordinat'			=> $request->getVar('koordinat'),
 					'kode_bulan'		=> $request->getVar('kode_bulan')
 				];
-
+				
 			$data_permasalahan = [
 					'id_paket'			=> $request->getVar('id_paket'),
 					'type'				=> $type,
@@ -2334,7 +2341,7 @@ class Jsondata extends \CodeIgniter\Controller
 					'kode_bulan'		=> $request->getVar('kode_bulan'),
 					'create_by'			=> $userid,
 				];
-
+				
 			$data_uraian = [
 					'id_paket'			=> $request->getVar('id_paket'),
 					'type'				=> $type,
@@ -2491,6 +2498,7 @@ class Jsondata extends \CodeIgniter\Controller
 						$data_permasalahan['type'] = 'keuangan';
 
 						$ceklatar = $model->cekParam('param_latar_belakang', $request->getVar('id_paket'), null, null, $userid);
+						
 						if(empty($ceklatar)){
 							$res_latar = $model->saveParam('param_latar_belakang', $data_latar);
 						}
@@ -3171,108 +3179,123 @@ class Jsondata extends \CodeIgniter\Controller
 							foreach ($datakegiatan as $key1 => $value1) {
 								$datasubkegiatan = $model->getall('data_subkegiatan', 'kode_subkegiatan, nama_subkegiatan', ['kode_kegiatan' => $value1['kode_kegiatan']]);
 								$datasubkegiatan = json_decode(json_encode($datasubkegiatan), true);
+								
 								foreach ($datasubkegiatan as $key2 => $value2) {
 									$datapaket = $model->getall('data_paket', 'id, nama_paket', ['kode_subkegiatan' => $value2['kode_subkegiatan']]);
 									$datapaket = json_decode(json_encode($datapaket), true);
-									
-									foreach ($datapaket as $key3 => $value3) {
-										
-										$datatarget = $model->getall('data_target', 'id_paket, pagu, bidang, seksi', ['id_paket' => $value3['id'] ]);
-										$datatarget = json_decode(json_encode($datatarget), true);
-										foreach ($datatarget as $key4 => $value4) {
-											$databulantarget_k = $model->getall('bulan_target', $code, ['id_paket' => $value4['id_paket'], 'type' => 'keuangan']);
-											$databulantarget_k = json_decode(json_encode($databulantarget_k), true);
 
-											$databulantarget_f = $model->getall('bulan_target', $code, ['id_paket' => $value4['id_paket'], 'type' => 'fisik']);
-											$databulantarget_f = json_decode(json_encode($databulantarget_f), true);
+									if(!empty($datapaket)){
+										foreach ($datapaket as $key3 => $value3) {
+											
+											$datatarget = $model->getall('data_target', 'id_paket, pagu, bidang, seksi', ['id_paket' => $value3['id'] ]);
+											$datatarget = json_decode(json_encode($datatarget), true);
+											
+											if(!empty($datatarget)){
+												foreach ($datatarget as $key4 => $value4) {
+													
+													$databulantarget_k = $model->getall('bulan_target', $code, ['id_paket' => $value4['id_paket'], 'type' => 'keuangan']);
+													$databulantarget_k = json_decode(json_encode($databulantarget_k), true);
 
-											$datatarget[$key4]['keuangan'] = $databulantarget_k[0][$code];
-											$datatarget[$key4]['fisik'] = $databulantarget_f[0][$code];
+													$databulantarget_f = $model->getall('bulan_target', $code, ['id_paket' => $value4['id_paket'], 'type' => 'fisik']);
+													$databulantarget_f = json_decode(json_encode($databulantarget_f), true);
+
+													$datatarget[$key4]['keuangan'] = $databulantarget_k[0][$code];
+													$datatarget[$key4]['fisik'] = $databulantarget_f[0][$code];
+												}
+											}
+											
+											$datarealisasi = $model->getall('data_realisasi', 'id_paket, koordinat ,kode_bulan, created_by', ['id_paket' => $value3['id'], 'kode_bulan' => $code ]);
+											$datarealisasi = json_decode(json_encode($datarealisasi), true);
+
+											$data_latarbelakang = $model->getall('param_latar_belakang', '*', ['id_paket' => $value3['id'], 'kode_bulan' => $code ]);
+											$data_latarbelakang = json_decode(json_encode($data_latarbelakang), true);
+											
+											if(!empty($data_latarbelakang)){
+												$data_latarbelakang = $data_latarbelakang[0]['desc'];
+											}
+
+											$data_uraian = $model->getall('param_uraian', '*', ['id_paket' => $value3['id'], 'kode_bulan' => $code ]);
+											$data_uraian = json_decode(json_encode($data_uraian), true);
+											if(!empty($data_uraian)){
+												$data_uraian = $data_uraian[0]['desc'];
+											}
+
+											$data_masalah = $model->getall('param_masalah', '*', ['id_paket' => $value3['id'], 'kode_bulan' => $code ]);
+											$data_masalah = json_decode(json_encode($data_masalah), true);
+											if(!empty($data_masalah)){
+												$data_masalah = $data_masalah[0]['desc'];
+											}
+											
+											foreach ($datarealisasi as $key5 => $value5) {
+												$dataprogres_k = $model->getall('bulan_realisasi', "* , replace(m1, '.','') + replace(m2, '.','') + replace(m3, '.','') + replace(m4, '.','') as new_total", ['id_paket' => $value5['id_paket'], 'type' => 'keuangan', 'kode_bulan' => $value5['kode_bulan']]);
+												$dataprogres_k = json_decode(json_encode($dataprogres_k), true);
+												$dataprogres_f = $model->getall('bulan_realisasi', '*', ['id_paket' => $value5['id_paket'], 'type' => 'fisik', 'kode_bulan' => $value5['kode_bulan']]);
+												$dataprogres_f = json_decode(json_encode($dataprogres_f), true);
+												$datarealisasi[$key5]['keuangan'] = $dataprogres_k[0];
+												$datarealisasi[$key5]['fisik'] = $dataprogres_f[0];
+												$datarealisasi[$key5]['latar_belakang'] = $data_latarbelakang;
+												$datarealisasi[$key5]['uraian'] = $data_uraian;
+												$datarealisasi[$key5]['permasalahan'] = $data_masalah;
+												$datarealisasi[$key5]['ppk'] = $model->getall('users', 'user_fullname', ['user_id' => $value5['created_by']]);
+											}
+											
+											// $datatarget = empty($datatarget) ? 0 : $datatarget[0];
+											// $datarealisasi = empty($datarealisasi) ? 0 : $datarealisasi[0];
+											if(!empty($datatarget)){
+												$datapaket[$key3]['target'] = $datatarget;
+												$datapaket[$key3]['realisasi'] = $datarealisasi;
+												foreach ($datapaket[$key3]['target'] as $keytar => $valuetar) {
+													$datapaket[$key3]['pagu_paket'] = $valuetar['keuangan'];
+												}
+											}
+											
 										}
+										
+										$datasubkegiatan[$key2]['paket'] = $datapaket;
+										$pagu_sub = [];
+										$target_keu_sub = [];
+										$real_keu_sub = [];
+										$target_fis_sub = [];
+										$real_fis_sub = [];
 
-										
-										
-										$datarealisasi = $model->getall('data_realisasi', 'id_paket, koordinat ,kode_bulan, created_by', ['id_paket' => $value3['id'], 'kode_bulan' => $code ]);
-										$datarealisasi = json_decode(json_encode($datarealisasi), true);
-
-										$data_latarbelakang = $model->getall('param_latar_belakang', '*', ['id_paket' => $value3['id'], 'kode_bulan' => $code ]);
-										$data_latarbelakang = json_decode(json_encode($data_latarbelakang), true);
-										
-										if(!empty($data_latarbelakang)){
-											$data_latarbelakang = $data_latarbelakang[0]['desc'];
-										}
-
-										$data_uraian = $model->getall('param_uraian', '*', ['id_paket' => $value3['id'], 'kode_bulan' => $code ]);
-										$data_uraian = json_decode(json_encode($data_uraian), true);
-										if(!empty($data_uraian)){
-											$data_uraian = $data_uraian[0]['desc'];
-										}
-
-										$data_masalah = $model->getall('param_masalah', '*', ['id_paket' => $value3['id'], 'kode_bulan' => $code ]);
-										$data_masalah = json_decode(json_encode($data_masalah), true);
-										if(!empty($data_masalah)){
-											$data_masalah = $data_masalah[0]['desc'];
-										}
-										
-										foreach ($datarealisasi as $key5 => $value5) {
-											$dataprogres_k = $model->getall('bulan_realisasi', "* , replace(m1, '.','') + replace(m2, '.','') + replace(m3, '.','') + replace(m4, '.','') as new_total", ['id_paket' => $value5['id_paket'], 'type' => 'keuangan', 'kode_bulan' => $value5['kode_bulan']]);
-											$dataprogres_k = json_decode(json_encode($dataprogres_k), true);
-											$dataprogres_f = $model->getall('bulan_realisasi', '*', ['id_paket' => $value5['id_paket'], 'type' => 'fisik', 'kode_bulan' => $value5['kode_bulan']]);
-											$dataprogres_f = json_decode(json_encode($dataprogres_f), true);
-											$datarealisasi[$key5]['keuangan'] = $dataprogres_k[0];
-											$datarealisasi[$key5]['fisik'] = $dataprogres_f[0];
-											$datarealisasi[$key5]['latar_belakang'] = $data_latarbelakang;
-											$datarealisasi[$key5]['uraian'] = $data_uraian;
-											$datarealisasi[$key5]['permasalahan'] = $data_masalah;
-											$datarealisasi[$key5]['ppk'] = $model->getall('users', 'user_fullname', ['user_id' => $value5['created_by']]);
-										}
-										
-										// $datatarget = empty($datatarget) ? 0 : $datatarget[0];
-										// $datarealisasi = empty($datarealisasi) ? 0 : $datarealisasi[0];
-										if(!empty($datatarget)){
-											$datapaket[$key3]['target'] = $datatarget;
-											$datapaket[$key3]['realisasi'] = $datarealisasi;
-											foreach ($datapaket[$key3]['target'] as $keytar => $valuetar) {
-												$datapaket[$key3]['pagu_paket'] = $valuetar['keuangan'];
+										foreach ($datasubkegiatan[$key2]['paket'] as $keypak => $valuepak) {
+											if(array_key_exists("pagu_paket",$valuepak)){
+												array_push($pagu_sub, str_replace(".","",$valuepak['pagu_paket']));
+												array_push($target_keu_sub, str_replace(".", "",$valuepak['target'][0]['keuangan']));
+												array_push($real_keu_sub, str_replace(".", "",$valuepak['realisasi'][0]['keuangan']['new_total']));
+												array_push($target_fis_sub, str_replace(".", "",$valuepak['target'][0]['fisik']));
+												array_push($real_fis_sub, str_replace(".", "",$valuepak['realisasi'][0]['fisik']['total']));
 											}
 										}
 										
+										$datasubkegiatan[$key2]['pagu_subkegiatan'] = array_sum($pagu_sub);
+										
+										$datasubkegiatan[$key2]['target_keu_subkegiatan']= array_sum($target_keu_sub);
+										$datasubkegiatan[$key2]['target_persen_keu_subkegiatan']= round(array_sum($target_keu_sub) == 0 ? 1 : array_sum($target_keu_sub)  / array_sum($pagu_sub),2);
+										
+										$datasubkegiatan[$key2]['real_keu_subkegiatan']= array_sum($real_keu_sub);
+										$datasubkegiatan[$key2]['real_persen_keu_subkegiatan']= round(array_sum($real_keu_sub) == 0 ? 1 : array_sum($real_keu_sub) / array_sum($pagu_sub),2);
+										
+										$datasubkegiatan[$key2]['target_fis_subkegiatan']= array_sum($target_fis_sub);
+										$datasubkegiatan[$key2]['real_fis_subkegiatan']= array_sum($real_fis_sub);
+
+										$datasubkegiatan[$key2]['dev_keu_subkegiatan']= round((array_sum($real_keu_sub) == 0 ? 1 : array_sum($real_keu_sub) / array_sum($pagu_sub))-(array_sum($target_keu_sub) == 0 ? 1 : array_sum($target_keu_sub) / array_sum($pagu_sub)),2) ;
+										$datasubkegiatan[$key2]['dev_fis_subkegiatan']= array_sum($real_fis_sub)-array_sum($target_fis_sub) ;
 									}
-
-									$datasubkegiatan[$key2]['paket'] = $datapaket;
-									$pagu_sub = [];
-									$target_keu_sub = [];
-									$real_keu_sub = [];
-									$target_fis_sub = [];
-									$real_fis_sub = [];
-
-									foreach ($datasubkegiatan[$key2]['paket'] as $keypak => $valuepak) {
-										if(array_key_exists("pagu_paket",$valuepak)){
-											array_push($pagu_sub, str_replace(".","",$valuepak['pagu_paket']));
-											array_push($target_keu_sub, str_replace(".", "",$valuepak['target'][0]['keuangan']));
-											array_push($real_keu_sub, str_replace(".", "",$valuepak['realisasi'][0]['keuangan']['new_total']));
-											array_push($target_fis_sub, str_replace(".", "",$valuepak['target'][0]['fisik']));
-											array_push($real_fis_sub, str_replace(".", "",$valuepak['realisasi'][0]['fisik']['total']));
-										}
-									}
-									
-									$datasubkegiatan[$key2]['pagu_subkegiatan'] = array_sum($pagu_sub);
-									
-									$datasubkegiatan[$key2]['target_keu_subkegiatan']= array_sum($target_keu_sub);
-									$datasubkegiatan[$key2]['target_persen_keu_subkegiatan']= array_sum($target_keu_sub) == 0 ? 1 : array_sum($target_keu_sub)  / array_sum($pagu_sub);
-									
-									$datasubkegiatan[$key2]['real_keu_subkegiatan']= array_sum($real_keu_sub);
-									$datasubkegiatan[$key2]['real_persen_keu_subkegiatan']= array_sum($real_keu_sub) == 0 ? 1 : array_sum($real_keu_sub) / array_sum($pagu_sub);
-									
-									$datasubkegiatan[$key2]['target_fis_subkegiatan']= array_sum($target_fis_sub);
-									$datasubkegiatan[$key2]['real_fis_subkegiatan']= array_sum($real_fis_sub);
-
-									$datasubkegiatan[$key2]['dev_keu_subkegiatan']= (array_sum($real_keu_sub) == 0 ? 1 : array_sum($real_keu_sub) / array_sum($pagu_sub))-(array_sum($target_keu_sub) == 0 ? 1 : array_sum($target_keu_sub) / array_sum($pagu_sub)) ;
-									$datasubkegiatan[$key2]['dev_fis_subkegiatan']= array_sum($real_fis_sub)-array_sum($target_fis_sub) ;
-									
 									
 								}
-								
+								foreach ($datasubkegiatan as $kekey => $valuey) {
+									if(isset($valuey['paket'])){
+										foreach ($valuey['paket'] as $keykey1 => $valuey1) {
+											if(!isset($valuey1['target'])){
+												unset($datasubkegiatan[$kekey]);
+											}
+										}
+									}else{
+										unset($datasubkegiatan[$kekey]);
+									}
+								}
+
 								$datakegiatan[$key1]['subkegiatan'] = $datasubkegiatan;
 								
 								$pagu_keg = [];
@@ -3295,10 +3318,10 @@ class Jsondata extends \CodeIgniter\Controller
 								$datakegiatan[$key1]['pagu_kegiatan']= array_sum($pagu_keg);
 								$datakegiatan[$key1]['target_keu_kegiatan']= array_sum($target_keu_keg);
 								
-								$datakegiatan[$key1]['target_persen_keu_kegiatan']= array_sum($target_keu_keg) == 0 ? 1 : array_sum($target_keu_keg) / array_sum($pagu_keg);
+								$datakegiatan[$key1]['target_persen_keu_kegiatan']= round(array_sum($target_keu_keg) == 0 ? 1 : array_sum($target_keu_keg) / array_sum($pagu_keg),2);
 
 								$datakegiatan[$key1]['real_keu_kegiatan']= array_sum($real_keu_keg);
-								$datakegiatan[$key1]['real_persen_keu_kegiatan']= array_sum($real_keu_keg) == 0 ? 1 : array_sum($real_keu_keg) / array_sum($pagu_keg);
+								$datakegiatan[$key1]['real_persen_keu_kegiatan']= round(array_sum($real_keu_keg) == 0 ? 1 : array_sum($real_keu_keg) / array_sum($pagu_keg),2);
 
 								$datakegiatan[$key1]['target_fis_kegiatan']= array_sum($target_fis_keg);
 								$datakegiatan[$key1]['real_fis_kegiatan']= array_sum($real_fis_keg);
@@ -3321,14 +3344,14 @@ class Jsondata extends \CodeIgniter\Controller
 
 							$dataprogram[$key]['pagu_program']	   = array_sum($pagu_prog);
 							$dataprogram[$key]['target_keu_program']= array_sum($target_keu_prog);
-							$dataprogram[$key]['target_persen_keu_program']= array_sum($target_keu_prog) == 0 ? 1 : array_sum($target_keu_prog) / array_sum($pagu_prog);
+							$dataprogram[$key]['target_persen_keu_program']= round(array_sum($target_keu_prog) == 0 ? 1 : array_sum($target_keu_prog) / array_sum($pagu_prog),2);
 							$dataprogram[$key]['real_keu_program']= array_sum($real_keu_prog);
-							$dataprogram[$key]['real_persen_keu_program']= array_sum($real_keu_prog) == 0 ? 1 : array_sum($real_keu_prog) / array_sum($pagu_prog);
+							$dataprogram[$key]['real_persen_keu_program']= round(array_sum($real_keu_prog) == 0 ? 1 : array_sum($real_keu_prog) / array_sum($pagu_prog),2);
 							$dataprogram[$key]['target_fis_program']= array_sum($target_fis_prog);
 							$dataprogram[$key]['real_fis_program']= array_sum($real_fis_prog);
 							
 						}
-
+						// print_r($dataprogram);die;
 					if($dataprogram){
 						$response = [
 							'status'   => 'sukses',
