@@ -3372,9 +3372,16 @@ class Jsondata extends \CodeIgniter\Controller
 			}
 		catch (\Exception $e)
 		{
-			echo '<pre>';
-			print_r($e->getTraceAsString());
-			die;
+			// echo '<pre>';
+			// print_r($e->getTraceAsString());
+			$response = [
+				'status'   => 'gagal',
+				'code'     => '0',
+				'data'     => $e->getTraceAsString(),
+			];
+			header('Content-Type: application/json');
+				echo json_encode($response);
+				exit;
 		}
 	}
 
