@@ -153,6 +153,17 @@ function loadsubkegiatan(param){
             }
         });
 
+        var sum = $('#all-subkegiatan').DataTable().column(5).data();
+        var total = 0;
+
+        for (let index = 0; index < sum.length; index++) {
+          var element = sum[index];
+          total += parseInt(element.replaceAll('.', ''));
+        }
+
+        // console.log(total);
+        $('#total-all').html('Total Pagu Sub Kegiatan : '+ rubah(total));
+
         let first_row = dt.row(':first').data();
         $('#satuan_code').val(parseInt(first_row.id) + 1 + '0');
 
@@ -317,4 +328,11 @@ function save(formData){
       $('#pagu_perubahan').val(pagu_perubahan == 'null' ? '': pagu_perubahan);
       $('#pagu_perubahan').parent().parent().show();
     
+    }
+
+    function rubah(angka){
+      var reverse = angka.toString().split('').reverse().join(''),
+      ribuan = reverse.match(/\d{1,3}/g);
+      ribuan = ribuan.join('.').split('').reverse().join('');
+      return ribuan;
     }
