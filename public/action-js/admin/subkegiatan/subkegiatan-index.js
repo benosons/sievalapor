@@ -154,15 +154,25 @@ function loadsubkegiatan(param){
         });
 
         var sum = $('#all-subkegiatan').DataTable().column(5).data();
+        var sum1 = $('#all-subkegiatan').DataTable().column(6).data();
         var total = 0;
+        var total1 = 0;
 
         for (let index = 0; index < sum.length; index++) {
           var element = sum[index];
           total += parseInt(element.replaceAll('.', ''));
         }
 
+        for (let index = 0; index < sum1.length; index++) {
+          var element1 = sum1[index];
+          if(element1 != null){
+            total1 += parseInt(element1.replaceAll('.', ''));
+          }
+        }
+
         // console.log(total);
-        $('#total-all').html('Total Pagu Sub Kegiatan : '+ rubah(total));
+        $('#total-all').html('Total pagu sub kegiatan murni : '+ rubah(total));
+        $('#total-all-rubah').html('total pagu sub kegiatan perubahan : '+ rubah(total1));
 
         let first_row = dt.row(':first').data();
         $('#satuan_code').val(parseInt(first_row.id) + 1 + '0');
