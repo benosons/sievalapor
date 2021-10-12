@@ -160,19 +160,20 @@ function loadsubkegiatan(param){
 
         for (let index = 0; index < sum.length; index++) {
           var element = sum[index];
-          total += parseInt(element.replaceAll('.', ''));
+          if(element != null){
+            total += parseInt(element.replaceAll('.', ''));
+          }
         }
 
         for (let index = 0; index < sum1.length; index++) {
           var element1 = sum1[index];
-          if(element1 != null){
+          if(element1){
             total1 += parseInt(element1.replaceAll('.', ''));
           }
         }
 
-        // console.log(total);
-        $('#total-all').html('Total pagu sub kegiatan murni : '+ rubah(total));
-        $('#total-all-rubah').html('total pagu sub kegiatan perubahan : '+ rubah(total1));
+        $('#total-all').html('<b>Total pagu sub kegiatan murni :</b> '+ rubah(total));
+        $('#total-all-rubah').html('<b>Total pagu sub kegiatan perubahan :</b> '+ rubah(total1));
 
         let first_row = dt.row(':first').data();
         $('#satuan_code').val(parseInt(first_row.id) + 1 + '0');

@@ -16,7 +16,7 @@ $(document).ready(function(){
       var nama_kegiatan = $('#nama_kegiatan').val();
       var id_kegiatan = $('#id_kegiatan').val()
 
-      if(kode_program && kode_kegiatan && nama_kegiatan){
+      if(kode_kegiatan && nama_kegiatan){
         var formData = new FormData();
         formData.append('param', 'data_kegiatan');
         formData.append('id_kegiatan', id_kegiatan);
@@ -58,6 +58,8 @@ $(document).ready(function(){
     $('#nama_program_chosen').parent().parent().show();
     $('#nama_kegiatan').val('');
     $('#id_kegiatan').val('');
+
+    $('#titel-modalnya').html('Tambah Kegiatan');
   })
 
 });
@@ -265,6 +267,7 @@ function save(formData){
 
 function edit(table,id, code, name){
   $('#modal_kegiatan').modal('show');
+  $('#titel-modalnya').html('Edit Kegiatan');
   let mycode = code.split(".");
   
   $('#kode_kegiatan_1').val(code.slice(0, -mycode[mycode.length - 1].length));
