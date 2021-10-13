@@ -68,10 +68,10 @@ function loadprogram(param){
             pageLength: 10,
             aaData: result.data,
             aoColumns: [
-                { 'mDataProp': 'id', 'width':'10%'},
-                { 'mDataProp': 'kode_program'},
+                { 'mDataProp': 'id', 'width':'10px'},
+                { 'mDataProp': 'kode_program', 'width':'10px'},
                 { 'mDataProp': 'nama_program'},
-                { 'mDataProp': 'user_status'},
+                { 'mDataProp': 'user_status', 'width':'10px'},
             ],
             order: [[0, 'ASC']],
             fixedColumns: true,
