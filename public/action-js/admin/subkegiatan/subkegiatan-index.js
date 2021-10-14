@@ -63,6 +63,7 @@ $("#nama_kegiatan").chosen().change(function(){
 });
 
 $('#modal_subkegiatan').on('hidden.bs.modal', function (e) {
+  $('#titelnya').html('Tambah Sub Kegiatan');
   $('#kode_subkegiatan_1').val('');
   $('#kode_subkegiatan_2').val('');
   $('#kode_subkegiatan_2').prop('disabled', false);
@@ -172,8 +173,8 @@ function loadsubkegiatan(param){
           }
         }
 
-        $('#total-all').html('<b>Total pagu sub kegiatan murni :</b> '+ rubah(total));
-        $('#total-all-rubah').html('<b>Total pagu sub kegiatan perubahan :</b> '+ rubah(total1));
+        $('#total-all').html('<b class="text-primary"> Total Pagu Murni :</b> '+ rubah(total));
+        $('#total-all-rubah').html('<b class="text-primary"> Total Pagu Perubahan :</b> '+ rubah(total1));
 
         let first_row = dt.row(':first').data();
         $('#satuan_code').val(parseInt(first_row.id) + 1 + '0');
@@ -322,6 +323,7 @@ function save(formData){
 
     function edit(table,id, code, name, pagu, sisa, pagu_perubahan){
       $('#modal_subkegiatan').modal('show');
+      $('#titelnya').html('Edit Sub Kegiatan');
       let mycode = code.split(".");
       
       $('#kode_subkegiatan_1').val(code.slice(0, -mycode[mycode.length - 1].length));
