@@ -12015,7 +12015,7 @@ td .lbl:only-child {
   border-bottom: none;
   box-shadow: none;
   padding: 6px;
-  background-color: #394557;
+  background-color: #039cd9;
   -moz-transform: scale(0,1) translate(-150px);
   -webkit-transform: scale(0,1) translate(-150px);
   -o-transform: scale(0,1) translate(-150px);
@@ -12177,7 +12177,8 @@ td .lbl:only-child {
   background-color: rgba(120, 110, 100, 0.4);
 }
 .blur-login {
-  background: #394557 url('images/meteorshower2.jpg') repeat;
+  background: #394557 url('../../images/Website-Disperkim-Update-1.png') repeat; 
+  background-size: cover;
 }
 .invoice-info {
   line-height: 24px !important;
