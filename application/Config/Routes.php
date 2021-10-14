@@ -130,6 +130,8 @@ $routes->post('updatepaket', 'Jsondata::updatepaket');
 $routes->post('updateUser', 'Jsondata::updateUser');
 $routes->post('loadpaketnya', 'Jsondata::loadpaketnya');
 
+$routes->add('islogin', 'Api::auth');
+
 
 
 
