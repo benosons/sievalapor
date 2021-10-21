@@ -106,6 +106,7 @@ $routes->post('loadkegiatan', 'Jsondata::loadkegiatan');
 $routes->post('loadsubkegiatan', 'Jsondata::loadsubkegiatan');
 $routes->post('loadpaket', 'Jsondata::loadpaket');
 $routes->post('loadtarget', 'Jsondata::loadtarget');
+
 $routes->post('loadtargetNip', 'Jsondata::loadtargetNip');
 $routes->post('loadrealisasi', 'Jsondata::loadrealisasi');
 $routes->post('loadminggu', 'Jsondata::loadminggu');
@@ -131,6 +132,7 @@ $routes->post('updateUser', 'Jsondata::updateUser');
 $routes->post('loadpaketnya', 'Jsondata::loadpaketnya');
 
 $routes->add('islogin', 'Api::auth');
+$routes->add('isloadtarget', 'Api::isloadtarget');
 
 
 
