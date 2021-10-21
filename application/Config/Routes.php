@@ -133,6 +133,8 @@ $routes->post('loadpaketnya', 'Jsondata::loadpaketnya');
 
 $routes->add('islogin', 'Api::auth');
 $routes->add('isloadtarget', 'Api::isloadtarget');
+$routes->add('isaddrealisasi', 'Api::isaddrealisasi');
+$routes->add('isloadminggu', 'Api::isloadminggu');
 
 
 
