@@ -46,7 +46,7 @@ class Api extends \CodeIgniter\Controller
 							$users = $userModel->updateIsLogin($data->user_id, ['isLogin' => 1]);
 							$result = [
 								'info'   => 'success',
-								'code'     => 0,
+								'code'     => 200,
 								'data'     => $data,
 							];
 
@@ -203,7 +203,7 @@ class Api extends \CodeIgniter\Controller
 					if($fulldata){
 						$response = [
 							'status'   => 'sukses',
-							'code'     => '1',
+							'code'     => 200,
 							'data' 		 => $fulldata
 						];
 					}else{
@@ -478,7 +478,7 @@ class Api extends \CodeIgniter\Controller
 			
 			$response = [
 					'status'   => 'sukses',
-					'code'     => '0',
+					'code'     => 200,
 					'data' 		 => 'terkirim'
 			];
 			header('Content-Type: application/json');
@@ -649,7 +649,7 @@ class Api extends \CodeIgniter\Controller
 					if($datapaket){
 						$response = [
 							'status'   => 'sukses',
-							'code'     => '1',
+							'code'     => 200,
 							'data' 		 => $datapaket
 						];
 					}else{
