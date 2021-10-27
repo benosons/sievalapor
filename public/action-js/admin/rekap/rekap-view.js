@@ -56,7 +56,7 @@ function saveminggu(ke){
 
     function loadtarget(param){
 
-  $.ajax({
+      $.ajax({
       type: 'post',
       dataType: 'json',
       url: 'loadtargetNip',
