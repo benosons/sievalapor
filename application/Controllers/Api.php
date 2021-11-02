@@ -225,7 +225,7 @@ class Api extends \CodeIgniter\Controller
 								}else if(!$minggufisik[0]->m2){
 									$fisikan[$keyfisik]= 'm2';
 								}else if(!$keyfisik[0]->m3){
-									$fisikan[$keyuang]= 'm3';
+									$fisikan[$keyfisik]= 'm3';
 								}else if(!$minggufisik[0]->m4){
 									$fisikan[$keyfisik]= 'm4';
 								}else{
