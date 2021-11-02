@@ -229,7 +229,7 @@ class Api extends \CodeIgniter\Controller
 								}else if(!$minggufisik[0]->m4){
 									$fisikan[$keyfisik] = 'm4';
 								}else{
-									$uangan[$keyfisik] = 'done';
+									$fisikan[$keyfisik] = 'done';
 								}
 							}else{
 								$fisikan[$keyfisik]= 'm1';
