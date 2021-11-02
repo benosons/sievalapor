@@ -101,6 +101,7 @@ class Api extends \CodeIgniter\Controller
 			
 					$fulldata = [];
 					
+					
 					$datapaket = $model->gettarget($code, $role, $userid);
 					if($code){
 						$uangan = [];
@@ -143,6 +144,7 @@ class Api extends \CodeIgniter\Controller
 								if($value->n12){
 									$uangan['n12'] = 'Desember';
 								}
+
 							}
 
 							if($value->type == 'fisik'){
@@ -194,12 +196,48 @@ class Api extends \CodeIgniter\Controller
 						$fulldata['paket'] = $datapaket[0]->nama_paket;
 						$fulldata['id_paket'] = $datapaket[0]->id_paket;
 						$fulldata['pagu_kegiatan'] = $datapaket[0]->pagu;
+						foreach ($uangan as $keyuang => $valueuang) {
+							$minggukeuangan = $model->getminggu('keuangan', $keyuang, $datapaket[0]->id_paket);
+							
+							if(!empty($minggukeuangan)){
+								if(!$minggukeuangan[0]->m1){
+									$uangan[$keyuang]= 'm1';
+								}else if(!$minggukeuangan[0]->m2){
+									$uangan[$keyuang]= 'm2';
+								}else if(!$minggukeuangan[0]->m3){
+									$uangan[$keyuang]= 'm3';
+								}else if(!$minggukeuangan[0]->m4){
+									$uangan[$keyuang]= 'm4';
+								}
+							}else{
+								$uangan[$keyuang]= 'm1';
+							}
+						}
 						
+						foreach ($fisikan as $keyfisik => $valuefisik) {
+							$minggufisik = $model->getminggu('fisik', $keyfisik, $datapaket[0]->id_paket);
+							
+							if(!empty($minggufisik)){
+								if(!$minggufisik[0]->m1){
+									$fisikan[$keyuang]= 'm1';
+								}else if(!$minggufisik[0]->m2){
+									$fisikan[$keyuang]= 'm2';
+								}else if(!$minggufisik[0]->m3){
+									$fisikan[$keyuang]= 'm3';
+								}else if(!$minggufisik[0]->m4){
+									$fisikan[$keyuang]= 'm4';
+								}
+							}else{
+								$fisikan[$keyfisik]= 'm1';
+							}
+						}
 						$fulldata['keuangan'] = $uangan;
+						
 						$fulldata['fisik'] = $fisikan;
 					}else{
 						$fulldata = $datapaket;
 					}
+					
 					if($fulldata){
 						$response = [
 							'status'   => 'sukses',
@@ -298,30 +336,31 @@ class Api extends \CodeIgniter\Controller
 					'kode_bulan'		=> $request->getVar('kode_bulan'),
 					'create_by'			=> $userid,
 				];
-				
-				if(!empty($_FILES)){
+
+				if(!empty($request->getFile('files'))){
 					
-					$files	  = $request->getFiles()['file'];
+					$files	  = $request->getFiles()['files'];
 					
 					$path			= FCPATH.'public';
 					$tipe			= 'uploads/users/progres';
 					$date 		= date('Y/m/d');
 					$folder		= $path.'/'.$tipe.'/'.$date.'/';
 					
+					
 					if (!is_dir($folder)) {
 						mkdir($folder, 0777, TRUE);
 					}
 					
-					foreach ($files as $i => $value) {
-						# code...						
-						$stat = $files[$i]->move($folder, $files[$i]->getName());
+
+						# code...	
+						$stat = $files->move($folder, $files->getName());
 						
 						$data_progres = [
 							'id_paket'			=> $request->getVar('id_paket'),
 							'progres'			=> $request->getVar('progres'),
-							'filename'			=> $files[$i]->getName(),
+							'filename'			=> $files->getName(),
 							'extention'			=> null,
-							'size'				=> $files[$i]->getSize('kb'),
+							'size'				=> $files->getSize('kb'),
 							'path'				=> $tipe.'/'.$date.'/',
 							'type'				=> 'fisik',
 							'created_date'		=> $this->now,
@@ -331,43 +370,53 @@ class Api extends \CodeIgniter\Controller
 							'keterangan'		=> $request->getVar('keterangan'),
 						];
 						
-						// $cekprogres = $model->cekParam('data_progres', $request->getVar('id_paket'), $request->getVar('kode_bulan'), 'fisik', $userid);
-						// if(empty($cekprogres)){
 							$res_progres = $model->saveParam('data_progres', $data_progres);
 							
-						// }
-					}
 				}
 				
 			}
 
 		if($request->getVar('type') == 'keuangan'){
-			if($request->getVar('m1')){
-				$data['m1'] = $request->getVar('m1');
-			}else if($request->getVar('m2')){
-				$data['m2'] = $request->getVar('m2');
-			}else if($request->getVar('m3')){
-				$data['m3'] = $request->getVar('m3');
-			}else if($request->getVar('m4')){
-				$data['m4'] = $request->getVar('m4');
+			
+			for ($i=1; $i <= 4 ; $i++) { 
+				# code...
+				if($request->getVar('param') == 'm'.$i ){
+					$data['m'.$i] = $request->getVar('value');
+				}
 			}
-
+			// if($request->getVar('m1')){
+			// 	$data['m1'] = $request->getVar('m1');
+			// }else if($request->getVar('m2')){
+			// 	$data['m2'] = $request->getVar('m2');
+			// }else if($request->getVar('m3')){
+			// 	$data['m3'] = $request->getVar('m3');
+			// }else if($request->getVar('m4')){
+			// 	$data['m4'] = $request->getVar('m4');
+			// }
+			
 		}else if($request->getVar('type') == 'fisik'){
-			if($request->getVar('m1')){
-				$data['m1'] = $request->getVar('m1');
-				$data['total']	= $request->getVar('m1');
-			}else if($request->getVar('m2')){
-				$data['m2'] = $request->getVar('m2');
-				$data['total']	= $request->getVar('m2');
-			}else if($request->getVar('m3')){
-				$data['m3'] = $request->getVar('m3');
-				$data['total']	= $request->getVar('m3');
-			}else if($request->getVar('m4')){
-				$data['m4'] = $request->getVar('m4');
-				$data['total']	= $request->getVar('m4');
+			for ($i=1; $i <= 4 ; $i++) { 
+				# code...
+				if($request->getVar('param') == 'm'.$i ){
+					$data['m'.$i] = $request->getVar('value');
+					$data['total']	= $request->getVar('value');
+				}
 			}
+			// if($request->getVar('m1')){
+			// 	$data['m1'] = $request->getVar('m1');
+			// 	$data['total']	= $request->getVar('m1');
+			// }else if($request->getVar('m2')){
+			// 	$data['m2'] = $request->getVar('m2');
+			// 	$data['total']	= $request->getVar('m2');
+			// }else if($request->getVar('m3')){
+			// 	$data['m3'] = $request->getVar('m3');
+			// 	$data['total']	= $request->getVar('m3');
+			// }else if($request->getVar('m4')){
+			// 	$data['m4'] = $request->getVar('m4');
+			// 	$data['total']	= $request->getVar('m4');
+			// }
 		}
-
+			
 			if($edited){
 				$idnya = $request->getVar('idnya');
 				$res = $model->updateDong('bulan_realisasi', $idnya , $data);
