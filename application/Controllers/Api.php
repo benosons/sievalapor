@@ -208,6 +208,8 @@ class Api extends \CodeIgniter\Controller
 									$uangan[$keyuang]= 'm3';
 								}else if(!$minggukeuangan[0]->m4){
 									$uangan[$keyuang]= 'm4';
+								}else{
+									$uangan[$keyuang]= 'done';
 								}
 							}else{
 								$uangan[$keyuang]= 'm1';
@@ -219,13 +221,15 @@ class Api extends \CodeIgniter\Controller
 							
 							if(!empty($minggufisik)){
 								if(!$minggufisik[0]->m1){
-									$fisikan[$keyuang]= 'm1';
+									$fisikan[$keyfisik]= 'm1';
 								}else if(!$minggufisik[0]->m2){
-									$fisikan[$keyuang]= 'm2';
-								}else if(!$minggufisik[0]->m3){
+									$fisikan[$keyfisik]= 'm2';
+								}else if(!$keyfisik[0]->m3){
 									$fisikan[$keyuang]= 'm3';
 								}else if(!$minggufisik[0]->m4){
-									$fisikan[$keyuang]= 'm4';
+									$fisikan[$keyfisik]= 'm4';
+								}else{
+									$uangan[$keyfisik]= 'done';
 								}
 							}else{
 								$fisikan[$keyfisik]= 'm1';
