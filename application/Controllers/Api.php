@@ -196,48 +196,111 @@ class Api extends \CodeIgniter\Controller
 						$fulldata['paket'] = $datapaket[0]->nama_paket;
 						$fulldata['id_paket'] = $datapaket[0]->id_paket;
 						$fulldata['pagu_kegiatan'] = $datapaket[0]->pagu;
+						$keuang = [];
 						foreach ($uangan as $keyuang => $valueuang) {
 							$minggukeuangan = $model->getminggu('keuangan', $keyuang, $datapaket[0]->id_paket);
 							
 							if(!empty($minggukeuangan)){
 								if(!$minggukeuangan[0]->m1){
-									$uangan[$keyuang]= 'm1';
+									// $uangan[$keyuang]= 'm1';
+									array_push($keuang, [
+										'bulan_id' => $keyuang,
+										'bulan_name' => $valueuang,
+										'minggu' => 'm1'
+									]);
+
 								}else if(!$minggukeuangan[0]->m2){
-									$uangan[$keyuang]= 'm2';
+									// $uangan[$keyuang]= 'm2';
+									array_push($keuang, [
+										'bulan_id' => $keyuang,
+										'bulan_name' => $valueuang,
+										'minggu' => 'm2'
+									]);
 								}else if(!$minggukeuangan[0]->m3){
-									$uangan[$keyuang]= 'm3';
+									// $uangan[$keyuang]= 'm3';
+									array_push($keuang, [
+										'bulan_id' => $keyuang,
+										'bulan_name' => $valueuang,
+										'minggu' => 'm3'
+									]);
 								}else if(!$minggukeuangan[0]->m4){
-									$uangan[$keyuang]= 'm4';
+									// $uangan[$keyuang]= 'm4';
+									array_push($keuang, [
+										'bulan_id' => $keyuang,
+										'bulan_name' => $valueuang,
+										'minggu' => 'm4'
+									]);
 								}else{
-									$uangan[$keyuang]= 'done';
+									// $uangan[$keyuang]= 'done';
+									array_push($keuang, [
+										'bulan_id' => $keyuang,
+										'bulan_name' => $valueuang,
+										'minggu' => 'done'
+									]);
 								}
 							}else{
-								$uangan[$keyuang]= 'm1';
+								// $uangan[$keyuang]= 'm1';
+								array_push($keuang, [
+									'bulan_id' => $keyuang,
+									'bulan_name' => $valueuang,
+									'minggu' => 'm1'
+								]);
 							}
 						}
 						
+						$fisi = [];
 						foreach ($fisikan as $keyfisik => $valuefisik) {
 							$minggufisik = $model->getminggu('fisik', $keyfisik, $datapaket[0]->id_paket);
 							
 							if(!empty($minggufisik)){
 								if(!$minggufisik[0]->m1){
-									$fisikan[$keyfisik] = 'm1';
+									// $fisikan[$keyfisik] = 'm1';
+									array_push($fisi, [
+										'bulan_id' => $keyfisik,
+										'bulan_name' => $valuefisik,
+										'minggu' => 'm1'
+									]);
 								}else if(!$minggufisik[0]->m2){
-									$fisikan[$keyfisik] = 'm2';
+									// $fisikan[$keyfisik] = 'm2';
+									array_push($fisi, [
+										'bulan_id' => $keyfisik,
+										'bulan_name' => $valuefisik,
+										'minggu' => 'm2'
+									]);
 								}else if(!$minggufisik[0]->m3){
-									$fisikan[$keyfisik] = 'm3';
+									// $fisikan[$keyfisik] = 'm3';
+									array_push($fisi, [
+										'bulan_id' => $keyfisik,
+										'bulan_name' => $valuefisik,
+										'minggu' => 'm3'
+									]);
 								}else if(!$minggufisik[0]->m4){
-									$fisikan[$keyfisik] = 'm4';
+									// $fisikan[$keyfisik] = 'm4';
+									array_push($fisi, [
+										'bulan_id' => $keyfisik,
+										'bulan_name' => $valuefisik,
+										'minggu' => 'm4'
+									]);
 								}else{
-									$fisikan[$keyfisik] = 'done';
+									// $fisikan[$keyfisik] = 'done';
+									array_push($fisi, [
+										'bulan_id' => $keyfisik,
+										'bulan_name' => $valuefisik,
+										'minggu' => 'done'
+									]);
 								}
 							}else{
-								$fisikan[$keyfisik]= 'm1';
+								// $fisikan[$keyfisik]= 'm1';
+								array_push($fisi, [
+									'bulan_id' => $keyfisik,
+									'bulan_name' => $valuefisik,
+									'minggu' => 'm1'
+								]);
 							}
 						}
-						$fulldata['keuangan'] = $uangan;
+						$fulldata['keuangan'] = $keuang;
 						
-						$fulldata['fisik'] = $fisikan;
+						$fulldata['fisik'] = $fisi;
 					}else{
 						$fulldata = $datapaket;
 					}
