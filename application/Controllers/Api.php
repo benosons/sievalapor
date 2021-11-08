@@ -370,7 +370,7 @@ class Api extends \CodeIgniter\Controller
 			}else{
 
 			
-			$data = [
+				$data = [
 					'id_paket'			=> $request->getVar('id_paket'),
 					'type'				=> $type,
 					'kode_bulan'		=> $request->getVar('kode_bulan'),
@@ -379,7 +379,7 @@ class Api extends \CodeIgniter\Controller
 					'updated_date'		=> $this->now,
 				];
 
-			$data_new = [
+				$data_new = [
 					'id_paket'			=> $request->getVar('id_paket'),
 					'created_by'		=> $userid,
 					'created_date'	=> $this->now,
@@ -388,7 +388,7 @@ class Api extends \CodeIgniter\Controller
 					'kode_bulan'		=> $request->getVar('kode_bulan')
 				];
 				
-			$data_permasalahan = [
+				$data_permasalahan = [
 					'id_paket'			=> $request->getVar('id_paket'),
 					'type'				=> $type,
 					'desc'				=> $request->getVar('permasalahan'),
@@ -396,7 +396,7 @@ class Api extends \CodeIgniter\Controller
 					'create_by'			=> $userid,
 				];
 				
-			$data_uraian = [
+				$data_uraian = [
 					'id_paket'			=> $request->getVar('id_paket'),
 					'type'				=> $type,
 					'desc'				=> $request->getVar('uraian'),
@@ -404,51 +404,52 @@ class Api extends \CodeIgniter\Controller
 					'create_by'			=> $userid,
 				];
 
-			$data_latar = [
+				$data_latar = [
 					'id_paket'			=> $request->getVar('id_paket'),
 					'type'				=> $type,
 					'desc'				=> $request->getVar('latar_belakang'),
 					'kode_bulan'		=> $request->getVar('kode_bulan'),
 					'create_by'			=> $userid,
 				];
-
-				if(!empty($request->getFile('files'))){
-					
-					$files	  = $request->getFiles()['files'];
-					
-					$path			= FCPATH.'public';
-					$tipe			= 'uploads/users/progres';
-					$date 		= date('Y/m/d');
-					$folder		= $path.'/'.$tipe.'/'.$date.'/';
-					
-					
-					if (!is_dir($folder)) {
-						mkdir($folder, 0777, TRUE);
-					}
-					
-
-						# code...	
-						$stat = $files->move($folder, $files->getName());
-						
-						$data_progres = [
-							'id_paket'			=> $request->getVar('id_paket'),
-							'progres'			=> $request->getVar('progres'),
-							'filename'			=> $files->getName(),
-							'extention'			=> null,
-							'size'				=> $files->getSize('kb'),
-							'path'				=> $tipe.'/'.$date.'/',
-							'type'				=> 'fisik',
-							'created_date'		=> $this->now,
-							'updated_date'		=> $this->now,
-							'create_by'			=> $userid,
-							'kode_bulan'		=> $request->getVar('kode_bulan'),
-							'keterangan'		=> $request->getVar('keterangan'),
-						];
-						
-							$res_progres = $model->saveParam('data_progres', $data_progres);
-							
-				}
 				
+				if($request->getVar('type') == 'fisik'){
+					if(!empty($request->getFile('files'))){
+						
+						$files	  = $request->getFiles()['files'];
+						
+						$path			= FCPATH.'public';
+						$tipe			= 'uploads/users/progres';
+						$date 		= date('Y/m/d');
+						$folder		= $path.'/'.$tipe.'/'.$date.'/';
+						
+						
+						if (!is_dir($folder)) {
+							mkdir($folder, 0777, TRUE);
+						}
+						
+
+							# code...	
+							$stat = $files->move($folder, $files->getName());
+							
+							$data_progres = [
+								'id_paket'			=> $request->getVar('id_paket'),
+								'progres'			=> $request->getVar('progres'),
+								'filename'			=> $files->getName(),
+								'extention'			=> null,
+								'size'				=> $files->getSize('kb'),
+								'path'				=> $tipe.'/'.$date.'/',
+								'type'				=> 'fisik',
+								'created_date'		=> $this->now,
+								'updated_date'		=> $this->now,
+								'create_by'			=> $userid,
+								'kode_bulan'		=> $request->getVar('kode_bulan'),
+								'keterangan'		=> $request->getVar('keterangan'),
+							];
+							
+								$res_progres = $model->saveParam('data_progres', $data_progres);
+								
+					}
+				}
 			}
 
 		if($request->getVar('type') == 'keuangan'){
