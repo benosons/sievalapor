@@ -152,7 +152,7 @@
 
 
 
-                        <div class="form-group">
+                        <div class="form-group" hidden>
                           <div class="row">
                             <div class="col-sm-12">
                               <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pilih Tipe </label>
@@ -171,145 +171,7 @@
                         <div class="space-4"></div>
 
 
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pilih Bulan </label>
-                              <div class="col-sm-9">
-                                <select class="chosen-select form-control" id="kpilih_bulan" data-placeholder="Pilih Bulan Keuangan...">
-                                  <option value="">  </option>
-                                </select>
-                                <select class="chosen-select form-control" id="fpilih_bulan" data-placeholder="Pilih Bulan Fisik...">
-                                  <option value="">  </option>
-                                </select>
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Progres Bulan Lalu </label>
-                    					<div class="col-sm-9">
-                    						<input type="text" id="kprogres_bulan_lalu" placeholder="" class="col-xs-12 col-sm-12" disabled/>
-                    						<input type="text" id="fprogres_bulan_lalu" placeholder="" class="col-xs-12 col-sm-12" disabled style="display: none;"/>
-                    					</div>
-                            </div>
-                          </div>
-                				</div>
-
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Total Progres </label>
-                    					<div class="col-sm-9">
-                    						<input type="text" id="ktotal_progres" placeholder="" class="col-xs-12 col-sm-12" disabled/>
-                    						<input type="text" id="ftotal_progres" placeholder="" class="col-xs-12 col-sm-12" disabled style="display: none;"/>
-                    					</div>
-                            </div>
-                          </div>
-                				</div>
-
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Titik Koordinat </label>
-                    					<div class="col-sm-9">
-                    						<input type="text" id="koordinat" placeholder="Derajat desimal (DD): xx.xxxxx, xx.xxxxx" class="col-xs-12 col-sm-12"/>
-                    					</div>
-                            </div>
-                          </div>
-                				</div>
-
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Latar Belakang Pekerjaan </label>
-                    					<div class="col-sm-9">
-                    						<input type="text" id="latar_belakang" placeholder="" class="col-xs-12 col-sm-12"/>
-                    					</div>
-                            </div>
-                          </div>
-                				</div>
-
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Uraian Progres </label>
-                    					<div class="col-sm-9">
-                    						<input type="text" id="uraian" placeholder="" class="col-xs-12 col-sm-12"/>
-                    					</div>
-                            </div>
-                          </div>
-                				</div>
-
-                        <div class="form-group">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Permasalahan </label>
-                    					<div class="col-sm-9">
-                    						<input type="text" id="permasalahan" placeholder="" class="col-xs-12 col-sm-12"/>
-                    					</div>
-                            </div>
-                          </div>
-                				</div>
-
-                        <div class="form-group" id="iniprogres">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Progres </label>
-                              <div class="col-sm-9">
-                                <select class="chosen-select form-control" id="progres" data-placeholder="Pilih Progress...">
-                                  <option value="0">0</option>
-                                  <option value="25">25 %</option>
-                                  <option value="50">50 %</option>
-                                  <option value="75">75 %</option>
-                                  <option value="100">100 %</option>
-                                </select>
-
-                                <input type="text" id="progres_input" placeholder="" class="col-xs-12 col-sm-12"/ disabled>
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-
-                        <div class="form-group" id="iniupload">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Upload Foto </label>
-                    					<div class="col-sm-9">
-                    					  <input type="file" id="id-input-file-2" multiple/>
-                                <input type="hidden" id="baseURL" value="{{baseURL}}">
-                                <div class="row" id="img-file">
-                                  <div class="col-md-3">
-                                    <a href="" data-rel="colorbox">
-                                      <img width="150" height="150" alt="150x150" src="../assets/images/gallery/thumb-2.jpg" />
-                                      <div class="text">
-                                        <div class="inner">Sample Caption on Hover</div>
-                                      </div>
-                                    </a>
-                                  </div>
-                                </div>
-                                
-
-                    					</div>
-                            </div>
-                          </div>
-                				</div>
-
-                        <div class="form-group" id="iniketerangan">
-                          <div class="row">
-                            <div class="col-sm-12">
-                              <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Keterangan </label>
-                    					<div class="col-sm-9">
-                    						<input type="text" id="keterangan" placeholder="" class="col-xs-12 col-sm-12"/>
-                    					</div>
-                            </div>
-                          </div>
-                				</div>
+                        
 
                 			</form>
                     </div>
@@ -317,334 +179,590 @@
                 </div>
               </div>
             </div>
-
             <div class="space-4"></div>
             <div class="row">
-              <div class="col-xs-12 widget-container-col" id="inikeuangan">
-                <div class="widget-box">
-                  <div class="widget-header">
-                    <h4 class="widget-title lighter">Keuangan (Kumulasi)</h4>
-                  </div>
-                  <div class="widget-body">
-                    <div class="widget-main">
-                      <table id="sample-table-1" class="table table-striped table-bordered table-hover">
-                        <thead>
-                          <tr>
-                            <th>Bulan</th>
-                            <th class="center">
-                              <label class="position-relative">
-                                Minggu Ke.
-                              </label>
-                            </th>
-                            <th>Progres Keuangan</th>
-                            <th>Edit</th>
-                          </tr>
-                        </thead>
+              <div class="col-sm-12">
+                <!-- #section:elements.tab -->
+                <div class="tabbable">
+                  <ul class="nav nav-tabs" >
+                    <li class="active" style="width: 10%;">
+                      <a data-toggle="tab" href="#keuangan" aria-expanded="true" id="tipenya-keuangan">
+                        Keuangan
+                      </a>
+                    </li>
 
-                        <tbody>
-                          <tr>
-                            <td>
-                              <a href="#" name="isibulan"></a>
-                            </td>
-                            <td class="center">
-                              <label class="position-relative">
-                                1
-                              </label>
-                            </td>
-                            <td>
-                              <div class="input-group">
-																	<input id="kprogres_mingu_1" type="text" class="form-control search-query uang" placeholder="">
-																	<span class="input-group-btn">
-																		<button onclick="saveminggu('keuangan',1)" id="ksave_minggu_1" type="button" class="btn btn-success btn-sm">
-																			<span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
-																			Simpan
-																		</button>
-																	</span>
-																</div>
-                            </td>
-                            <td>
-                              <center>
-                                <div class="checkbox">
-        													<label>
-        														<input id="kedit_1" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('keuangan',1)">
-        														<span class="lbl"></span>
-        													</label>
-        												</div>
-                              </center>
-                            </td>
+                    <li class="" style="width: 10%;">
+                      <a data-toggle="tab" href="#fisik" aria-expanded="true" id="tipenya-fisik">
+                        Fisik
+                      </a>
+                    </li>
 
-                          </tr>
+                  </ul>
 
-                          <tr>
-                            <td>
-                              <a href="#" name="isibulan"></a>
-                            </td>
-                            <td class="center">
-                              <label class="position-relative">
-                                2
-                              </label>
-                            </td>
-                            <td>
-                              <div class="input-group">
-																	<input id="kprogres_mingu_2" type="text" class="form-control search-query uang" placeholder="">
-																	<span class="input-group-btn">
-																		<button onclick="saveminggu('keuangan',2)" id="ksave_minggu_2" type="button" class="btn btn-success btn-sm">
-																			<span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
-																			Simpan
-																		</button>
-																	</span>
-																</div>
-                            </td>
-                            <td>
-                              <center>
-                                <div class="checkbox">
-        													<label>
-        														<input id="kedit_2" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('keuangan',2)">
-        														<span class="lbl"></span>
-        													</label>
-        												</div>
-                              </center>
-                            </td>
+                  <div class="tab-content">
+                    <div id="keuangan" class="tab-pane fade active in">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pilih Bulan </label>
+                            <div class="col-sm-9">
+                              <select class="chosen-select form-control" id="kpilih_bulan" data-placeholder="Pilih Bulan Keuangan...">
+                                <option value="">  </option>
+                              </select>
+                            </div>
+                          </div>
 
-                          </tr>
-                          <tr>
-                            <td>
-                              <a href="#" name="isibulan"></a>
-                            </td>
-                            <td class="center">
-                              <label class="position-relative">
-                                3
-                              </label>
-                            </td>
-                            <td>
-                              <div class="input-group">
-																	<input id="kprogres_mingu_3" type="text" class="form-control search-query uang" placeholder="">
-																	<span class="input-group-btn">
-																		<button onclick="saveminggu('keuangan',3)" id="ksave_minggu_3" type="button" class="btn btn-success btn-sm">
-																			<span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
-																			Simpan
-																		</button>
-																	</span>
-																</div>
-                            </td>
-                            <td>
-                              <center>
-                                <div class="checkbox">
-        													<label>
-        														<input id="kedit_3" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('keuangan',3)">
-        														<span class="lbl"></span>
-        													</label>
-        												</div>
-                              </center>
-                            </td>
+                        </div>
+                      </div>
 
-                          </tr>
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Progres Bulan Lalu </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="kprogres_bulan_lalu" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-                          <tr>
-                            <td>
-                              <a href="#" name="isibulan"></a>
-                            </td>
-                            <td class="center">
-                              <label class="position-relative">
-                                4
-                              </label>
-                            </td>
-                            <td>
-                              <div class="input-group">
-																	<input id="kprogres_mingu_4" type="text" class="form-control search-query uang" placeholder="">
-																	<span class="input-group-btn">
-																		<button onclick="saveminggu('keuangan',4)" id="ksave_minggu_4" type="button" class="btn btn-success btn-sm">
-																			<span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
-																			Simpan
-																		</button>
-																	</span>
-																</div>
-                            </td>
-                            <td>
-                              <center>
-                                <div class="checkbox">
-        													<label>
-        														<input id="kedit_4" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('keuangan',4)">
-        														<span class="lbl"></span>
-        													</label>
-        												</div>
-                              </center>
-                            </td>
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Total Progres </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="ktotal_progres" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-                          </tr>
-                        </tbody>
-                        <tfoot>
-                          <th colspan=2><center>Total</center></th>
-                          <th colspan=2><input type="text" id="ktot_prog" placeholder="" class="col-xs-12 col-sm-12" disabled=""></th>
-                        </tfoot>
-                      </table>
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Titik Koordinat </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="kkoordinat" placeholder="Derajat desimal (DD): xx.xxxxx, xx.xxxxx" class="col-xs-12 col-sm-12"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Latar Belakang Pekerjaan </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="klatar_belakang" placeholder="" class="col-xs-12 col-sm-12"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Uraian Progres </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="kuraian" placeholder="" class="col-xs-12 col-sm-12"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Permasalahan </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="kpermasalahan" placeholder="" class="col-xs-12 col-sm-12"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-xs-12 widget-container-col" id="inikeuangan">
+                          <div class="widget-box">
+                            <div class="widget-header">
+                              <h4 class="widget-title lighter">Keuangan (Kumulasi)</h4>
+                            </div>
+                            <div class="widget-body">
+                              <div class="widget-main">
+                                <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                  <thead>
+                                    <tr>
+                                      <th>Bulan</th>
+                                      <th class="center">
+                                        <label class="position-relative">
+                                          Minggu Ke.
+                                        </label>
+                                      </th>
+                                      <th>Progres Keuangan</th>
+                                      <th>Edit</th>
+                                    </tr>
+                                  </thead>
+          
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <a href="#" name="isibulan"></a>
+                                      </td>
+                                      <td class="center">
+                                        <label class="position-relative">
+                                          1
+                                        </label>
+                                      </td>
+                                      <td>
+                                        <div class="input-group">
+                                            <input id="kprogres_mingu_1" type="text" class="form-control search-query uang" placeholder="">
+                                            <span class="input-group-btn">
+                                              <button onclick="saveminggu('keuangan',1)" id="ksave_minggu_1" type="button" class="btn btn-success btn-sm">
+                                                <span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
+                                                Simpan
+                                              </button>
+                                            </span>
+                                          </div>
+                                      </td>
+                                      <td>
+                                        <center>
+                                          <div class="checkbox">
+                                            <label>
+                                              <input id="kedit_1" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('keuangan',1)">
+                                              <span class="lbl"></span>
+                                            </label>
+                                          </div>
+                                        </center>
+                                      </td>
+          
+                                    </tr>
+          
+                                    <tr>
+                                      <td>
+                                        <a href="#" name="isibulan"></a>
+                                      </td>
+                                      <td class="center">
+                                        <label class="position-relative">
+                                          2
+                                        </label>
+                                      </td>
+                                      <td>
+                                        <div class="input-group">
+                                            <input id="kprogres_mingu_2" type="text" class="form-control search-query uang" placeholder="">
+                                            <span class="input-group-btn">
+                                              <button onclick="saveminggu('keuangan',2)" id="ksave_minggu_2" type="button" class="btn btn-success btn-sm">
+                                                <span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
+                                                Simpan
+                                              </button>
+                                            </span>
+                                          </div>
+                                      </td>
+                                      <td>
+                                        <center>
+                                          <div class="checkbox">
+                                            <label>
+                                              <input id="kedit_2" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('keuangan',2)">
+                                              <span class="lbl"></span>
+                                            </label>
+                                          </div>
+                                        </center>
+                                      </td>
+          
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <a href="#" name="isibulan"></a>
+                                      </td>
+                                      <td class="center">
+                                        <label class="position-relative">
+                                          3
+                                        </label>
+                                      </td>
+                                      <td>
+                                        <div class="input-group">
+                                            <input id="kprogres_mingu_3" type="text" class="form-control search-query uang" placeholder="">
+                                            <span class="input-group-btn">
+                                              <button onclick="saveminggu('keuangan',3)" id="ksave_minggu_3" type="button" class="btn btn-success btn-sm">
+                                                <span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
+                                                Simpan
+                                              </button>
+                                            </span>
+                                          </div>
+                                      </td>
+                                      <td>
+                                        <center>
+                                          <div class="checkbox">
+                                            <label>
+                                              <input id="kedit_3" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('keuangan',3)">
+                                              <span class="lbl"></span>
+                                            </label>
+                                          </div>
+                                        </center>
+                                      </td>
+          
+                                    </tr>
+          
+                                    <tr>
+                                      <td>
+                                        <a href="#" name="isibulan"></a>
+                                      </td>
+                                      <td class="center">
+                                        <label class="position-relative">
+                                          4
+                                        </label>
+                                      </td>
+                                      <td>
+                                        <div class="input-group">
+                                            <input id="kprogres_mingu_4" type="text" class="form-control search-query uang" placeholder="">
+                                            <span class="input-group-btn">
+                                              <button onclick="saveminggu('keuangan',4)" id="ksave_minggu_4" type="button" class="btn btn-success btn-sm">
+                                                <span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
+                                                Simpan
+                                              </button>
+                                            </span>
+                                          </div>
+                                      </td>
+                                      <td>
+                                        <center>
+                                          <div class="checkbox">
+                                            <label>
+                                              <input id="kedit_4" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('keuangan',4)">
+                                              <span class="lbl"></span>
+                                            </label>
+                                          </div>
+                                        </center>
+                                      </td>
+          
+                                    </tr>
+                                  </tbody>
+                                  <tfoot>
+                                    <th colspan=2><center>Total</center></th>
+                                    <th colspan=2><input type="text" id="ktot_prog" placeholder="" class="col-xs-12 col-sm-12" disabled=""></th>
+                                  </tfoot>
+                                </table>
+          
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+          
+                        
+                      </div>
                     </div>
+
+                    
+                    <div id="fisik" class="tab-pane fade">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Pilih Bulan </label>
+                            <div class="col-sm-9">
+                              <select class="chosen-select form-control" id="fpilih_bulan" data-placeholder="Pilih Bulan Fisik...">
+                                <option value="">  </option>
+                              </select>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Progres Bulan Lalu </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="fprogres_bulan_lalu" placeholder="" class="col-xs-12 col-sm-12" disabled />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Total Progres </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="ftotal_progres" placeholder="" class="col-xs-12 col-sm-12" disabled/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Titik Koordinat </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="fkoordinat" placeholder="Derajat desimal (DD): xx.xxxxx, xx.xxxxx" class="col-xs-12 col-sm-12"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Latar Belakang Pekerjaan </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="flatar_belakang" placeholder="" class="col-xs-12 col-sm-12"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Uraian Progres </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="furaian" placeholder="" class="col-xs-12 col-sm-12"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Permasalahan </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="fpermasalahan" placeholder="" class="col-xs-12 col-sm-12"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group" id="iniprogres">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Progres </label>
+                            <div class="col-sm-9">
+                              <select class="chosen-select form-control" id="fprogres" data-placeholder="Pilih Progress...">
+                                <option value="0">0</option>
+                                <option value="25">25 %</option>
+                                <option value="50">50 %</option>
+                                <option value="75">75 %</option>
+                                <option value="100">100 %</option>
+                              </select>
+
+                              <input type="text" id="fprogres_input" placeholder="" class="col-xs-12 col-sm-12"/ disabled>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="form-group" id="iniupload">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Upload Foto </label>
+                            <div class="col-sm-9">
+                              <input type="file" id="id-input-file-2" multiple/>
+                              <input type="hidden" id="baseURL" value="{{baseURL}}">
+                              <div class="row" id="img-file">
+                                <div class="col-md-3">
+                                  <a href="" data-rel="colorbox">
+                                    <img width="150" height="150" alt="150x150" src="../assets/images/gallery/thumb-2.jpg" />
+                                    <div class="text">
+                                      <div class="inner">Sample Caption on Hover</div>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                              
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group" id="iniketerangan">
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> Keterangan </label>
+                            <div class="col-sm-9">
+                              <input type="text" id="fketerangan" placeholder="" class="col-xs-12 col-sm-12"/>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-xs-12 widget-container-col" id="inifisik" style="display: block;">
+                            <div class="widget-box">
+                              <div class="widget-header">
+                                <h4 class="widget-title lighter">Fisik (Kumulasi)</h4>
+                              </div>
+                              <div class="widget-body">
+                                <div class="widget-main">
+                                  <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                      <tr>
+                                        <th>Bulan</th>
+                                        <th class="center">
+                                          <label class="position-relative">
+                                            Minggu Ke.
+                                          </label>
+                                        </th>
+                                        <th>Progres Fisik</th>
+                                        <th>Edit</th>
+                                      </tr>
+                                    </thead>
+            
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <a href="#" name="isibulan"></a>
+                                        </td>
+                                        <td class="center">
+                                          <label class="position-relative">
+                                            1
+                                          </label>
+                                        </td>
+                                        <td>
+                                          <div class="input-group">
+                                              <input id="fprogres_mingu_1" type="text" class="form-control search-query" placeholder="">
+                                              <span class="input-group-btn">
+                                                <button onclick="saveminggu('fisik',1)" id="fsave_minggu_1" type="button" class="btn btn-success btn-sm">
+                                                  <span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
+                                                  Simpan
+                                                </button>
+                                              </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                          <center>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input id="fedit_1" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('fisik',1)">
+                                                <span class="lbl"></span>
+                                              </label>
+                                            </div>
+                                          </center>
+                                        </td>
+            
+                                      </tr>
+            
+                                      <tr>
+                                        <td>
+                                          <a href="#" name="isibulan"></a>
+                                        </td>
+                                        <td class="center">
+                                          <label class="position-relative">
+                                            2
+                                          </label>
+                                        </td>
+                                        <td>
+                                          <div class="input-group">
+                                              <input id="fprogres_mingu_2" type="text" class="form-control search-query" placeholder="">
+                                              <span class="input-group-btn">
+                                                <button onclick="saveminggu('fisik',2)" id="fsave_minggu_2" type="button" class="btn btn-success btn-sm">
+                                                  <span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
+                                                  Simpan
+                                                </button>
+                                              </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                          <center>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input id="fedit_2" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('fisik',2)">
+                                                <span class="lbl"></span>
+                                              </label>
+                                            </div>
+                                          </center>
+                                        </td>
+            
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <a href="#" name="isibulan"></a>
+                                        </td>
+                                        <td class="center">
+                                          <label class="position-relative">
+                                            3
+                                          </label>
+                                        </td>
+                                        <td>
+                                          <div class="input-group">
+                                              <input id="fprogres_mingu_3" type="text" class="form-control search-query" placeholder="">
+                                              <span class="input-group-btn">
+                                                <button onclick="saveminggu('fisik',3)" id="fsave_minggu_3" type="button" class="btn btn-success btn-sm">
+                                                  <span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
+                                                  Simpan
+                                                </button>
+                                              </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                          <center>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input id="fedit_3" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('fisik',3)">
+                                                <span class="lbl"></span>
+                                              </label>
+                                            </div>
+                                          </center>
+                                        </td>
+            
+                                      </tr>
+            
+                                      <tr>
+                                        <td>
+                                          <a href="#" name="isibulan"></a>
+                                        </td>
+                                        <td class="center">
+                                          <label class="position-relative">
+                                            4
+                                          </label>
+                                        </td>
+                                        <td>
+                                          <div class="input-group">
+                                              <input id="fprogres_mingu_4" type="text" class="form-control search-query" placeholder="">
+                                              <span class="input-group-btn">
+                                                <button onclick="saveminggu('fisik',4)" id="fsave_minggu_4" type="button" class="btn btn-success btn-sm">
+                                                  <span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
+                                                  Simpan
+                                                </button>
+                                              </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                          <center>
+                                            <div class="checkbox">
+                                              <label>
+                                                <input id="fedit_4" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('fisik',4)">
+                                                <span class="lbl"></span>
+                                              </label>
+                                            </div>
+                                          </center>
+                                        </td>
+            
+                                      </tr>
+            
+                                    </tbody>
+                                  </table>
+            
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
-              </div>
 
-              <div class="col-xs-12 widget-container-col" id="inifisik" style="display: none;">
-                <div class="widget-box">
-                  <div class="widget-header">
-                    <h4 class="widget-title lighter">Fisik (Kumulasi)</h4>
-                  </div>
-                  <div class="widget-body">
-                    <div class="widget-main">
-                      <table id="sample-table-1" class="table table-striped table-bordered table-hover">
-                        <thead>
-                          <tr>
-                            <th>Bulan</th>
-                            <th class="center">
-                              <label class="position-relative">
-                                Minggu Ke.
-                              </label>
-                            </th>
-                            <th>Progres Fisik</th>
-                            <th>Edit</th>
-                          </tr>
-                        </thead>
+                <!-- /section:elements.tab -->
+              </div><!-- /.col -->
 
-                        <tbody>
-                          <tr>
-                            <td>
-                              <a href="#" name="isibulan"></a>
-                            </td>
-                            <td class="center">
-                              <label class="position-relative">
-                                1
-                              </label>
-                            </td>
-                            <td>
-                              <div class="input-group">
-																	<input id="fprogres_mingu_1" type="text" class="form-control search-query" placeholder="">
-																	<span class="input-group-btn">
-																		<button onclick="saveminggu('fisik',1)" id="fsave_minggu_1" type="button" class="btn btn-success btn-sm">
-																			<span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
-																			Simpan
-																		</button>
-																	</span>
-																</div>
-                            </td>
-                            <td>
-                              <center>
-                                <div class="checkbox">
-        													<label>
-        														<input id="fedit_1" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('fisik',1)">
-        														<span class="lbl"></span>
-        													</label>
-        												</div>
-                              </center>
-                            </td>
+              
 
-                          </tr>
-
-                          <tr>
-                            <td>
-                              <a href="#" name="isibulan"></a>
-                            </td>
-                            <td class="center">
-                              <label class="position-relative">
-                                2
-                              </label>
-                            </td>
-                            <td>
-                              <div class="input-group">
-																	<input id="fprogres_mingu_2" type="text" class="form-control search-query" placeholder="">
-																	<span class="input-group-btn">
-																		<button onclick="saveminggu('fisik',2)" id="fsave_minggu_2" type="button" class="btn btn-success btn-sm">
-																			<span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
-																			Simpan
-																		</button>
-																	</span>
-																</div>
-                            </td>
-                            <td>
-                              <center>
-                                <div class="checkbox">
-        													<label>
-        														<input id="fedit_2" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('fisik',2)">
-        														<span class="lbl"></span>
-        													</label>
-        												</div>
-                              </center>
-                            </td>
-
-                          </tr>
-                          <tr>
-                            <td>
-                              <a href="#" name="isibulan"></a>
-                            </td>
-                            <td class="center">
-                              <label class="position-relative">
-                                3
-                              </label>
-                            </td>
-                            <td>
-                              <div class="input-group">
-																	<input id="fprogres_mingu_3" type="text" class="form-control search-query" placeholder="">
-																	<span class="input-group-btn">
-																		<button onclick="saveminggu('fisik',3)" id="fsave_minggu_3" type="button" class="btn btn-success btn-sm">
-																			<span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
-																			Simpan
-																		</button>
-																	</span>
-																</div>
-                            </td>
-                            <td>
-                              <center>
-                                <div class="checkbox">
-        													<label>
-        														<input id="fedit_3" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('fisik',3)">
-        														<span class="lbl"></span>
-        													</label>
-        												</div>
-                              </center>
-                            </td>
-
-                          </tr>
-
-                          <tr>
-                            <td>
-                              <a href="#" name="isibulan"></a>
-                            </td>
-                            <td class="center">
-                              <label class="position-relative">
-                                4
-                              </label>
-                            </td>
-                            <td>
-                              <div class="input-group">
-																	<input id="fprogres_mingu_4" type="text" class="form-control search-query" placeholder="">
-																	<span class="input-group-btn">
-																		<button onclick="saveminggu('fisik',4)" id="fsave_minggu_4" type="button" class="btn btn-success btn-sm">
-																			<span class="ace-icon fa fa-check icon-on-right bigger-110"></span>
-																			Simpan
-																		</button>
-																	</span>
-																</div>
-                            </td>
-                            <td>
-                              <center>
-                                <div class="checkbox">
-        													<label>
-        														<input id="fedit_4" name="form-field-checkbox" type="checkbox" class="ace" onchange="editdong('fisik',4)">
-        														<span class="lbl"></span>
-        													</label>
-        												</div>
-                              </center>
-                            </td>
-
-                          </tr>
-
-                        </tbody>
-                      </table>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
+              
             </div>
+
+            <div class="space-4"></div>
+            
 
           </div>
           <div class="widget-toolbox padding-8 clearfix">

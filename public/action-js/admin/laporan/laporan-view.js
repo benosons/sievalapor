@@ -10,22 +10,22 @@ $(document).ready(function(){
   $( '.uang, .uang-pagu' ).mask('000.000.000.000.000', {reverse: true});
   // loadkegiatan("program",0);
   loadtarget(ids);
-  $('#fpilih_bulan_chosen').hide();
-  $('#fprogres_bulan_lalu').hide();
-  $('#ftotal_progres').hide();
-  $('#inifisik').hide();
+  // $('#fpilih_bulan_chosen').hide();
+  // $('#fprogres_bulan_lalu').hide();
+  // $('#ftotal_progres').hide();
+  // $('#inifisik').hide();
 
-  $('#iniprogres').hide();
-   $('#iniupload').hide();
-   $('#iniketerangan').hide();
+  // $('#iniprogres').hide();
+  //  $('#iniupload').hide();
+  //  $('#iniketerangan').hide();
 
-   $('#ktotal_progres').val('');
-   $('#kprogres_bulan_lalu').val('');
-   $('#koordinat').val('');
-   $('#latar_belakang').val('');
-   $('#uraian').val('');
-   $('#permasalahan').val('');
-   $('#ktot_prog').val('');
+  //  $('#ktotal_progres').val('');
+  //  $('#kprogres_bulan_lalu').val('');
+  //  $('#koordinat').val('');
+  //  $('#latar_belakang').val('');
+  //  $('#uraian').val('');
+  //  $('#permasalahan').val('');
+  //  $('#ktot_prog').val('');
 
    $('input:checkbox').removeAttr('checked');
 
@@ -79,50 +79,64 @@ $(document).ready(function(){
   });
 
 
-  $('#tipedong').click(function(){
-    $('#koordinat').val('');
-    $('#latar_belakang').val('');
-    $('#uraian').val('');
-    $('#permasalahan').val('');
-    if($(this).prop("checked") == true){
-      window.type = 'fisik';
-      $('#fpilih_bulan_chosen').show();
-      $('#fprogres_bulan_lalu').show();
-      $('#ftotal_progres').show();
-      $('#fpermasalahan').show();
-      $('#inifisik').show();
+//   $('#tipedong').click(function(){
+//     $('#koordinat').val('');
+//     $('#latar_belakang').val('');
+//     $('#uraian').val('');
+//     $('#permasalahan').val('');
+//     if($(this).prop("checked") == true){
+//       window.type = 'fisik';
+//       $('#fpilih_bulan_chosen').show();
+//       $('#fprogres_bulan_lalu').show();
+//       $('#ftotal_progres').show();
+//       $('#fpermasalahan').show();
+//       $('#inifisik').show();
 
-      $('#kpilih_bulan_chosen').hide();
-      $('#kprogres_bulan_lalu').hide();
-      $('#ktotal_progres').hide();
-      $('#kpermasalahan').hide();
-      $('#inikeuangan').hide();
+//       $('#kpilih_bulan_chosen').hide();
+//       $('#kprogres_bulan_lalu').hide();
+//       $('#ktotal_progres').hide();
+//       $('#kpermasalahan').hide();
+//       $('#inikeuangan').hide();
 
-      $('#iniprogres').show();
-      $('#iniupload').show();
-      $('#iniketerangan').show();
-    }else if($(this).prop("checked") == false){
-      window.type = 'keuangan';
-      $('#kpilih_bulan_chosen').show();
-      $('#kprogres_bulan_lalu').show();
-      $('#ktotal_progres').show();
-      $('#kpermasalahan').show();
-      $('#inikeuangan').show();
+//       $('#iniprogres').show();
+//       $('#iniupload').show();
+//       $('#iniketerangan').show();
+//     }else if($(this).prop("checked") == false){
+//       window.type = 'keuangan';
+//       $('#kpilih_bulan_chosen').show();
+//       $('#kprogres_bulan_lalu').show();
+//       $('#ktotal_progres').show();
+//       $('#kpermasalahan').show();
+//       $('#inikeuangan').show();
 
-      $('#fpilih_bulan_chosen').hide();
-      $('#fprogres_bulan_lalu').hide();
-      $('#ftotal_progres').hide();
-      $('#fpermasalahan').hide();
-      $('#inifisik').hide();
+//       $('#fpilih_bulan_chosen').hide();
+//       $('#fprogres_bulan_lalu').hide();
+//       $('#ftotal_progres').hide();
+//       $('#fpermasalahan').hide();
+//       $('#inifisik').hide();
 
-      $('#iniprogres').hide();
-      $('#iniupload').hide();
-      $('#iniketerangan').hide();
-    }
+//       $('#iniprogres').hide();
+//       $('#iniupload').hide();
+//       $('#iniketerangan').hide();
+//     }
 
+// });
+
+$('#tipenya-keuangan').on('click', function(){
+  window.type = 'keuangan';
 });
 
-  $("#kpilih_bulan, #fpilih_bulan").chosen().change(function(){
+$('#tipenya-fisik').on('click', function(){
+  window.type = 'fisik';
+})
+
+  $("#kpilih_bulan").chosen().change(function(){
+    let nama = $('option:selected', this).text();
+    $('[name="isibulan"]').html(nama);
+    loadbulan(window.type, this.value);
+  });
+
+  $("#fpilih_bulan").chosen().change(function(){
     let nama = $('option:selected', this).text();
     $('[name="isibulan"]').html(nama);
     loadbulan(window.type, this.value);
@@ -423,15 +437,15 @@ function saveminggu(type,ke){
                   $('#ktotal_progres').val('');
                   $('#kprogres_mingu_'+i).prop('disabled', false);
                   $('#ksave_minggu_'+i).prop('disabled', false);
-                  $('#koordinat').val('');
-                  $('#latar_belakang').val('');
-                  $('#uraian').val('');
-                  $('#permasalahan').val('');
+                  $('#kkoordinat').val('');
+                  $('#klatar_belakang').val('');
+                  $('#kuraian').val('');
+                  $('#kpermasalahan').val('');
 
-                  $('#koordinat').prop('disabled', false);
-                  $('#latar_belakang').prop('disabled', false);
-                  $('#uraian').prop('disabled', false);
-                  $('#permasalahan').prop('disabled', false);
+                  $('#kkoordinat').prop('disabled', false);
+                  $('#klatar_belakang').prop('disabled', false);
+                  $('#kuraian').prop('disabled', false);
+                  $('#kpermasalahan').prop('disabled', false);
 
 
                 }else if(type = 'fisik'){
@@ -439,15 +453,15 @@ function saveminggu(type,ke){
                   $('#ftotal_progres').val('');
                   $('#fprogres_mingu_'+i).prop('disabled', false);
                   $('#fsave_minggu_'+i).prop('disabled', false);
-                  $('#koordinat').val('');
-                  $('#latar_belakang').val('');
-                  $('#uraian').val('');
-                  $('#permasalahan').val('');
+                  $('#fkoordinat').val('');
+                  $('#flatar_belakang').val('');
+                  $('#furaian').val('');
+                  $('#fpermasalahan').val('');
 
-                  $('#koordinat').prop('disabled', false);
-                  $('#latar_belakang').prop('disabled', false);
-                  $('#uraian').prop('disabled', false);
-                  $('#permasalahan').prop('disabled', false);
+                  $('#fkoordinat').prop('disabled', false);
+                  $('#flatar_belakang').prop('disabled', false);
+                  $('#furaian').prop('disabled', false);
+                  $('#fpermasalahan').prop('disabled', false);
 
                 }
 
@@ -471,24 +485,24 @@ function saveminggu(type,ke){
                   $('#ktotal_progres').val(ribuan_tot);
                   
                   if(data[i].koordinat){
-                    $('#koordinat').val(data[i].koordinat);
-                    $('#koordinat').prop('disabled', true);
+                    $('#kkoordinat').val(data[i].koordinat);
+                    $('#kkoordinat').prop('disabled', true);
                   }
                   if(data[i].latar_belakang){
-                    $('#latar_belakang').val(data[i].latar_belakang);
-                    $('#latar_belakang').prop('disabled', true);
+                    $('#klatar_belakang').val(data[i].latar_belakang);
+                    $('#klatar_belakang').prop('disabled', true);
                   }
                   if(data[i].uraian){
-                    $('#uraian').val(data[i].uraian);
-                    $('#uraian').prop('disabled', true);
+                    $('#kuraian').val(data[i].uraian);
+                    $('#kuraian').prop('disabled', true);
                   }
                   
                   if(data[i].permasalahan){
-                    $('#permasalahan').val(data[i].permasalahan);
-                    $('#permasalahan').prop('disabled', true);
+                    $('#kpermasalahan').val(data[i].permasalahan);
+                    $('#kpermasalahan').prop('disabled', true);
                   }else{
-                    $('#permasalahan').val('');
-                    $('#permasalahan').prop('disabled', false);
+                    $('#kpermasalahan').val('');
+                    $('#kpermasalahan').prop('disabled', false);
                   }
 
 
@@ -542,28 +556,28 @@ function saveminggu(type,ke){
 
                   $('#ftotal_progres').val(data[i].total);
                   if(data[i].koordinat){
-                    $('#koordinat').val(data[i].koordinat);
-                    $('#koordinat').prop('disabled', true);
+                    $('#fkoordinat').val(data[i].koordinat);
+                    $('#fkoordinat').prop('disabled', true);
                   }
                   if(data[i].latar_belakang){
-                    $('#latar_belakang').val(data[i].latar_belakang);
-                    $('#latar_belakang').prop('disabled', true);
+                    $('#flatar_belakang').val(data[i].latar_belakang);
+                    $('#flatar_belakang').prop('disabled', true);
                   }
                   if(data[i].uraian){
-                    $('#uraian').val(data[i].uraian);
-                    $('#uraian').prop('disabled', true);
+                    $('#furaian').val(data[i].uraian);
+                    $('#furaian').prop('disabled', true);
                     
                   }else{
-                    $('#uraian').val('');
-                    $('#uraian').prop('disabled', false);
+                    $('#furaian').val('');
+                    $('#furaian').prop('disabled', false);
                   }
                   
                   if(data[i].permasalahan){
-                    $('#permasalahan').val(data[i].permasalahan);
-                    $('#permasalahan').prop('disabled', true);
+                    $('#fpermasalahan').val(data[i].permasalahan);
+                    $('#fpermasalahan').prop('disabled', true);
                   }else{
-                    $('#permasalahan').val('');
-                    $('#permasalahan').prop('disabled', false);
+                    $('#fpermasalahan').val('');
+                    $('#fpermasalahan').prop('disabled', false);
                   }
 
 
@@ -588,9 +602,9 @@ function saveminggu(type,ke){
                   // $('#kedit_4').attr('idnya',data[i].id);
                   if(data[i].progres){
                    
-                    $('#progres_input').val(data[i].progres);
-                    $('#keterangan').val(data[i].keterangan);
-                    $('#keterangan').prop('disabled', true);
+                    $('#fprogres_input').val(data[i].progres);
+                    $('#fketerangan').val(data[i].keterangan);
+                    $('#fketerangan').prop('disabled', true);
 
                     // $('#img-file').attr('href',);
                     // $('#img-file > img').attr('src',);
@@ -613,17 +627,17 @@ function saveminggu(type,ke){
 
                     $('#img-file').html(imag);
 
-                    $('#progres_chosen').hide();
+                    $('#fprogres_chosen').hide();
                     $('.ace-file-input').hide();
                     $('#img-file').show();
                     $('#progres_input').show();
                   }else{
-                    $('#progres_chosen').show();
+                    $('#fprogres_chosen').show();
                     $('.ace-file-input').show();
                     $('#img-file').hide();
-                    $('#progres_input').hide();
-                    $('#keterangan').val('');
-                    $('#keterangan').prop('disabled', false);
+                    $('#fprogres_input').hide();
+                    $('#fketerangan').val('');
+                    $('#fketerangan').prop('disabled', false);
                   }
                   
                   
