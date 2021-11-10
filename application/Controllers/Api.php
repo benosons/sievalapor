@@ -417,11 +417,12 @@ class Api extends \CodeIgniter\Controller
 						
 						$files	  = $request->getFiles()['files'];
 						
+						
 						$path			= FCPATH.'public';
 						$tipe			= 'uploads/users/progres';
 						$date 		= date('Y/m/d');
 						$folder		= $path.'/'.$tipe.'/'.$date.'/';
-						
+						// print_r($folder);die;
 						
 						if (!is_dir($folder)) {
 							mkdir($folder, 0777, TRUE);
@@ -492,22 +493,43 @@ class Api extends \CodeIgniter\Controller
 			// 	$data['total']	= $request->getVar('m4');
 			// }
 		}
-			
+
+		$ism1 = "";
+		$ism2 = "";
+		$ism3 = "";
+		$ism4 = "";
+
+		switch ($request->getVar('param')) {
+			case 'm1':
+				$ism1 = $request->getVar('value');
+				break;
+			case 'm2':
+				$ism2 = $request->getVar('value');
+				break;
+			case 'm3':
+				$ism3 = $request->getVar('value');
+				break;
+			case 'm4':
+				$ism4 = $request->getVar('value');
+				break;
+		}
+		
+		
 			if($edited){
 				$idnya = $request->getVar('idnya');
 				$res = $model->updateDong('bulan_realisasi', $idnya , $data);
 				$res2 = $model->updateDong2('data_realisasi', $request->getVar('id_paket'), $request->getVar('kode_bulan') , $data_new);
 
 			}else{
-				$cekrealisasi = $model->cekrealisasi($request->getVar('id_paket'), $request->getVar('kode_bulan'), $userid, $type, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'));
 				
+				$cekrealisasi = $model->cekrealisasi($request->getVar('id_paket'), $request->getVar('kode_bulan'), $userid, $type, $ism1, $ism2, $ism3, $ism4);
 				if(empty($cekrealisasi)){
 					$res = $model->saveParam('bulan_realisasi', $data);
 				}else{
 					if(!array_key_exists("total",$data)){
 						$data['total'] = '';
 					}
-					$res = $model->updateRealisasi($cekrealisasi[0]->id, $request->getVar('m1'), $request->getVar('m2'), $request->getVar('m3'), $request->getVar('m4'), @$data['total']);
+					$res = $model->updateRealisasi($cekrealisasi[0]->id, $ism1, $ism2, $ism3, $ism4, @$data['total']);
 				}
 
 				$cekpaket	= $model->cekpaket($request->getVar('id_paket'), $request->getVar('kode_bulan'), $userid);
