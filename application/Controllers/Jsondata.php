@@ -945,13 +945,19 @@ class Jsondata extends \CodeIgniter\Controller
 							
 							if($type == 'keuangan'){
 								$cekuraian = $model->cekParam('param_uraian', $idpaket, null, $type);
-								$cekrealisasi[0]->uraian = $cekuraian[0]->desc;
+								if(!empty($cekuraian)){
+									$cekrealisasi[0]->uraian = $cekuraian[0]->desc;
+								}
 
 								$ceklatar = $model->cekParam('param_latar_belakang', $idpaket, null, $type);
-								$cekrealisasi[0]->latar_belakang = $ceklatar[0]->desc;
+								if(!empty($ceklatar)){
+									$cekrealisasi[0]->latar_belakang = $ceklatar[0]->desc;
+								}
 
 								$cekmasalah = $model->cekParam('param_masalah', $idpaket, $cekrealisasi[0]->kode_bulan, $type);
-								$cekrealisasi[0]->permasalahan = $cekmasalah[0]->desc;
+								if(!empty($cekmasalah)){
+									$cekrealisasi[0]->permasalahan = $cekmasalah[0]->desc;
+								}
 
 							}else if($type = 'fisik'){
 								
@@ -959,12 +965,12 @@ class Jsondata extends \CodeIgniter\Controller
 
 								$cekrealisasi[0]->latar_belakang = $ceklatar[0]->desc;
 								$cekuraian = $model->cekParam('param_uraian', $idpaket, $cekrealisasi[0]->kode_bulan, $type);
-								if($cekuraian){
+								if(!empty($cekuraian)){
 									$cekrealisasi[0]->uraian = $cekuraian[0]->desc;
 								}
 
 								$cekmasalah = $model->cekParam('param_masalah', $idpaket, $cekrealisasi[0]->kode_bulan, $type);
-								if($cekmasalah){
+								if(!empty($cekmasalah)){
 									$cekrealisasi[0]->permasalahan = $cekmasalah[0]->desc;
 								}
 
@@ -1091,6 +1097,7 @@ class Jsondata extends \CodeIgniter\Controller
 		catch (\Exception $e)
 		{
 			die($e->getTraceAsString());
+			// die($e->getMessage());
 		}
 	}
 

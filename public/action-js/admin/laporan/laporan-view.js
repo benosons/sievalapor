@@ -184,10 +184,10 @@ function saveminggu(type,ke){
   formData.append('id_paket', $('#id_paket').val());
   formData.append('m'+ke, $('#'+keys+'progres_mingu_'+ke).val());
   formData.append('total_progres', $('#'+keys+'tot_prog').val());
-  formData.append('koordinat', $('#koordinat').val());
-  formData.append('latar_belakang', $('#latar_belakang').val());
-  formData.append('uraian', $('#uraian').val());
-  formData.append('permasalahan', $('#permasalahan').val());
+  formData.append('koordinat', $('#'+keys+'koordinat').val());
+  formData.append('latar_belakang', $('#'+keys+'latar_belakang').val());
+  formData.append('uraian', $('#'+keys+'uraian').val());
+  formData.append('permasalahan', $('#'+keys+'permasalahan').val());
 
   if($('#'+keys+'edit_'+ke).is(":checked")){
     formData.append('edited', 1);
@@ -195,8 +195,8 @@ function saveminggu(type,ke){
   }
 
   if(type == 'fisik'){
-    formData.append('progres', $('#progres').val());
-    formData.append('keterangan', $('#keterangan').val());
+    formData.append('progres', $('#fprogres').val());
+    formData.append('keterangan', $('#fketerangan').val());
     
     if (typeof $('#id-input-file-2')[0].files[0] != 'undefined') {
       for (let index = 0; index < $('#id-input-file-2')[0].files.length; index++) {

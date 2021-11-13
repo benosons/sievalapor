@@ -351,7 +351,7 @@ class Api extends \CodeIgniter\Controller
 		$type = $request->getVar('type');
 		
 		$edited = $request->getVar('edited');
-
+		
 			if($edited){
 
 				$data = [
