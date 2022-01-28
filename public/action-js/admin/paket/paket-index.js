@@ -78,7 +78,7 @@ $("#nama_subkegiatan").chosen().change(function(){
     let pagusub = $('#pagu_subkegiatan').val().replaceAll('.', '');
     let pagupak = this.value.replaceAll('.', '');
     if(parseInt(pagupak) > parseInt(pagusub)){
-      $('#save_paket').prop('disabled', true);
+      $('#save_paket').prop('disabled', false);
       $('#pagu_paket').parent().parent().addClass('has-error');
       $('#pagu_habis').show();
     }else{
@@ -445,7 +445,7 @@ function edit(table,id, code, name, pagu, code_sub, pagu_perubahan){
   $('#nama_paket').val(name);
   $('#id_paket').val(id);
   $('#pagu_paket').val(pagu);
-  $('#pagu_paket').prop('disabled', true);
+  $('#pagu_paket').prop('disabled', false);
 
   $('#pagu_perubahan').val(pagu_perubahan == 'null' ? '': pagu_perubahan);
   $('#pagu_perubahan').parent().parent().show();

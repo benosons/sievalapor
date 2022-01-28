@@ -336,7 +336,7 @@ function save(formData){
       $('#pagu_subkegiatan').val(pagu);
       $('#sisa_pagu_subkegiatan').val(sisa);
       $('#pagu_awal').val(pagu);
-      $('#pagu_subkegiatan').prop('disabled', true);
+      $('#pagu_subkegiatan').prop('disabled', false);
       
       $('#pagu_perubahan').val(pagu_perubahan == 'null' ? '': pagu_perubahan);
       $('#pagu_perubahan').parent().parent().show();
